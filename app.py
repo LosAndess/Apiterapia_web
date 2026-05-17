@@ -2,14 +2,21 @@
 Apiterapia con Vero — Serveur Flask
 =====================================
 Lancer avec :  python app.py
-Accessible depuis le réseau local (téléphone, etc.) sur http://<IP_locale>:5000
+
+Le serveur écoute simultanément sur DEUX ports :
+  → http://localhost:5001      (navigateur de ton Mac)
+  → http://<IP_locale>:8080    (téléphone sur le même Wi-Fi)
+
+Pour trouver ton IP locale : ipconfig getifaddr en0
 """
 
 from flask import Flask, render_template, request, jsonify
 import json
 import os
 import urllib.parse
+import threading
 from datetime import datetime
+from werkzeug.serving import make_server
 
 app = Flask(__name__)
 
@@ -126,7 +133,25 @@ def book():
 
 # ── Point d'entrée ────────────────────────────────────────────────────────────
 
+def start_server(port):
+    """Lance une instance du serveur sur le port donné (sans reloader)."""
+    server = make_server('0.0.0.0', port, app)
+    server.serve_forever()
+
 if __name__ == '__main__':
-    # Port 5001 — le port 5000 est réservé par AirPlay sur macOS Monterey et plus récent
-    # Accès depuis ton téléphone (même Wi-Fi) : http://<IP_locale>:5001
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    PORT_MAC    = 5001   # Accès local sur ton Mac  → http://localhost:5001
+    PORT_MOBILE = 8080   # Accès depuis ton téléphone → http://<IP_locale>:8080
+
+    # Lancer le port 5001 dans un thread secondaire
+    t = threading.Thread(target=start_server, args=(PORT_MAC,), daemon=True)
+    t.start()
+
+    print(f"\n{'='*52}")
+    print(f"  ✅  Serveur Apiterapia lancé sur 2 ports")
+    print(f"  💻  Mac     → http://localhost:{PORT_MAC}")
+    print(f"  📱  Mobile  → http://<ton_IP_locale>:{PORT_MOBILE}")
+    print(f"  (IP locale : lance 'ipconfig getifaddr en0' dans un autre terminal)")
+    print(f"{'='*52}\n")
+
+    # Lancer le port 8080 sur le thread principal (bloquant)
+    start_server(PORT_MOBILE)
