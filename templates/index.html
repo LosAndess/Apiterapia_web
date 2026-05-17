@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="meta-title">Apiterapia con Vero — Bienestar Natural</title>
+  <meta name="description" id="meta-desc" content="Sesiones de apiterapia y productos naturales en San Esteban. Agenda tu sesión con Vero por WhatsApp.">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght=200;300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:    '#FDFBF7',
+            beige:    '#EFEAE2',
+            offwhite: '#F9F6F0',
+            olive:    '#6B7A61',
+            'olive-dark': '#4E5A47',
+            honey:    '#BD8F36',
+            'honey-light': '#D4A74E',
+            bark:     '#735F43',
+            ink:      '#2C251E',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body:    ['Jost', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: #FDFBF7;
+      color: #2C251E;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background-color: #2C251E;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+    }
+
+    .preloader-bar-bg {
+      width: 180px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .preloader-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #BD8F36 0%, #D4A74E 100%);
+      border-radius: 99px;
+      box-shadow: 0 0 8px rgba(212, 167, 78, 0.4);
+      transition: width 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.0s cubic-bezier(.215, .610, .355, 1), transform 1.0s cubic-bezier(.215, .610, .355, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    .nav-link {
+      position: relative;
+      padding-bottom: 6px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 0; height: 1px;
+      background: #BD8F36;
+      transition: width 0.4s cubic-bezier(.25, .46, .45, .94);
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .hero-overlay {
+      background: linear-gradient(
+        135deg,
+        rgba(44, 37, 30, 0.8) 0%,
+        rgba(78, 90, 71, 0.55) 50%,
+        rgba(115, 95, 67, 0.4) 100%
+      );
+    }
+
+    .btn-honey {
+      background: linear-gradient(135deg, #BD8F36 0%, #D4A74E 100%);
+      transition: all 0.4s cubic-bezier(.25, .46, .45, .94);
+      box-shadow: 0 4px 20px rgba(189,143,54,0.18);
+    }
+    .btn-honey:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(189,143,54,0.3);
+      background: linear-gradient(135deg, #D4A74E 0%, #BD8F36 100%);
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      transition: all 0.4s cubic-bezier(.25, .46, .45, .94);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,1);
+    }
+
+    .card-lift {
+      transition: all 0.5s cubic-bezier(.25, .46, .45, .94);
+      box-shadow: 0 4px 24px rgba(44,37,30,0.02);
+    }
+    .card-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(44,37,30,0.08);
+    }
+
+    .noise::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      z-index: 998;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.25);
+      transition: all 0.3s cubic-bezier(.25, .46, .45, .94);
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08) translateY(-3px);
+      box-shadow: 0 12px 28px rgba(37,211,102,0.4);
+    }
+
+    @media (max-width: 767px) {
+      .whatsapp-float {
+        bottom: 32px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .stars { color: #BD8F36; letter-spacing: 2px; }
+
+    .form-field {
+      background: #FDFBF7;
+      border: 1px solid #E2E8F0;
+      border-radius: 9999px;
+      padding: 14px 24px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      color: #2C251E;
+      width: 100%;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .form-field:focus {
+      border-color: #BD8F36;
+      box-shadow: 0 0 0 3px rgba(189,143,54,0.08);
+    }
+
+    #mobile-menu {
+      transition: max-height 0.4s ease-in-out, opacity 0.3s ease;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+    }
+    #mobile-menu.open {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    .hex-bg {
+      clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+      background: linear-gradient(135deg, rgba(189,143,54,0.08) 0%, rgba(107,122,97,0.1) 100%);
+    }
+
+    .dot-pattern {
+      background-image: radial-gradient(circle, rgba(189,143,54,0.12) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .testimonial-line {
+      border-left: 1px solid #BD8F36;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #735F43 0%, #BD8F36 60%, #6B7A61 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lang-btn {
+      transition: all 0.3s ease;
+      opacity: 0.4;
+      cursor: pointer;
+    }
+    .lang-btn.active {
+      opacity: 1;
+      font-weight: 600;
+      color: #BD8F36;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    #back-to-top {
+      z-index: 998;
+    }
+
+    /* 60FPS Hardware GPU Acceleration & Smooth Floating Micro-interactions */
+    .card-lift {
+      will-change: transform, opacity;
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .card-lift:hover {
+      transform: translate3d(0, -8px, 0);
+      box-shadow: 0 24px 48px rgba(189, 143, 54, 0.12);
+    }
+
+    @keyframes smoothFloatY {
+      0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50% { transform: translate3d(0, -6px, 0) rotate(0.5deg); }
+      100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    }
+
+    @keyframes smoothFloatYInverse {
+      0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50% { transform: translate3d(0, -4px, 0) rotate(-0.5deg); }
+      100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    }
+
+    /* Assign fine-tuned asymmetric delay animations to shop & testimonial cards */
+    #productos .card-lift:nth-child(1) { animation: smoothFloatY 7s ease-in-out infinite; }
+    #productos .card-lift:nth-child(2) { animation: smoothFloatYInverse 8s ease-in-out infinite; animation-delay: 1.5s; }
+    #productos .card-lift:nth-child(3) { animation: smoothFloatY 7.5s ease-in-out infinite; animation-delay: 0.7s; }
+    #productos .card-lift:nth-child(4) { animation: smoothFloatYInverse 8.5s ease-in-out infinite; animation-delay: 2.2s; }
+
+    /* For dynamic or generated review cards */
+    #contenedor-opiniones > div:nth-child(3n+1) { animation: smoothFloatY 7.2s ease-in-out infinite; }
+    #contenedor-opiniones > div:nth-child(3n+2) { animation: smoothFloatYInverse 7.8s ease-in-out infinite; animation-delay: 1.2s; }
+    #contenedor-opiniones > div:nth-child(3n+3) { animation: smoothFloatY 8.3s ease-in-out infinite; animation-delay: 2s; }
+
+    /* Pause floating on hover to let the elegant elevation take focus natively */
+    .card-lift:hover {
+      animation-play-state: paused !important;
+    }
+
+    /* GPU rendering enhancements across animations */
+    .reveal, .nav-link::after, .btn-honey, .btn-ghost, #back-to-top, #mobile-menu {
+      will-change: transform, opacity;
+    }
+
+    /* ── Ombres portées & relief ── */
+
+    /* Logo : transparence totale, aucune bordure ni ombre parasite */
+    .logo-img {
+      background: transparent !important;
+      background-color: rgba(0,0,0,0) !important;
+      border: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+      display: block;
+    }
+    /* Conteneur du logo : forcer le fond transparent également */
+    a .logo-img,
+    a:hover .logo-img {
+      background: transparent !important;
+    }
+
+    /* Cards produits : une seule définition d'ombre, propre et cohérente */
+    #productos .card-lift {
+      box-shadow: 0 4px 18px rgba(44,37,30,0.06), 0 1px 4px rgba(44,37,30,0.03);
+    }
+    #productos .card-lift:hover {
+      box-shadow: 0 16px 40px rgba(189,143,54,0.13), 0 4px 12px rgba(44,37,30,0.05);
+    }
+
+    /* Section sobre-mi : pas de shadow CSS additionnel, Tailwind shadow-md suffit */
+
+    /* Boutons principaux */
+    .btn-honey {
+      box-shadow: 0 4px 18px rgba(189,143,54,0.22), 0 1px 4px rgba(189,143,54,0.10) !important;
+    }
+    .btn-honey:hover {
+      box-shadow: 0 10px 28px rgba(189,143,54,0.32), 0 2px 8px rgba(189,143,54,0.14) !important;
+    }
+
+    /* Formulaire de réservation */
+    #agenda .reveal {
+      box-shadow: 0 6px 32px rgba(44,37,30,0.07), 0 1px 6px rgba(44,37,30,0.03);
+    }
+
+    /* Bandeau paiement */
+    .payment-banner {
+      box-shadow: 0 3px 18px rgba(189,143,54,0.09), 0 1px 4px rgba(44,37,30,0.03);
+    }
+  </style>
+</head>
+<body class="noise antialiased">
+
+  <div id="preloader">
+    <div class="preloader-bar-bg">
+      <div id="preloader-bar" class="preloader-bar-fill"></div>
+    </div>
+    <p id="preloader-text" data-i18n="preloaderText" class="font-body text-xs tracking-[0.2em] text-white/60 uppercase font-light">Preparando tu experience Apiterapia...</p>
+  </div>
+
+  <button id="back-to-top" class="fixed bottom-[104px] md:bottom-[104px] right-5 w-10 h-10 rounded-full bg-cream/90 text-ink border border-beige/60 shadow-lg flex items-center justify-center backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2" aria-label="Volver arriba">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <a href="https://wa.me/56939047200" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.948 0c3.173.001 6.154 1.24 8.395 3.486 2.242 2.246 3.479 5.23 3.474 8.403-.01 6.547-5.347 11.896-11.901 11.896-2.003-.001-3.97-.506-5.718-1.472L0 24zm6.59-4.846c1.6.95 3.397 1.453 5.24 1.454h.005c5.444 0 9.877-4.437 9.885-9.885.004-2.639-1.02-5.122-2.883-6.989-1.864-1.868-4.346-2.894-6.994-2.895-5.45 0-9.884 4.437-9.892 9.885-.001 1.815.474 3.591 1.378 5.167L2.247 21.91l4.4-1.156zM16.92 14.84c-.27-.135-1.593-.787-1.84-.876-.246-.09-.425-.135-.604.135-.18.27-.696.876-.853 1.057-.157.18-.313.202-.583.067-.27-.135-1.14-.42-2.172-1.34-1.03-.92-1.727-2.056-1.93-2.326-.2-.27-.022-.416.113-.55.12-.12.27-.315.405-.473.134-.157.18-.27.27-.45.09-.18.044-.337-.022-.472-.067-.135-.604-1.455-.827-1.996-.217-.523-.44-.452-.604-.461-.157-.008-.337-.01-.517-.01-.18 0-.473.067-.72.337-.246.27-.94.92-.94 2.24 0 1.32.96 2.59 1.093 2.77.135.18 1.89 2.886 4.578 4.05 1.58.686 2.19.743 2.97.625.503-.075 1.593-.65 1.82-1.276.226-.625.226-1.16.157-1.276-.068-.115-.247-.18-.517-.315z"/>
+    </svg>
+  </a>
+
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#FDFBF7] border-b border-beige/40 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="flex items-center justify-between h-20">
+        
+        <a href="#hero" class="flex items-center gap-3 group">
+          <img src="../static/abeilles_Pictures/logo_website.png" alt="Apiterapia logo" class="logo-img h-20 w-20 object-contain transition-transform duration-500 group-hover:scale-110">
+          <div>
+            <p class="font-display text-xl font-medium tracking-wide text-ink" data-i18n="footerApiterapia">Apiterapia</p>
+            <p class="text-[9px] tracking-[0.25em] uppercase text-honey font-semibold" id="logo-sub" data-i18n="logoSub">con Vero</p>
+          </div>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <nav>
+            <ul class="flex items-center gap-8">
+              <li><a href="#sobre-mi" class="nav-link font-body text-xs uppercase tracking-widest text-ink/80 hover:text-ink font-medium transition-colors" data-i18n="navAbout">Sobre mí</a></li>
+              <li><a href="#agenda" class="nav-link font-body text-xs uppercase tracking-widest text-ink/80 hover:text-ink font-medium transition-colors" data-i18n="navSchedule">Agenda</a></li>
+              <li><a href="#productos" class="nav-link font-body text-xs uppercase tracking-widest text-ink/80 hover:text-ink font-medium transition-colors" data-i18n="navProducts">Productos</a></li>
+              <li><a href="#opiniones" class="nav-link font-body text-xs uppercase tracking-widest text-ink/80 hover:text-ink font-medium transition-colors" data-i18n="navReviews">Opiniones</a></li>
+            </ul>
+          </nav>
+          
+          <div class="h-4 w-px bg-beige"></div>
+
+          <div class="flex items-center gap-2 text-[11px] font-body tracking-wider text-ink font-medium lang-switcher">
+            <button data-lang="es" class="lang-btn active focus:outline-none">ES</button>
+            <span class="opacity-30">/</span>
+            <button data-lang="en" class="lang-btn focus:outline-none">EN</button>
+          </div>
+
+          <a href="https://wa.me/56939047200" target="_blank" class="btn-honey text-white text-[11px] font-medium px-6 py-3 rounded-md font-body tracking-widest uppercase" data-i18n="navCta">
+            WhatsApp
+          </a>
+        </div>
+
+        <div class="flex md:hidden items-center gap-4">
+          <div class="flex items-center gap-2 text-[11px] font-body text-ink mr-1 font-medium lang-switcher">
+            <button data-lang="es" class="lang-btn active">ES</button>
+            <span class="opacity-30">/</span>
+            <button data-lang="en" class="lang-btn">EN</button>
+          </div>
+          <button onclick="toggleMenu()" class="text-ink focus:outline-none" aria-label="Menu">
+            <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="md:hidden bg-cream border-t border-beige/40">
+      <ul class="px-6 py-6 space-y-4 font-body text-xs uppercase tracking-widest text-ink font-medium">
+        <li><a href="#sobre-mi" onclick="toggleMenu()" class="block py-1 opacity-90" data-i18n="navAbout">Sobre mí</a></li>
+        <li><a href="#agenda" onclick="toggleMenu()" class="block py-1 opacity-90" data-i18n="navSchedule">Agenda</a></li>
+        <li><a href="#productos" onclick="toggleMenu()" class="block py-1 opacity-90" data-i18n="navProducts">Productos</a></li>
+        <li><a href="#opiniones" onclick="toggleMenu()" class="block py-1 opacity-90" data-i18n="navReviews">Opiniones</a></li>
+        <li class="pt-2">
+          <a href="https://wa.me/56939047200" target="_blank" class="btn-honey text-white text-center block py-3 rounded-md font-medium tracking-widest" data-i18n="navCta">
+            WhatsApp
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <div class="absolute inset-0 z-0 bg-ink">
+      <img src="../static/abeilles_Pictures/Hyves.jpg" alt="Ruches et colmenas Apiterapia" class="w-full h-full object-cover opacity-45 hero-img transform scale-105">
+      <div class="absolute inset-0 hero-overlay"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center text-white space-y-6 md:space-y-8 py-12 md:py-20">
+      <div class="flex justify-center items-center gap-3 reveal">
+        <span class="w-6 h-px bg-honey"></span>
+        <span class="font-body text-[10px] md:text-xs tracking-[0.3em] uppercase text-honey-light font-medium" data-i18n="heroTag">Medicina Natural & Bienestar Exclusivo</span>
+        <span class="w-6 h-px bg-honey"></span>
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-wide leading-[1.1] reveal reveal-delay-1" data-i18n-html="heroTitle">
+        Apiterapia y Bienestar<br><em class='font-display italic font-normal text-honey-light'>en San Esteban</em>
+      </h1>
+
+      <div class="max-w-3xl mx-auto font-body text-sm sm:text-base leading-relaxed text-white/85 font-light space-y-4 text-justify md:text-center reveal reveal-delay-2" data-i18n-html="heroSubtitle">
+        <p>La apiterapia es un enfoque natural, ancestral y holístico que utiliza los amplios benefits de los elementos de la colmena para promover el bienestar y acompañar ciertos dolores crónicos.</p>
+        <p>Ofrezco sesiones personalizadas basadas principalmente en el uso del veneno de abeja, tradicionalmente reconocido por ayudar a aliviar dolores musculares y articulares.</p>
+        <p>El acompañamiento también incluye productos naturales de la colmena, como cremas, cuidados y preparaciones a base de miel, cera, propóleo u otros activos naturales seleccionados por sus propiedades beneficiosas.</p>
+        <p>Cada sesión se realiza con un enfoque humano, respetuoso y centrado en el bienestar integral de la persona.</p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4 reveal reveal-delay-3">
+        <a href="#agenda" class="btn-honey w-full sm:w-auto text-white text-xs font-medium tracking-widest uppercase px-8 py-4 rounded-md" data-i18n="heroBtnPrimary">
+          Agendar Sesión
+        </a>
+        <a href="#sobre-mi" class="btn-ghost w-full sm:w-auto text-xs font-medium tracking-widest uppercase px-8 py-4 rounded-md" data-i18n="heroBtnSecondary">
+          Descubrir Más
+        </a>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 animate-bounce cursor-pointer z-10" onclick="document.getElementById('sobre-mi').scrollIntoView({behavior:'smooth'})">
+      <span class="text-[9px] tracking-[0.25em] uppercase text-white font-body" data-i18n="heroScroll">Scroll</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-honey" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </div>
+  </section>
+
+  <section id="sobre-mi" class="py-24 bg-cream relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 dot-pattern opacity-40"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      
+      <div class="lg:col-span-6 flex justify-center lg:block">
+        <div class="relative z-10 w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-none aspect-[4/5] rounded-2xl overflow-hidden bg-cream reveal">
+          <img src="../static/abeilles_Pictures/ruche.jpg" alt="Ruche naturelle Apiterapia" class="w-full h-full object-cover transition-transform duration-700 hover:scale-102">
+        </div>
+        <div class="absolute -bottom-3 -right-3 w-36 h-36 sm:w-48 sm:h-48 rounded-xl bg-cream z-0 opacity-60 hidden sm:block"></div>
+        <div class="absolute -top-3 -left-3 w-16 h-16 sm:w-20 sm:h-20 hex-bg z-0 hidden sm:block"></div>
+      </div>
+
+      <div class="lg:col-span-6">
+        <div class="flex items-center gap-3 mb-4 reveal">
+          <span class="font-body text-honey text-xs tracking-widest uppercase font-medium" data-i18n="aboutTag">El Origen del Bienestar</span>
+        </div>
+        <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-light text-ink tracking-wide leading-tight mb-6 reveal reveal-delay-1" data-i18n-html="aboutTitle">
+          Sanación milenaria con <br><em class='gradient-text not-italic font-normal'>la sabiduría de la colmena</em>
+        </h2>
+        <div class="font-body text-sm md:text-base text-bark font-light space-y-4 leading-relaxed reveal reveal-delay-2" data-i18n-html="aboutParagraphs">
+          <p>Guiada por una vocación profunda hacia los cuidados naturales, ofrezco un espacio seguro y sereno para reconectar con tu bienestar. La apiterapia es un arte sanador milenario, valorado desde el Antiguo Egipto y la Grecia clásica, que hoy pongo a tu disposición para revitalizar tu salud integral.</p><p>Durante nuestras sesiones, realizo un abordaje profesional y holístico. Utilizo con máxima delicadeza el aguijón de la abeja, un recurso natural extraordinario, aplicándolo estratégicamente en las zonas exactas de tensión. Esta técnica, lejos de inspirar temor, es un puente directo hacia el alivio profundo de dolores musculares y articulares, estimulando la propia capacidad regenerativa de tu cuerpo.</p><p>Para complementar este cuidado, integro los tesoros más puros de la colmena: propóleos protectores y ungüentos. Mi propósito es acompañarte con amor, paciencia y absoluto respeto, brindándote una experiencia sanadora de primer nivel.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="agenda" class="py-24 bg-cream relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      
+      <div class="text-center max-w-xl mx-auto mb-16">
+        <span class="font-body text-olive text-xs tracking-widest uppercase font-medium mb-3 inline-block" data-i18n="bookTag">Reserva en Línea</span>
+        <h2 class="font-display text-3xl md:text-4xl font-light text-ink tracking-wide mb-4" data-i18n="bookTitle">Planifica tu consulta</h2>
+        <p class="font-body text-xs md:text-sm text-bark font-light leading-relaxed" data-i18n="bookSubtitle">Completa tus datos y obtendrás el formato inmediato para confirmar tu hora con Vero por WhatsApp.</p>
+      </div>
+
+      <div class="bg-cream rounded-2xl border border-beige/60 p-8 md:p-12 shadow-sm relative reveal">
+        <form id="booking-form" class="space-y-6" onsubmit="handleBookingSubmit(event)">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-body text-[11px] text-bark tracking-wider uppercase mb-2 font-medium pl-2" data-i18n="lblName">Nombre Completo</label>
+              <input id="f-nombre" type="text" data-i18n-placeholder="placeholderName" placeholder="Ej. Ana María" class="form-field">
+            </div>
+            <div>
+              <label class="block font-body text-[11px] text-bark tracking-wider uppercase mb-2 font-medium pl-2" data-i18n="lblPhone">WhatsApp / Teléfono</label>
+              <input id="f-telefono" type="tel" data-i18n-placeholder="placeholderPhone" placeholder="Ej. +56912345678" class="form-field">
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-body text-[11px] text-bark tracking-wider uppercase mb-2 font-medium pl-2" data-i18n="lblDate">Fecha deseada</label>
+              <input id="f-fecha" type="date" class="form-field" onchange="handleDateChange()">
+            </div>
+            <div>
+              <label class="block font-body text-[11px] text-bark tracking-wider uppercase mb-2 font-medium pl-2" data-i18n="lblTime">Horario preferido</label>
+              <div class="relative">
+                <select id="f-hora" class="form-field appearance-none cursor-pointer">
+                  <option value="" data-i18n="optSelect">Seleccionar</option>
+                  <option value="09:00">09:00 hrs</option>
+                  <option value="10:00">10:00 hrs</option>
+                  <option value="11:00">11:00 hrs</option>
+                  <option value="12:00">12:00 hrs</option>
+                  <option value="13:00">13:00 hrs</option>
+                  <option value="15:00">15:00 hrs</option>
+                  <option value="16:00">16:00 hrs</option>
+                  <option value="17:00">17:00 hrs</option>
+                  <option value="18:00">18:00 hrs</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-bark/60">
+                  <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-body text-[11px] text-bark tracking-wider uppercase mb-2 font-medium pl-2" data-i18n="lblComment">Comentarios Adicionales</label>
+            <textarea id="f-comentario" rows="3" data-i18n-placeholder="placeholderComment" placeholder="Indica si tienes alguna condición o dolor específico..." class="form-field rounded-2xl resize-none py-3"></textarea>
+          </div>
+
+          <div id="form-error" data-i18n="formError" class="hidden text-red-600 font-body text-xs text-center bg-red-50 py-3 px-4 rounded-full border border-red-100 transition-all duration-300">
+            Por favor completa todos los campos requeridos correctamente.
+          </div>
+          <div id="form-duplicate-error" data-i18n="formDuplicateError" class="hidden text-red-600 font-body text-xs text-center bg-red-50 py-3 px-4 rounded-full border border-red-100 transition-all duration-300">
+            Este horario ya se encuentra reservado. Por favor selecciona otro horario.
+          </div>
+          <div id="form-past-error" data-i18n="formPastError" class="hidden text-red-600 font-body text-xs text-center bg-red-50 py-3 px-4 rounded-full border border-red-100 transition-all duration-300">
+            No puedes reservar una hora anterior a la hora actual.
+          </div>
+
+          <div class="text-center pt-2 space-y-3">
+            <button type="submit" id="btn-submit" data-i18n="btnSubmit" class="btn-honey text-white text-xs font-semibold tracking-widest uppercase px-10 py-4 rounded-full w-full sm:w-auto">
+              Confirmar Reserva
+            </button>
+            <p data-i18n="bookingRedirectNote" class="text-xs md:text-sm text-bark/80 font-body block font-light tracking-wide">Será redirigido automáticamente a WhatsApp para finalizar la confirmación de su cita.</p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="productos" class="py-24 bg-cream border-t border-b border-beige/30 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div>
+          <span class="font-body text-honey text-xs tracking-widest uppercase font-medium mb-3 block" data-i18n="productsTag">La Tienda de la Colmena</span>
+          <h2 class="font-display text-3xl md:text-4xl font-light text-ink tracking-wide" data-i18n="productsTitle">Cuidado 100% natural</h2>
+        </div>
+        <p class="font-body text-xs md:text-sm text-bark/90 font-light max-w-md md:text-right leading-relaxed" data-i18n="productsSubtitle">Lleva los grandes beneficios terapéuticos y regeneradores de la apiterapia a tu rutina diaria en casa.</p>
+      </div>
+
+      <!-- ── Bannière paiement en mains propres ── -->
+      <div class="payment-banner mb-10 rounded-2xl border border-honey/25 bg-gradient-to-r from-honey/6 via-offwhite to-honey/6 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-5 reveal">
+        <div class="flex items-start sm:items-center gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-honey/10 border border-honey/20 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-honey" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-body text-sm font-semibold text-ink tracking-wide leading-snug" data-i18n="bannerPaymentTitle">Venta y pago únicamente en persona</p>
+            <p class="font-body text-xs text-bark/90 font-light mt-0.5" data-i18n="bannerPaymentSub">Pago en efectivo o transferencia bancaria al momento de la entrega.</p>
+          </div>
+        </div>
+        <div class="flex-shrink-0 flex items-center gap-2 bg-honey/10 border border-honey/30 rounded-full px-5 py-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-honey" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+          </svg>
+          <span class="font-body text-[11px] font-semibold text-honey tracking-widest uppercase" data-i18n="bannerComingSoon">Ventas en línea próximamente</span>
+        </div>
+      </div>
+
+      <div class="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto pb-8 pt-2 md:pb-0 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
+
+        <!-- Carte 1 : mix_of_product (anciennement carte 2 — INVERSÉ) -->
+        <div class="min-w-[270px] sm:min-w-[290px] md:min-w-0 snap-center group bg-cream rounded-xl overflow-hidden border border-beige/50 card-lift reveal p-3 md:p-0 flex flex-col justify-between">
+          <div class="aspect-[3/4] rounded-lg md:rounded-none overflow-hidden bg-offwhite relative max-w-[220px] md:max-w-none mx-auto w-full">
+            <img src="../static/abeilles_Pictures/mix_of_product.jpg" alt="Mix produits naturels colmena" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103">
+          </div>
+          <div class="p-4 md:p-6 text-center md:text-left flex-grow flex flex-col">
+            <span class="inline-block text-[9px] font-body font-semibold text-honey bg-honey/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p2Badge">Combo</span>
+            <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p2Title">El Combo Completo</h3>
+            <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p2Desc">Una selección de los mejores productos de la colmena: miel, propóleo y cuidados naturales para una rutina completa.</p>
+          </div>
+        </div>
+
+        <!-- Carte 2 : miel (anciennement carte 1 — INVERSÉ) -->
+        <div class="min-w-[270px] sm:min-w-[290px] md:min-w-0 snap-center group bg-cream rounded-xl overflow-hidden border border-beige/50 card-lift reveal reveal-delay-1 p-3 md:p-0 flex flex-col justify-between">
+          <div class="aspect-[3/4] rounded-lg md:rounded-none overflow-hidden bg-offwhite relative max-w-[220px] md:max-w-none mx-auto w-full">
+            <img src="../static/abeilles_Pictures/miel.jpg" alt="Miel natural Apiterapia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103">
+          </div>
+          <div class="p-4 md:p-6 text-center md:text-left flex-grow flex flex-col">
+            <span class="inline-block text-[9px] font-body font-semibold text-olive bg-olive/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p1Badge">Producto estrella</span>
+            <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p1Title">Miel natural</h3>
+            <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p1Desc">Miel pura y de origen natural, ideal para fortalecer el organismo y disfrutar de sus grandes propiedades.</p>
+          </div>
+        </div>
+
+        <!-- Carte 3 -->
+        <div class="min-w-[270px] sm:min-w-[290px] md:min-w-0 snap-center group bg-cream rounded-xl overflow-hidden border border-beige/50 card-lift reveal reveal-delay-2 p-3 md:p-0 flex flex-col justify-between">
+          <div class="aspect-[3/4] rounded-lg md:rounded-none overflow-hidden bg-offwhite relative max-w-[220px] md:max-w-none mx-auto w-full">
+            <img src="../static/abeilles_Pictures/IMG-20260516-WA0015.jpg" alt="Crema de veneno de abeja Apiterapia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103">
+          </div>
+          <div class="p-4 md:p-6 text-center md:text-left flex-grow flex flex-col">
+            <span class="inline-block text-[9px] font-body font-semibold text-olive bg-olive/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p3Badge">Alivio focalizado</span>
+            <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p3Title">Crema de Veneno</h3>
+            <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p3Desc">Fórmula calmante natural enriquecida, diseñada para masajes reconfortantes en articulaciones y músculos.</p>
+          </div>
+        </div>
+
+        <!-- Carte 4 -->
+        <div class="min-w-[270px] sm:min-w-[290px] md:min-w-0 snap-center group bg-cream rounded-xl overflow-hidden border border-beige/50 card-lift reveal reveal-delay-3 p-3 md:p-0 flex flex-col justify-between">
+          <div class="aspect-[3/4] rounded-lg md:rounded-none overflow-hidden bg-offwhite relative max-w-[220px] md:max-w-none mx-auto w-full">
+            <img src="../static/abeilles_Pictures/IMG-20260516-WA0018.jpg" alt="Jalea real pura colmena Apiterapia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103">
+          </div>
+          <div class="p-4 md:p-6 text-center md:text-left flex-grow flex flex-col">
+            <span class="inline-block text-[9px] font-body font-semibold text-honey bg-honey/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p4Badge">Premium</span>
+            <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p4Title">Jalea Real</h3>
+            <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p4Desc">El elixir exclusivo de la reina colmena, ideal para revitalizar cuerpo, mente y potenciar vitalidad.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="opiniones" class="py-24 bg-ink text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+      
+      <div class="text-center max-w-xl mx-auto mb-16">
+        <span class="font-body text-honey text-xs tracking-widest uppercase font-medium mb-3 block" data-i18n="reviewsTag">Testimonios Reales</span>
+        <h2 class="font-display text-3xl md:text-4xl font-light tracking-wide mb-4" data-i18n="reviewsTitle">Experiencias de bienestar</h2>
+        <div class="flex justify-center items-center gap-2 mt-2 font-body text-xs text-white/70">
+          <span class="stars text-sm">★★★★★</span>
+          <span class="font-medium text-white" id="global-rating-value">5.0</span>
+          <span class="opacity-60">/ 5.0 base en pacientes</span>
+        </div>
+      </div>
+
+      <div id="contenedor-opiniones" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        </div>
+
+      <div class="bg-[#FDFBF7]/5 rounded-2xl border border-white/10 p-8 md:p-12 max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+          <h3 class="font-display text-xl font-light mb-2" data-i18n="addReviewTitle">Comparte tu experiencia</h3>
+          <p class="font-body text-xs text-white/60" data-i18n="addReviewSubtitle">Tu testimonio ayuda a que más personas descubran los beneficios sanadores de la colmena de forma segura.</p>
+        </div>
+
+        <form id="opinion-form" class="space-y-4" onsubmit="handleOpinionSubmit(event)">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input id="r-nombre" type="text" data-i18n-placeholder="placeholderReviewName" placeholder="Tu nombre" class="form-field !bg-white/5 !border-white/10 !text-white focus:!border-honey outline-none" required>
+            <div class="relative">
+              <select id="r-rating" class="form-field !bg-white/5 !border-white/10 !text-white focus:!border-honey outline-none appearance-none cursor-pointer" required>
+                <option value="5" class="text-ink">★★★★★ Excelente</option>
+                <option value="4" class="text-ink">★★★★☆ Muy Bueno</option>
+                <option value="3" class="text-ink">★★★☆☆ Bueno</option>
+                <option value="2" class="text-ink">★★☆☆☆ Regular</option>
+                <option value="1" class="text-ink">★☆☆☆☆ Mejorable</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-white/40">
+                <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <textarea id="r-comentario" rows="3" data-i18n-placeholder="placeholderReviewText" placeholder="Escribe tu reseña aquí..." class="form-field rounded-2xl !bg-white/5 !border-white/10 !text-white focus:!border-honey outline-none resize-none py-3" required></textarea>
+          
+          <div class="text-center pt-2">
+            <button type="submit" data-i18n="btnReviewSubmit" class="btn-honey text-white text-xs font-medium tracking-widest uppercase px-8 py-3.5 rounded-full w-full sm:w-auto">
+              Publicar Opinión
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="bg-cream border-t border-beige/50 py-16 text-ink relative z-10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-12 gap-12 items-center">
+      
+      <div class="md:col-span-4 flex flex-col items-center md:items-start space-y-4 text-center md:text-left">
+        <a href="#hero" class="flex items-center gap-4">
+          <img src="../static/abeilles_Pictures/logo_website.png" alt="Apiterapia logo" class="logo-img h-24 w-24 object-contain">
+          <span class="font-display text-2xl font-medium tracking-wide" data-i18n="footerApiterapia">Apiterapia</span>
+        </a>
+        <p class="font-body text-sm text-bark/90 leading-relaxed font-light" data-i18n="footerTagline">Bienestar natural y armonía para tu vida.</p>
+      </div>
+
+      <div class="md:col-span-4 text-center space-y-2">
+        <p class="font-body text-[11px] tracking-widest uppercase text-bark font-semibold" data-i18n="footerContactTitle">Contacto & Ubicación</p>
+        <p class="font-body text-xs text-bark/90 font-light" data-i18n="footerLocation">San Esteban, Región de Valparaíso, Chile</p>
+        <p class="font-body text-xs font-medium"><a href="https://wa.me/56939047200" target="_blank" class="text-honey hover:underline font-medium">+56 9 3904 7200</a></p>
+      </div>
+
+      <div class="md:col-span-4 flex flex-col items-center md:items-end text-center md:text-right space-y-4">
+        <div class="flex justify-center gap-6 text-[11px] tracking-wider uppercase text-ink/80 font-semibold">
+          <a href="#sobre-mi" class="hover:text-honey transition-colors" data-i18n="navAbout">Sobre mí</a>
+          <a href="#agenda" class="hover:text-honey transition-colors" data-i18n="navSchedule">Agenda</a>
+          <a href="#productos" class="hover:text-honey transition-colors" data-i18n="navProducts">Productos</a>
+        </div>
+        <p class="font-body text-xs text-bark/70 font-light">&copy; 2026 Apiterapia con Vero. Todos los derechos reservados.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      es: {
+        preloaderText: "Preparando tu experiencia Apiterapia...",
+        logoSub: "con Vero",
+        navAbout: "Sobre mí",
+        navSchedule: "Agenda",
+        navProducts: "Productos",
+        navReviews: "Opiniones",
+        navCta: "WhatsApp",
+        heroTag: "Medicina Natural & Bienestar Exclusivo",
+        heroTitle: "Apiterapia y Bienestar<br><em class='font-display italic font-normal text-honey-light'>en San Esteban</em>",
+        heroSubtitle: "<p>La apiterapia es un enfoque natural, ancestral y holístico que utiliza los amplios benefits de los elementos de la colmena para promover el bienestar y acompañar ciertos dolores crónicos.</p><p>Ofrezco sesiones personalizadas basadas principalmente en el uso del veneno de abeja, tradicionalmente reconocido por ayudar a aliviar dolores musculares y articulares.</p><p>El acompañamiento también incluye productos naturales de la colmena, como cremas, cuidados y preparaciones a base de miel, cera, propóleo u otros activos naturales seleccionados por sus propiedades beneficiosas.</p><p>Cada sesión se realiza con un enfoque humano, respetuoso y centrado en el bienestar integral de la persona.</p>",
+        heroBtnPrimary: "Agendar Sesión",
+        heroBtnSecondary: "Descubrir Más",
+        heroScroll: "Scroll",
+        aboutTag: "El Origen del Bienestar",
+        aboutTitle: "Sanación milenaria con <br><em class='gradient-text not-italic font-normal'>la sabiduría de la colmena</em>",
+        aboutParagraphs: "<p>Guiada por una vocación profunda hacia los cuidados naturales, ofrezco un espacio seguro y sereno para reconectar con tu bienestar. La apiterapia es un arte sanador milenario, valorado desde el Antiguo Egipto y la Grecia clásica, que hoy pongo a tu disposición para revitalizar tu salud integral.</p><p>Durante nuestras sesiones, realizo un abordaje profesional y holístico. Utilizo con máxima delicadeza el aguijón de la abeja, un recurso natural extraordinario, aplicándolo estratégicamente en las zonas exactas de tensión. Esta técnica, lejos de inspirar temor, es un puente directo hacia el alivio profundo de dolores musculares y articulares, estimulando la propia capacidad regenerativa de tu cuerpo.</p><p>Para complementar este cuidado, integro los tesoros más puros de la colmena: propóleos protectores y ungüentos. Mi propósito es acompañarte con amor, paciencia y absoluto respeto, brindándote una experiencia sanadora de primer nivel.</p>",
+        bookTag: "Reserva en Línea",
+        bookTitle: "Planifica tu consulta",
+        bookSubtitle: "Completa tus datos y obtendrás el formato inmediato para confirmar tu hora con Vero por WhatsApp.",
+        lblName: "Nombre Completo",
+        placeholderName: "Ej. Ana María",
+        lblPhone: "WhatsApp / Teléfono",
+        placeholderPhone: "Ej. +56912345678",
+        lblDate: "Fecha deseada",
+        lblTime: "Horario preferido",
+        optSelect: "Seleccionar",
+        lblComment: "Comentarios Adicionales",
+        placeholderComment: "Indica si tienes alguna condición o dolor específico...",
+        btnSubmit: "Confirmar Reserva",
+        bookingRedirectNote: "Será redirigido automáticamente a WhatsApp para finalizar la confirmación de su cita.",
+        formError: "Por favor completa todos los campos requeridos correctamente.",
+        formDuplicateError: "Este horario ya se encuentra reservado. Por favor selecciona otro horario.",
+        formPastError: "No puedes reservar una hora anterior a la hora actual.",
+        productsTag: "La Tienda de la Colmena",
+        productsTitle: "Cuidado 100% natural",
+        productsSubtitle: "Lleva los grandes beneficios terapéuticos y regeneradores de la apiterapia a tu rutina diaria en casa.",
+        p1Badge: "Producto estrella",
+        p1Title: "Miel natural",
+        p1Desc: "Miel pura y de origen natural, ideal para fortalecer el organism y disfrutar de sus grandes propiedades.",
+        p1Cta: "Consultar disponibilidad",
+        p2Badge: "Combo",
+        p2Title: "El Combo Completo",
+        p2Desc: "Una selección de los mejores productos de la colmena: miel, propóleo y cuidados naturales para una rutina completa.",
+        p2Cta: "Consultar disponibilidad",
+        p3Badge: "Alivio focalizado",
+        p3Title: "Crema de Veneno",
+        p3Desc: "Fórmula calmante natural enriquecida, diseñada para masajes reconfortantes en articulaciones y músculos.",
+        p3Cta: "Consultar disponibilidad",
+        p4Badge: "Premium",
+        p4Title: "Jalea Real",
+        p4Desc: "El elixir exclusivo de la reina colmena, ideal para revitalizar cuerpo, mente y potenciar vitalidad.",
+        p4Cta: "Consultar disponibilidad",
+        reviewsTag: "Testimonios Reales",
+        reviewsTitle: "Experiencias de bienestar",
+        addReviewTitle: "Comparte tu experiencia",
+        addReviewSubtitle: "Tu testimonio ayuda a que más personas descubran los beneficios sanadores de la colmena de forma segura.",
+        placeholderReviewName: "Tu nombre",
+        placeholderReviewText: "Escribe tu reseña aquí...",
+        btnReviewSubmit: "Publicar Opinión",
+        footerApiterapia: "Apiterapia",
+        footerTagline: "Bienestar natural y armonía para tu vida.",
+        footerContactTitle: "Contacto & Ubicación",
+        footerLocation: "San Esteban, Región de Valparaíso, Chile",
+        bannerPaymentTitle: "Venta y pago únicamente en persona",
+        bannerPaymentSub: "Pago en efectivo o transferencia bancaria al momento de la entrega.",
+        bannerComingSoon: "Ventas en línea próximamente",
+      },
+      en: {
+        preloaderText: "Preparing your Apiterapia experience...",
+        logoSub: "with Vero",
+        navAbout: "About Me",
+        navSchedule: "Schedule",
+        navProducts: "Products",
+        navReviews: "Reviews",
+        navCta: "WhatsApp",
+        heroTag: "Natural Medicine & Exclusive Well-being",
+        heroTitle: "Apiterapia & Holistic Health<br><em class='font-display italic font-normal text-honey-light'>in San Esteban</em>",
+        heroSubtitle: "<p>Apiterapia is a natural, ancestral, and holistic approach that utilizes the extensive therapeutic benefits of hive elements to promote well-being and soothe chronic pains.</p><p>I offer personalized sessions based primarily on the precise use of bee venom, traditionally recognized for supporting muscle and joint relief.</p><p>The accompaniment also integrates natural hive formulations, including targeted creams, care balms, and preparations made with raw honey, beeswax, propolis, or other naturally selected actives.</p><p>Every session is performed with a deeply human, respectful approach focused entirely on the person’s comprehensive well-being.</p>",
+        heroBtnPrimary: "Book Session",
+        heroBtnSecondary: "Discover More",
+        heroScroll: "Scroll",
+        aboutTag: "The Origin of Well-being",
+        aboutTitle: "Ancient healing through <br><em class='gradient-text not-italic font-normal'>the wisdom of the hive</em>",
+        aboutParagraphs: "<p>Guided by a deep calling for natural care, I offer a safe and serene space to reconnect with your well-being. Apitherapy is an ancient healing art, revered since Ancient Egypt and Classical Greece, which I now bring to you to consciously revitalize your holistic health.</p><p>During our sessions, I take a professional and comprehensive approach. I use the bee's sting with the utmost delicacy—an extraordinary natural resource—applying it strategically to precise zones of tension. This technique, far from being something to fear, acts as a direct pathway to profound relief for muscle and joint pain, awakening your body’s own regenerative capacity.</p><p>To complement this care, I integrate the purest treasures of the hive: protective propolis and ointments. My true purpose is to accompany you with love, patience, and absolute respect, providing a premium healing experience.</p>",
+        bookTag: "Online Booking",
+        bookTitle: "Plan your consultation",
+        bookSubtitle: "Fill in your details to immediately generate your pre-formatted confirmation message with Vero via WhatsApp.",
+        lblName: "Full Name",
+        placeholderName: "E.g. Ana María",
+        lblPhone: "WhatsApp / Phone",
+        placeholderPhone: "E.g. +56912345678",
+        lblDate: "Desired Date",
+        lblTime: "Preferred Time",
+        optSelect: "Select",
+        lblComment: "Additional Comments",
+        placeholderComment: "Indicate if you have any specific condition or localized pain...",
+        btnSubmit: "Confirm Booking",
+        bookingRedirectNote: "You will be automatically redirected to WhatsApp to finalize your appointment confirmation.",
+        formError: "Please fill in all required fields correctly.",
+        formDuplicateError: "This time slot is already booked. Please choose another time.",
+        formPastError: "You cannot book a time slot in the past.",
+        productsTag: "The Hive Boutique",
+        productsTitle: "100% Natural Care",
+        productsSubtitle: "Bring the incredible therapeutic and restorative benefits of apiterapia into your daily home routine.",
+        p1Badge: "Best seller",
+        p1Title: "Natural Honey",
+        p1Desc: "Pure, raw source honey, ideal for strengthening your body defenses and enjoying great organic properties.",
+        p1Cta: "Check Availability",
+        p2Badge: "Combo",
+        p2Title: "The Complete Bundle",
+        p2Desc: "A curated selection of the finest hive products: honey, propolis and natural care essentials for a complete wellness routine.",
+        p2Cta: "Check Availability",
+        p3Badge: "Targeted Relief",
+        p3Title: "Bee Venom Cream",
+        p3Desc: "Enriched natural soothing topical formula, designed for comforting muscle, back and joint massages.",
+        p3Cta: "Check Availability",
+        p4Badge: "Premium",
+        p4Title: "Royal Jelly",
+        p4Desc: "The exclusive elixir of the hive queen, perfect for revitalizing mind, body and boosting natural energy.",
+        p4Cta: "Check Availability",
+        reviewsTag: "Real Testimonials",
+        reviewsTitle: "Well-being Experiences",
+        addReviewTitle: "Share your experience",
+        addReviewSubtitle: "Your testimonial helps more people discover the healing benefits of the hive safely.",
+        placeholderReviewName: "Your name",
+        placeholderReviewText: "Write your review here...",
+        btnReviewSubmit: "Publish Review",
+        footerApiterapia: "Apiterapia",
+        footerTagline: "Natural well-being and harmony for your life.",
+        footerContactTitle: "Contact & Location",
+        footerLocation: "San Esteban, Valparaíso Region, Chile",
+        bannerPaymentTitle: "In-person sales & payment only",
+        bannerPaymentSub: "Payment by cash or bank transfer upon delivery.",
+        bannerComingSoon: "Online sales coming soon",
+      }
+    };
+
+    const avisParDefaut = [
+      { nombre: "María Loreto", rating: 5, es: "Las sesiones con la Vero me han cambiado la vida. El dolor crónico que tenía en la espalda baja disminuyó notablemente desde la primera sesión. Excelente profesional, muy empática.", en: "Sessions with Vero have completely changed my life. The chronic lower back pain I had decreased drastically right from the very first session. Excellent professional, deeply empathetic." },
+      { nombre: "Carlos S.", rating: 5, es: "Llegué por un dolor terrible en la rodilla que no me dejaba dormir. Sinceramente, después de la tercera sesión con Vero el alivio fue total. Increíble la atención y paciencia.", en: "I came because of an awful pain in my knee that kept me awake at night. Honestly, after the third session with Vero, the relief was massive. Incredible care and endless patience." },
+      { nombre: "Daniela M.", rating: 5, es: "La Vero atiende súper bien, se nota al tiro que le encanta lo que hace y tiene mucha buena energía. Los productos naturales que me recomendó para llevar a casa me han hecho súper bien.", en: "Vero gives outstanding care, you can instantly tell she absolutely loves what she does and brings such a pure energy. The natural remedies she suggested for home have done wonders." },
+      { nombre: "Felipe G.", rating: 5, es: "Al principio iba con un poco de nervios por las abejas, pero el ambiente es muy calmado y te explica todo con calma. Salí súper relajado y con el cuerpo mucho más liviano. Totalmente recomendado.", en: "I was a bit nervous about the bees at first, but the room is so peaceful and she explains every step quietly. Left feeling deeply relaxed and lighter overall. Highly recommended." }
+    ];
+
+    let currentLang = 'es';
+
+    function initLanguage() {
+      const storedLang = localStorage.getItem('lang');
+      if (storedLang && translations[storedLang]) {
+        currentLang = storedLang;
+      } else {
+        const browserLang = navigator.language || navigator.userLanguage;
+        currentLang = browserLang.startsWith('es') ? 'es' : 'en';
+      }
+      changeLang(currentLang);
+    }
+
+    function changeLang(lang) {
+      if (!translations[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+
+      const t = translations[lang];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+      });
+
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (t[key]) el.innerHTML = t[key];
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) el.setAttribute('placeholder', t[key]);
+      });
+
+      document.querySelectorAll('.lang-switcher').forEach(container => {
+        container.querySelectorAll('[data-lang]').forEach(btn => {
+          if (btn.getAttribute('data-lang') === lang) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      });
+
+      renderReviews();
+    }
+
+    document.querySelectorAll('.lang-switcher').forEach(container => {
+      container.querySelectorAll('[data-lang]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          changeLang(btn.getAttribute('data-lang'));
+        });
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+
+    (function() {
+      let progress = 0;
+      const bar = document.getElementById('preloader-bar');
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 15) + 5;
+        if (progress >= 100) {
+          progress = 100;
+          if (bar) bar.style.width = '100%';
+          clearInterval(interval);
+          setTimeout(() => {
+            const prel = document.getElementById('preloader');
+            if (prel) {
+              prel.style.opacity = '0';
+              prel.style.visibility = 'hidden';
+            }
+          }, 250);
+        } else {
+          if (bar) bar.style.width = progress + '%';
+        }
+      }, 20);
+    })();
+
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('menu-icon');
+      if (menu && icon) {
+        menu.classList.toggle('open');
+        if (menu.classList.contains('open')) {
+          icon.style.transform = 'rotate(90deg)';
+        } else {
+          icon.style.transform = 'rotate(0deg)';
+        }
+      }
+    }
+
+    function getBookedSlots() {
+      const stored = localStorage.getItem('apiterapia_booked_slots');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveBookedSlot(date, time) {
+      const slots = getBookedSlots();
+      slots.push({ date, time });
+      localStorage.setItem('apiterapia_booked_slots', JSON.stringify(slots));
+    }
+
+    function isSlotDuplicate(date, time) {
+      const slots = getBookedSlots();
+      return slots.some(slot => slot.date === date && slot.time === time);
+    }
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    function isSlotPast(date, timeString) {
+      if (!date || !timeString) return false;
+      const now = new Date();
+      const [year, month, day] = date.split('-').map(Number);
+      const [hours, minutes] = timeString.split(':').map(Number);
+      const targetDate = new Date(year, month - 1, day, hours, minutes, 0);
+      return targetDate < now;
+    }
+
+    function updateAvailableTimes() {
+      const dateInput = document.getElementById('f-fecha');
+      const timeSelect = document.getElementById('f-hora');
+      if (!dateInput || !timeSelect) return;
+
+      const selectedDate = dateInput.value;
+      const options = timeSelect.options;
+
+      for (let i = 0; i < options.length; i++) {
+        const opt = options[i];
+        if (opt.value === "") continue;
+
+        if (isSlotDuplicate(selectedDate, opt.value) || isSlotPast(selectedDate, opt.value)) {
+          opt.disabled = true;
+          opt.text = opt.value + " hrs (" + (currentLang === 'es' ? 'No disponible' : 'Unavailable') + ")";
+        } else {
+          opt.disabled = false;
+          opt.text = opt.value + " hrs";
+        }
+      }
+    }
+
+    function handleDateChange() {
+      updateAvailableTimes();
+    }
+
+    function handleBookingSubmit(event) {
+      event.preventDefault();
+      
+      const errEl = document.getElementById('form-error');
+      const dupEl = document.getElementById('form-duplicate-error');
+      const pastEl = document.getElementById('form-past-error');
+      
+      if (errEl) errEl.classList.add('hidden');
+      if (dupEl) dupEl.classList.add('hidden');
+      if (pastEl) pastEl.classList.add('hidden');
+
+      const nombre = document.getElementById('f-nombre').value.trim();
+      const telefono = document.getElementById('f-telefono').value.trim();
+      const fecha = document.getElementById('f-fecha').value;
+      const hora = document.getElementById('f-hora').value;
+      const comentario = document.getElementById('f-comentario').value.trim();
+
+      if (!nombre || !telefono || !fecha || !hora) {
+        if (errEl) errEl.classList.remove('hidden');
+        return;
+      }
+
+      if (isSlotPast(fecha, hora)) {
+        if (pastEl) pastEl.classList.remove('hidden');
+        return;
+      }
+
+      if (isSlotDuplicate(fecha, hora)) {
+        if (dupEl) dupEl.classList.remove('hidden');
+        return;
+      }
+
+      saveBookedSlot(fecha, hora);
+      updateAvailableTimes();
+
+      const text = currentLang === 'es' 
+        ? `Hola Vero, me gustaría agendar una sesión de Apiterapia.\n\n• *Nombre:* ${nombre}\n• *WhatsApp:* ${telefono}\n• *Fecha deseada:* ${fecha}\n• *Horario:* ${hora} hrs${comentario ? `\n• *Comentarios:* ${comentario}` : ''}`
+        : `Hello Vero, I would love to book an Apiterapia session.\n\n• *Name:* ${nombre}\n• *WhatsApp:* ${telefono}\n• *Desired Date:* ${fecha}\n• *Time slot:* ${hora} hrs${comentario ? `\n• *Comments:* ${comentario}` : ''}`;
+
+      const url = `https://wa.me/56939047200?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    function getCustomReviews() {
+      const stored = localStorage.getItem('apiterapia_user_reviews');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveCustomReview(review) {
+      const currentReviews = getCustomReviews();
+      currentReviews.push(review);
+      localStorage.setItem('apiterapia_user_reviews', JSON.stringify(currentReviews));
+    }
+
+    function calculateGlobalRating() {
+      const custom = getCustomReviews();
+      let totalRating = 0;
+      let totalCount = avisParDefaut.length + custom.length;
+
+      avisParDefaut.forEach(r => totalRating += r.rating);
+      custom.forEach(r => totalRating += r.rating);
+
+      const average = totalCount > 0 ? (totalRating / totalCount).toFixed(1) : "5.0";
+      const ratingEl = document.getElementById('global-rating-value');
+      if (ratingEl) ratingEl.textContent = average;
+    }
+
+    function handleOpinionSubmit(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('r-nombre').value.trim();
+      const rating = parseInt(document.getElementById('r-rating').value, 10);
+      const comentario = document.getElementById('r-comentario').value.trim();
+
+      if (!nombre || !comentario) return;
+
+      const newReview = { nombre, rating, es: comentario, en: comentario };
+      saveCustomReview(newReview);
+      
+      document.getElementById('opinion-form').reset();
+      renderReviews();
+    }
+
+    function renderReviews() {
+      const container = document.getElementById('contenedor-opiniones');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const custom = getCustomReviews();
+      // Copie avant reverse pour ne pas muter le tableau source, avis récents en premier
+      const listToRender = [...[...custom].reverse(), ...avisParDefaut];
+
+      listToRender.forEach((r, idx) => {
+        const text = currentLang === 'es' ? r.es : r.en;
+        const starsStr = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        
+        const card = document.createElement('div');
+        card.className = `bg-[#FDFBF7]/5 border border-white/10 rounded-xl p-6 md:p-8 testimonial-line card-lift reveal visible transition-all duration-300`;
+        card.innerHTML = `
+          <div class="flex flex-col h-full justify-between">
+            <div>
+              <div class="stars text-xs mb-4">${starsStr}</div>
+              <p class="font-body text-xs md:text-sm text-white/90 font-light leading-relaxed italic">"${text}"</p>
+            </div>
+            <div class="mt-6">
+              <p class="font-body text-[11px] tracking-widest uppercase font-semibold text-honey">${r.nombre}</p>
+              <p class="text-[9px] font-body text-white/40 tracking-wider uppercase">${currentLang === 'es' ? 'Paciente Verificado' : 'Verified Patient'}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      calculateGlobalRating();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initLanguage();
+
+      const dateInput = document.getElementById('f-fecha');
+      if (dateInput) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.min = `${yyyy}-${mm}-${dd}`;
+      }
+      
+      updateAvailableTimes();
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      setTimeout(() => {
+        const heroImg = document.querySelector('.hero-img');
+        if (heroImg) {
+          heroImg.style.transform = 'scale(1)';
+          heroImg.style.transition = 'transform 1.8s cubic-bezier(0.1, 1, 0.1, 1)';
+        }
+      }, 100);
+    });
+
+    const btt = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (btt) {
+        if (window.scrollY > 400) {
+          btt.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+          btt.classList.add('opacity-1', 'translate-y-0');
+        } else {
+          btt.classList.remove('opacity-1', 'translate-y-0');
+          btt.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+        }
+      }
+    }, { passive: true });
+
+    if (btt) {
+      btt.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  </script>
+</body>
+</html>
