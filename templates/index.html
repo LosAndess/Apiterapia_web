@@ -286,6 +286,9 @@
     #productos .card-lift:nth-child(2) { animation: smoothFloatYInverse 8s ease-in-out infinite; animation-delay: 1.5s; }
     #productos .card-lift:nth-child(3) { animation: smoothFloatY 7.5s ease-in-out infinite; animation-delay: 0.7s; }
     #productos .card-lift:nth-child(4) { animation: smoothFloatYInverse 8.5s ease-in-out infinite; animation-delay: 2.2s; }
+    #productos .card-lift:nth-child(5) { animation: smoothFloatY 7.2s ease-in-out infinite; animation-delay: 0.4s; }
+    #productos .card-lift:nth-child(6) { animation: smoothFloatYInverse 8.3s ease-in-out infinite; animation-delay: 1.8s; }
+    #productos .card-lift:nth-child(7) { animation: smoothFloatY 7.8s ease-in-out infinite; animation-delay: 2.6s; }
 
     /* For dynamic or generated review cards */
     #contenedor-opiniones > div:nth-child(3n+1) { animation: smoothFloatY 7.2s ease-in-out infinite; }
@@ -304,19 +307,24 @@
 
     /* ── Ombres portées & relief ── */
 
-    /* Logo : transparence totale, aucune bordure ni ombre parasite */
+    /* Logo : transparence absolue — aucun fond, aucun artefact possible */
     .logo-img {
       background: transparent !important;
-      background-color: rgba(0,0,0,0) !important;
+      background-color: transparent !important;
       border: none !important;
       box-shadow: none !important;
       outline: none !important;
+      -webkit-filter: none !important;
+      filter: none !important;
+      mix-blend-mode: normal !important;
+      isolation: auto !important;
       display: block;
     }
-    /* Conteneur du logo : forcer le fond transparent également */
     a .logo-img,
-    a:hover .logo-img {
+    a:hover .logo-img,
+    header .logo-img {
       background: transparent !important;
+      background-color: transparent !important;
     }
 
     /* Cards produits : une seule définition d'ombre, propre et cohérente */
@@ -373,8 +381,8 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
       <div class="flex items-center justify-between h-20">
         
-        <a href="#hero" class="flex items-center gap-3 group">
-          <img src="../static/abeilles_Pictures/logo_website.png" alt="Apiterapia logo" class="logo-img h-20 w-20 object-contain transition-transform duration-500 group-hover:scale-110">
+        <a href="#hero" class="flex items-center gap-3 group -ml-3">
+          <img src="../static/abeilles_Pictures/logo_website.png" alt="Apiterapia logo" class="logo-img h-24 w-24 object-contain transition-transform duration-500 group-hover:scale-110">
           <div>
             <p class="font-display text-xl font-medium tracking-wide text-ink" data-i18n="footerApiterapia">Apiterapia</p>
             <p class="text-[9px] tracking-[0.25em] uppercase text-honey font-semibold" id="logo-sub" data-i18n="logoSub">con Vero</p>
@@ -486,7 +494,8 @@
           <img src="../static/abeilles_Pictures/ruche.jpg" alt="Ruche naturelle Apiterapia" class="w-full h-full object-cover transition-transform duration-700 hover:scale-102">
         </div>
         <div class="absolute -bottom-3 -right-3 w-36 h-36 sm:w-48 sm:h-48 rounded-xl bg-cream z-0 opacity-60 hidden sm:block"></div>
-        <div class="absolute -top-3 -left-3 w-16 h-16 sm:w-20 sm:h-20 hex-bg z-0 hidden sm:block"></div>
+        <!-- hex-bg décoratif désactivé pour éviter l'artefact gris -->
+        <!-- <div class="absolute -top-3 -left-3 w-16 h-16 sm:w-20 sm:h-20 hex-bg z-0 hidden sm:block"></div> -->
       </div>
 
       <div class="lg:col-span-6">
@@ -662,6 +671,42 @@
           </div>
         </div>
 
+        <!-- Carte 5 : Propóleo -->
+        <div class="min-w-[270px] sm:min-w-[290px] md:min-w-0 snap-center group bg-cream rounded-xl overflow-hidden border border-beige/50 card-lift reveal p-3 md:p-0 flex flex-col justify-between">
+          <div class="aspect-[3/4] rounded-lg md:rounded-none overflow-hidden bg-offwhite relative max-w-[220px] md:max-w-none mx-auto w-full">
+            <img src="../static/abeilles_Pictures/Propoleo.jpg" alt="Propóleo puro natural Apiterapia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103">
+          </div>
+          <div class="p-4 md:p-6 text-center md:text-left flex-grow flex flex-col">
+            <span class="inline-block text-[9px] font-body font-semibold text-olive bg-olive/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p5Badge">Antiséptico natural</span>
+            <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p5Title">Propóleo</h3>
+            <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p5Desc">Resina protectora de la colmena, conocida por sus propiedades antibacterianas e inmunoestimulantes.</p>
+          </div>
+        </div>
+
+        <!-- Carte 6 -->
+        <div class="min-w-[270px] sm:min-w-[290px] md:min-w-0 snap-center group bg-cream rounded-xl overflow-hidden border border-beige/50 card-lift reveal reveal-delay-1 p-3 md:p-0 flex flex-col justify-between">
+          <div class="aspect-[3/4] rounded-lg md:rounded-none overflow-hidden bg-offwhite relative max-w-[220px] md:max-w-none mx-auto w-full">
+            <img src="../static/abeilles_Pictures/IMG-20260516-WA0022.jpg" alt="Polen natural de abeja Apiterapia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103">
+          </div>
+          <div class="p-4 md:p-6 text-center md:text-left flex-grow flex flex-col">
+            <span class="inline-block text-[9px] font-body font-semibold text-honey bg-honey/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p6Badge">Energizante</span>
+            <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p6Title">Polen de Abeja</h3>
+            <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p6Desc">Superalimento natural rico en proteínas, vitaminas y antioxidantes para reforzar la vitalidad diaria.</p>
+          </div>
+        </div>
+
+        <!-- Carte 7 -->
+        <div class="min-w-[270px] sm:min-w-[290px] md:min-w-0 snap-center group bg-cream rounded-xl overflow-hidden border border-beige/50 card-lift reveal reveal-delay-2 p-3 md:p-0 flex flex-col justify-between">
+          <div class="aspect-[3/4] rounded-lg md:rounded-none overflow-hidden bg-offwhite relative max-w-[220px] md:max-w-none mx-auto w-full">
+            <img src="../static/abeilles_Pictures/IMG-20260516-WA0029.jpg" alt="Cera natural de abeja Apiterapia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103">
+          </div>
+          <div class="p-4 md:p-6 text-center md:text-left flex-grow flex flex-col">
+            <span class="inline-block text-[9px] font-body font-semibold text-bark bg-bark/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p7Badge">Hidratación</span>
+            <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p7Title">Cera Natural</h3>
+            <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p7Desc">Cera pura de la colmena, ideal para el cuidado de la piel y elaboración de cosméticos naturales artesanales.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -721,8 +766,8 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-12 gap-12 items-center">
       
       <div class="md:col-span-4 flex flex-col items-center md:items-start space-y-4 text-center md:text-left">
-        <a href="#hero" class="flex items-center gap-4">
-          <img src="../static/abeilles_Pictures/logo_website.png" alt="Apiterapia logo" class="logo-img h-24 w-24 object-contain">
+        <a href="#hero" class="flex items-center gap-4 -ml-3">
+          <img src="../static/abeilles_Pictures/logo_website.png" alt="Apiterapia logo" class="logo-img h-28 w-28 object-contain">
           <span class="font-display text-2xl font-medium tracking-wide" data-i18n="footerApiterapia">Apiterapia</span>
         </a>
         <p class="font-body text-sm text-bark/90 leading-relaxed font-light" data-i18n="footerTagline">Bienestar natural y armonía para tu vida.</p>
@@ -801,6 +846,15 @@
         p4Title: "Jalea Real",
         p4Desc: "El elixir exclusivo de la reina colmena, ideal para revitalizar cuerpo, mente y potenciar vitalidad.",
         p4Cta: "Consultar disponibilidad",
+        p5Badge: "Antiséptico natural",
+        p5Title: "Propóleo",
+        p5Desc: "Resina protectora de la colmena, conocida por sus propiedades antibacterianas e inmunoestimulantes.",
+        p6Badge: "Energizante",
+        p6Title: "Polen de Abeja",
+        p6Desc: "Superalimento natural rico en proteínas, vitaminas y antioxidantes para reforzar la vitalidad diaria.",
+        p7Badge: "Hidratación",
+        p7Title: "Cera Natural",
+        p7Desc: "Cera pura de la colmena, ideal para el cuidado de la piel y elaboración de cosméticos naturales artesanales.",
         reviewsTag: "Testimonios Reales",
         reviewsTitle: "Experiencias de bienestar",
         addReviewTitle: "Comparte tu experiencia",
@@ -869,6 +923,15 @@
         p4Title: "Royal Jelly",
         p4Desc: "The exclusive elixir of the hive queen, perfect for revitalizing mind, body and boosting natural energy.",
         p4Cta: "Check Availability",
+        p5Badge: "Natural antiseptic",
+        p5Title: "Propolis",
+        p5Desc: "Protective resin from the hive, renowned for its antibacterial and immune-boosting properties.",
+        p6Badge: "Energizing",
+        p6Title: "Bee Pollen",
+        p6Desc: "Natural superfood rich in proteins, vitamins and antioxidants to support daily vitality and energy.",
+        p7Badge: "Moisturizing",
+        p7Title: "Natural Beeswax",
+        p7Desc: "Pure hive wax, ideal for skin care and crafting handmade natural cosmetics at home.",
         reviewsTag: "Real Testimonials",
         reviewsTitle: "Well-being Experiences",
         addReviewTitle: "Share your experience",
