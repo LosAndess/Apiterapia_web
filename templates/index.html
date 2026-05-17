@@ -354,6 +354,30 @@
     .payment-banner {
       box-shadow: 0 3px 18px rgba(189,143,54,0.09), 0 1px 4px rgba(44,37,30,0.03);
     }
+
+    /* ── Reviews mobile : 2 lignes, scroll horizontal ── */
+    @media (max-width: 767px) {
+      .reviews-scroll-mobile {
+        display: grid;
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        grid-auto-columns: 78vw;
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 12px;
+        padding-left: 4px;
+        padding-right: 16px;
+        margin-left: -6px;
+      }
+      .reviews-scroll-mobile::-webkit-scrollbar { display: none; }
+      .reviews-scroll-mobile > * {
+        scroll-snap-align: start;
+        width: 78vw;
+      }
+    }
   </style>
 </head>
 <body class="noise antialiased">
@@ -724,7 +748,7 @@
         </div>
       </div>
 
-      <div id="contenedor-opiniones" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+      <div id="contenedor-opiniones" class="reviews-scroll-mobile grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-16">
         </div>
 
       <div class="bg-[#FDFBF7]/5 rounded-2xl border border-white/10 p-8 md:p-12 max-w-2xl mx-auto">
@@ -1057,20 +1081,21 @@
       }
     }
 
-    function getBookedSlots() {
-      const stored = localStorage.getItem('apiterapia_booked_slots');
-      return stored ? JSON.parse(stored) : [];
-    }
+    // ── Créneaux réservés — synchronisés avec le serveur Flask ──────────────
+    let serverBookedSlots = [];
 
-    function saveBookedSlot(date, time) {
-      const slots = getBookedSlots();
-      slots.push({ date, time });
-      localStorage.setItem('apiterapia_booked_slots', JSON.stringify(slots));
+    async function fetchBookedSlots() {
+      try {
+        const resp = await fetch('/api/slots');
+        if (resp.ok) serverBookedSlots = await resp.json();
+      } catch(e) {
+        console.warn('Impossible de charger les créneaux depuis le serveur :', e);
+      }
+      updateAvailableTimes();
     }
 
     function isSlotDuplicate(date, time) {
-      const slots = getBookedSlots();
-      return slots.some(slot => slot.date === date && slot.time === time);
+      return serverBookedSlots.some(s => s.date === date && s.time === time);
     }
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
@@ -1110,47 +1135,75 @@
       updateAvailableTimes();
     }
 
-    function handleBookingSubmit(event) {
+    async function handleBookingSubmit(event) {
       event.preventDefault();
-      
-      const errEl = document.getElementById('form-error');
-      const dupEl = document.getElementById('form-duplicate-error');
-      const pastEl = document.getElementById('form-past-error');
-      
-      if (errEl) errEl.classList.add('hidden');
-      if (dupEl) dupEl.classList.add('hidden');
-      if (pastEl) pastEl.classList.add('hidden');
 
-      const nombre = document.getElementById('f-nombre').value.trim();
-      const telefono = document.getElementById('f-telefono').value.trim();
-      const fecha = document.getElementById('f-fecha').value;
-      const hora = document.getElementById('f-hora').value;
+      const errEl  = document.getElementById('form-error');
+      const dupEl  = document.getElementById('form-duplicate-error');
+      const pastEl = document.getElementById('form-past-error');
+      errEl?.classList.add('hidden');
+      dupEl?.classList.add('hidden');
+      pastEl?.classList.add('hidden');
+
+      const nombre     = document.getElementById('f-nombre').value.trim();
+      const telefono   = document.getElementById('f-telefono').value.trim();
+      const fecha      = document.getElementById('f-fecha').value;
+      const hora       = document.getElementById('f-hora').value;
       const comentario = document.getElementById('f-comentario').value.trim();
 
+      // Validations locales rapides (pas besoin du serveur)
       if (!nombre || !telefono || !fecha || !hora) {
-        if (errEl) errEl.classList.remove('hidden');
+        errEl?.classList.remove('hidden');
         return;
       }
-
       if (isSlotPast(fecha, hora)) {
-        if (pastEl) pastEl.classList.remove('hidden');
+        pastEl?.classList.remove('hidden');
         return;
       }
-
       if (isSlotDuplicate(fecha, hora)) {
-        if (dupEl) dupEl.classList.remove('hidden');
+        dupEl?.classList.remove('hidden');
         return;
       }
 
-      saveBookedSlot(fecha, hora);
-      updateAvailableTimes();
+      // Désactiver le bouton pendant l'envoi
+      const btn = document.getElementById('btn-submit');
+      if (btn) { btn.disabled = true; btn.textContent = '...'; }
 
-      const text = currentLang === 'es' 
-        ? `Hola Vero, me gustaría agendar una sesión de Apiterapia.\n\n• *Nombre:* ${nombre}\n• *WhatsApp:* ${telefono}\n• *Fecha deseada:* ${fecha}\n• *Horario:* ${hora} hrs${comentario ? `\n• *Comentarios:* ${comentario}` : ''}`
-        : `Hello Vero, I would love to book an Apiterapia session.\n\n• *Name:* ${nombre}\n• *WhatsApp:* ${telefono}\n• *Desired Date:* ${fecha}\n• *Time slot:* ${hora} hrs${comentario ? `\n• *Comments:* ${comentario}` : ''}`;
+      try {
+        const resp = await fetch('/api/book', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ name: nombre, phone: telefono, date: fecha, time: hora, comment: comentario })
+        });
 
-      const url = `https://wa.me/56939047200?text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank');
+        const result = await resp.json();
+
+        if (resp.status === 409) {
+          // Un autre client a réservé ce créneau pendant que le formulaire était ouvert
+          await fetchBookedSlots();   // Rafraîchir depuis le serveur
+          dupEl?.classList.remove('hidden');
+          return;
+        }
+
+        if (!resp.ok) {
+          errEl?.classList.remove('hidden');
+          return;
+        }
+
+        // Succès : mettre à jour le cache local et ouvrir WhatsApp
+        serverBookedSlots.push({ date: fecha, time: hora });
+        updateAvailableTimes();
+        window.open(result.whatsapp_url, '_blank');
+
+      } catch(e) {
+        console.error('Erreur réseau :', e);
+        errEl?.classList.remove('hidden');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = currentLang === 'es' ? 'Confirmar Reserva' : 'Confirm Booking';
+        }
+      }
     }
 
     function getCustomReviews() {
@@ -1237,7 +1290,7 @@
         dateInput.min = `${yyyy}-${mm}-${dd}`;
       }
       
-      updateAvailableTimes();
+      fetchBookedSlots();   // Charge les créneaux depuis le serveur Flask au démarrage
 
       document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
@@ -1252,6 +1305,14 @@
 
     const btt = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => {
+      // Fermer le menu burger automatiquement au scroll
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu && mobileMenu.classList.contains('open')) {
+        mobileMenu.classList.remove('open');
+        const icon = document.getElementById('menu-icon');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      }
+
       if (btt) {
         if (window.scrollY > 400) {
           btt.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
