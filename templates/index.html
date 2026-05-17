@@ -660,6 +660,9 @@
           <div id="form-past-error" data-i18n="formPastError" class="hidden text-red-600 font-body text-xs text-center bg-red-50 py-3 px-4 rounded-full border border-red-100 transition-all duration-300">
             No puedes reservar una hora anterior a la hora actual.
           </div>
+          <div id="form-network-error" data-i18n="formNetworkError" class="hidden text-red-600 font-body text-xs text-center bg-red-50 py-3 px-4 rounded-full border border-red-100 transition-all duration-300">
+            Error de conexión. Por favor intenta nuevamente.
+          </div>
 
           <div class="text-center pt-2 space-y-3">
             <button type="submit" id="btn-submit" data-i18n="btnSubmit" class="btn-honey text-white text-xs font-semibold tracking-widest uppercase px-10 py-4 rounded-full w-full sm:w-auto">
@@ -911,6 +914,7 @@
         formError: "Por favor completa todos los campos requeridos correctamente.",
         formDuplicateError: "Este horario ya se encuentra reservado. Por favor selecciona otro horario.",
         formPastError: "No puedes reservar una hora anterior a la hora actual.",
+        formNetworkError: "Error de conexión. Por favor intenta nuevamente.",
         productsTag: "La Tienda de la Colmena",
         productsTitle: "Cuidado 100% natural",
         productsSubtitle: "Lleva los grandes beneficios terapéuticos y regeneradores de la apiterapia a tu rutina diaria en casa.",
@@ -988,6 +992,7 @@
         formError: "Please fill in all required fields correctly.",
         formDuplicateError: "This time slot is already booked. Please choose another time.",
         formPastError: "You cannot book a time slot in the past.",
+        formNetworkError: "Connection error. Please try again.",
         productsTag: "The Hive Boutique",
         productsTitle: "100% Natural Care",
         productsSubtitle: "Bring the incredible therapeutic and restorative benefits of apiterapia into your daily home routine.",
@@ -1211,9 +1216,11 @@
       const errEl  = document.getElementById('form-error');
       const dupEl  = document.getElementById('form-duplicate-error');
       const pastEl = document.getElementById('form-past-error');
+      const netEl  = document.getElementById('form-network-error');
       errEl?.classList.add('hidden');
       dupEl?.classList.add('hidden');
       pastEl?.classList.add('hidden');
+      netEl?.classList.add('hidden');
 
       const nombre     = document.getElementById('f-nombre').value.trim();
       const telefono   = document.getElementById('f-telefono').value.trim();
@@ -1267,7 +1274,7 @@
 
       } catch(e) {
         console.error('Erreur réseau :', e);
-        errEl?.classList.remove('hidden');
+        netEl?.classList.remove('hidden');
       } finally {
         if (btn) {
           btn.disabled = false;

@@ -45,6 +45,15 @@ def save_appointments(appointments):
 
 # ── Routes ────────────────────────────────────────────────────────────────────
 
+@app.after_request
+def no_cache(response):
+    """Désactive le cache navigateur sur toutes les réponses (mode développement)."""
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma']        = 'no-cache'
+    response.headers['Expires']       = '0'
+    return response
+
+
 @app.route('/')
 def index():
     """Page principale — charge templates/index.html."""
@@ -133,25 +142,16 @@ def book():
 
 # ── Point d'entrée ────────────────────────────────────────────────────────────
 
-def start_server(port):
-    """Lance une instance du serveur sur le port donné (sans reloader)."""
-    server = make_server('0.0.0.0', port, app)
-    server.serve_forever()
-
 if __name__ == '__main__':
-    PORT_MAC    = 5001   # Accès local sur ton Mac  → http://localhost:5001
-    PORT_MOBILE = 8080   # Accès depuis ton téléphone → http://<IP_locale>:8080
+    PORT = 5001
 
-    # Lancer le port 5001 dans un thread secondaire
-    t = threading.Thread(target=start_server, args=(PORT_MAC,), daemon=True)
-    t.start()
+    print(f"\n{'='*54}")
+    print(f"  ✅  Serveur Apiterapia lancé (multi-thread)")
+    print(f"  💻  Mac     → http://localhost:{PORT}")
+    print(f"  📱  Mobile  → http://<ton_IP_locale>:{PORT}")
+    print(f"  (IP locale : ipconfig getifaddr en0)")
+    print(f"{'='*54}\n")
 
-    print(f"\n{'='*52}")
-    print(f"  ✅  Serveur Apiterapia lancé sur 2 ports")
-    print(f"  💻  Mac     → http://localhost:{PORT_MAC}")
-    print(f"  📱  Mobile  → http://<ton_IP_locale>:{PORT_MOBILE}")
-    print(f"  (IP locale : lance 'ipconfig getifaddr en0' dans un autre terminal)")
-    print(f"{'='*52}\n")
-
-    # Lancer le port 8080 sur le thread principal (bloquant)
-    start_server(PORT_MOBILE)
+    # threaded=True : chaque requête dans son propre thread
+    # → résout le blocage sur Mac quand plusieurs requêtes arrivent en même temps
+    app.run(debug=False, host='0.0.0.0', port=PORT, threaded=True)
