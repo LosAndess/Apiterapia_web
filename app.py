@@ -1,35 +1,87 @@
 """
 Apiterapia con Vero — Serveur Flask
 =====================================
-Lancer avec :  python app.py
+Développement local :
+  python app.py
+  → http://localhost:5001
 
-Le serveur écoute sur :
-  → http://localhost:5001      (Mac)
-  → http://<IP_locale>:5001    (mobile sur le même Wi-Fi)
+Production (Vercel) :
+  Le fichier vercel.json route toutes les requêtes vers ce fichier.
+  L'objet WSGI `app` est détecté automatiquement par @vercel/python.
 
-IP locale : ipconfig getifaddr en0
+Stockage des rendez-vous :
+  - Local      → appointments.json dans le même répertoire
+  - Vercel     → /tmp/appointments.json (éphémère, par instance)
+  - Fallback   → liste en mémoire si /tmp n'est pas accessible
 """
 
-from flask import Flask, render_template, request, jsonify
-import json
 import os
+import json
 import urllib.parse
 from datetime import datetime
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-# Chemin absolu vers appointments.json — même répertoire que ce fichier,
-# peu importe depuis quel dossier le terminal est lancé.
-APPOINTMENTS_FILE = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), 'appointments.json')
-)
+# ─────────────────────────────────────────────────────────────────────────────
+# Stockage résilient des rendez-vous
+# ─────────────────────────────────────────────────────────────────────────────
+# Sur Vercel, le système de fichiers est en lecture seule sauf /tmp.
+# /tmp est éphémère (local à l'instance Serverless) mais ne génère jamais
+# d'erreur 500. En développement local, on utilise le fichier appointments.json
+# dans le même répertoire que app.py.
+
+def _get_appointments_file():
+    """Retourne le chemin du fichier de stockage adapté à l'environnement."""
+    # En local, on utilise le dossier du projet
+    local_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appointments.json')
+    if os.path.exists(os.path.dirname(local_path)) and os.access(os.path.dirname(local_path), os.W_OK):
+        try:
+            # Teste si on peut écrire dans le dossier courant (local)
+            test_path = os.path.join(os.path.dirname(local_path), '.write_test')
+            with open(test_path, 'w') as f:
+                f.write('ok')
+            os.remove(test_path)
+            return local_path
+        except OSError:
+            pass
+    # Fallback Vercel → /tmp
+    return '/tmp/appointments.json'
+
+# Cache en mémoire (fallback si le disque est inaccessible)
+_appointments_memory = []
+
+
+def load_appointments():
+    """Charge les rendez-vous depuis le disque. Retourne [] en cas d'erreur."""
+    global _appointments_memory
+    try:
+        filepath = _get_appointments_file()
+        if os.path.exists(filepath):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    _appointments_memory = data
+                    return data
+    except Exception:
+        pass
+    return list(_appointments_memory)
+
+
+def save_appointments(appointments):
+    """Enregistre les rendez-vous sur disque et en mémoire."""
+    global _appointments_memory
+    _appointments_memory = list(appointments)
+    try:
+        filepath = _get_appointments_file()
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(appointments, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass  # Mémoire suffisante si le disque est inaccessible
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Gestionnaires d'erreurs globaux
-# Garantissent que Flask retourne TOUJOURS du JSON, jamais une page HTML.
-# Sans ça, une exception Python dans une route renvoie du HTML → le JS ne
-# peut pas parser → SyntaxError → "Error de conexión" affiché à tort.
+# Gestionnaires d'erreurs — retournent toujours du JSON (jamais du HTML)
 # ─────────────────────────────────────────────────────────────────────────────
 
 @app.errorhandler(400)
@@ -55,7 +107,7 @@ def unhandled_exception(e):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# En-têtes anti-cache (appliqués sur toutes les réponses)
+# En-têtes anti-cache
 # ─────────────────────────────────────────────────────────────────────────────
 
 @app.after_request
@@ -64,28 +116,6 @@ def apply_no_cache(response):
     response.headers['Pragma']        = 'no-cache'
     response.headers['Expires']       = '0'
     return response
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Helpers JSON
-# ─────────────────────────────────────────────────────────────────────────────
-
-def load_appointments():
-    """Charge les rendez-vous. Retourne [] si fichier absent ou corrompu."""
-    if not os.path.exists(APPOINTMENTS_FILE):
-        return []
-    with open(APPOINTMENTS_FILE, 'r', encoding='utf-8') as f:
-        try:
-            data = json.load(f)
-            return data if isinstance(data, list) else []
-        except (json.JSONDecodeError, ValueError):
-            return []
-
-
-def save_appointments(appointments):
-    """Écrit la liste dans appointments.json (création automatique si absent)."""
-    with open(APPOINTMENTS_FILE, 'w', encoding='utf-8') as f:
-        json.dump(appointments, f, ensure_ascii=False, indent=2)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -119,9 +149,8 @@ def book():
 
     Codes de retour :
       200 → succès  { success: true, whatsapp_url: "…" }
-      400 → champs manquants
+      400 → champs manquants ou JSON invalide
       409 → créneau déjà pris
-      500 → erreur serveur
     """
     data = request.get_json(silent=True)
 
@@ -139,16 +168,14 @@ def book():
         return jsonify({'error': 'missing_fields',
                         'message': 'Faltan campos obligatorios'}), 400
 
-    # Vérification anti-doublon : on relit le fichier depuis le disque
-    # à chaque requête — jamais depuis un cache mémoire.
     appointments = load_appointments()
 
+    # Anti-doublon côté serveur
     for appt in appointments:
         if appt.get('date') == date and appt.get('time') == slot:
             return jsonify({'error': 'duplicate',
                             'message': 'Este horario ya está reservado'}), 409
 
-    # Sauvegarde
     appointments.append({
         'name':       name,
         'phone':      phone,
@@ -175,20 +202,23 @@ def book():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Démarrage
+# Exposition WSGI — requis par Vercel (@vercel/python)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Vercel détecte automatiquement l'objet `app` ou `application`.
+# Cette ligne garantit la compatibilité avec les deux conventions.
+application = app
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Démarrage local uniquement
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
     PORT = 5001
-
     print(f"\n{'='*56}")
     print(f"  ✅  Serveur Apiterapia prêt")
-    print(f"  📂  JSON  → {APPOINTMENTS_FILE}")
-    print(f"  💻  Mac   → http://localhost:{PORT}")
-    print(f"  📱  Mobile → http://<ton_IP>:{PORT}")
-    print(f"  ⚠️   Mode  → DEBUG (désactiver avant mise en ligne)")
+    print(f"  💻  Mac    → http://localhost:{PORT}")
+    print(f"  📱  Mobile → http://<ton_IP>:{PORT}  (ipconfig getifaddr en0)")
     print(f"{'='*56}\n")
-
-    # debug=True : affiche les erreurs Python dans le terminal
-    # → indispensable pour diagnostiquer les problèmes en développement
     app.run(debug=True, host='0.0.0.0', port=PORT, threaded=True)
