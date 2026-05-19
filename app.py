@@ -1,13 +1,14 @@
 """
-Apiterapia con Vero — Serveur Flask
-=====================================
-Développement local :
+Apiterapia con Vero — Serveur Flask (développement local uniquement)
+======================================================================
+En PRODUCTION le site est 100% statique sur Vercel.
+  → index.html est à la racine du projet
+  → vercel.json sert index.html + static/ directement (pas de Python)
+  → Les RDV sont stockés en localStorage côté client
+
+En DÉVELOPPEMENT LOCAL seulement :
   python app.py
   → http://localhost:5001
-
-Production (Vercel) :
-  Le fichier vercel.json route toutes les requêtes vers ce fichier.
-  L'objet WSGI `app` est détecté automatiquement par @vercel/python.
 
 Stockage des rendez-vous :
   - Local      → appointments.json dans le même répertoire
@@ -19,9 +20,10 @@ import os
 import json
 import urllib.parse
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, send_file, request, jsonify
 
-app = Flask(__name__)
+# template_folder non utilisé — on sert index.html depuis la racine
+app = Flask(__name__, static_folder='static')
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Stockage résilient des rendez-vous
@@ -124,7 +126,8 @@ def apply_no_cache(response):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    """Sert index.html depuis la racine du projet (identique à Vercel)."""
+    return send_file('index.html')
 
 
 @app.route('/api/slots', methods=['GET'])
