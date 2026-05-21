@@ -549,7 +549,7 @@
     <p id="preloader-text" data-i18n="preloaderText" class="font-body text-xs tracking-[0.2em] text-white/60 uppercase font-light">Preparando tu experience Apiterapia...</p>
   </div>
 
-  <button id="back-to-top" class="fixed bottom-[104px] md:bottom-[104px] right-5 w-10 h-10 rounded-full bg-cream/90 text-ink border border-beige/60 shadow-lg flex items-center justify-center backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2" aria-label="Volver arriba">
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-[104px] md:bottom-[104px] right-5 w-10 h-10 rounded-full bg-cream/90 text-ink border border-beige/60 shadow-lg flex items-center justify-center backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2" aria-label="Volver arriba">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
       <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
     </svg>
@@ -752,6 +752,19 @@
         </div>
       </div>
 
+      <!-- Note informative récolte abeilles -->
+      <div class="mb-8 flex items-start gap-4 bg-honey/6 border border-honey/25 rounded-2xl px-6 py-5 reveal">
+        <div class="flex-shrink-0 mt-0.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-honey" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="font-body text-sm font-semibold text-ink mb-1 tracking-wide">Información importante sobre las sesiones</p>
+          <p class="font-body text-xs text-bark font-light leading-relaxed">La recolección de abejas para las sesiones de apiterapia debe realizarse con al menos <strong class="font-medium text-honey">24 horas de anticipación</strong>. Por ello, las reservas sólo están disponibles <strong class="font-medium text-honey">a partir del día siguiente</strong>. Si tienes alguna consulta o necesitas coordinar una fecha específica, no dudes en <a href="https://wa.me/56939047200" target="_blank" class="text-honey underline hover:text-honey-light transition-colors">contactarme directamente por WhatsApp</a>.</p>
+        </div>
+      </div>
+
       <div class="bg-cream rounded-2xl border border-beige/60 p-8 md:p-12 shadow-sm relative reveal">
         <form id="booking-form" class="space-y-6" novalidate onsubmit="handleBookingSubmit(event)">
           <div class="grid md:grid-cols-2 gap-6">
@@ -806,15 +819,15 @@
               <div class="relative">
                 <select id="f-hora" class="form-field appearance-none cursor-pointer">
                   <option value="" data-i18n="optSelect">Seleccionar</option>
-                  <option value="09:00">09:00 hrs</option>
-                  <option value="10:00">10:00 hrs</option>
-                  <option value="11:00">11:00 hrs</option>
-                  <option value="12:00">12:00 hrs</option>
-                  <option value="13:00">13:00 hrs</option>
                   <option value="15:00">15:00 hrs</option>
+                  <option value="15:30">15:30 hrs</option>
                   <option value="16:00">16:00 hrs</option>
+                  <option value="16:30">16:30 hrs</option>
                   <option value="17:00">17:00 hrs</option>
+                  <option value="17:30">17:30 hrs</option>
                   <option value="18:00">18:00 hrs</option>
+                  <option value="18:30">18:30 hrs</option>
+                  <option value="19:00">19:00 hrs</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-bark/60">
                   <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -840,6 +853,9 @@
           </div>
           <div id="form-past-error" data-i18n="formPastError" class="hidden text-red-600 font-body text-xs text-center bg-red-50 py-3 px-4 rounded-full border border-red-100 transition-all duration-300">
             No puedes reservar una hora anterior a la hora actual.
+          </div>
+          <div id="form-profanity-error" class="hidden text-red-600 font-body text-xs text-center bg-red-50 py-3 px-4 rounded-full border border-red-100 transition-all duration-300">
+            Por favor, conserve un lenguaje correcto y respetuoso.
           </div>
           <div class="text-center pt-2 space-y-3">
             <button type="submit" id="btn-submit" data-i18n="btnSubmit" class="btn-honey text-white text-xs font-semibold tracking-widest uppercase px-10 py-4 rounded-full w-full sm:w-auto">
@@ -918,7 +934,7 @@
             <span class="inline-block text-[9px] font-body font-semibold text-olive bg-olive/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p1Badge">Producto estrella</span>
             <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p1Title">Miel natural</h3>
             <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p1Desc">Miel pura y de origen natural, ideal para fortalecer el organismo y disfrutar de sus grandes propiedades.</p>
-            <p class="product-price">$10.000 <span>CLP</span></p>
+            <p class="product-price">$8.000 <span>CLP</span></p>
           </div>
         </div>
 
@@ -931,7 +947,7 @@
             <span class="inline-block text-[9px] font-body font-semibold text-olive bg-olive/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p3Badge">Alivio focalizado</span>
             <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p3Title">Ungüento medicinal</h3>
             <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p3Desc">Ungüento natural de alta concentración elaborado con veneno de abeja puro. Aplicado directamente sobre la zona afectada, alivia de forma rápida y profunda dolores musculares y articulares crónicos.</p>
-            <p class="product-price">$12.000 <span>CLP</span></p>
+            <p class="product-price">$6.000 <span>CLP</span></p>
           </div>
         </div>
 
@@ -944,7 +960,7 @@
             <span class="inline-block text-[9px] font-body font-semibold text-honey bg-honey/5 rounded px-2.5 py-1 mb-2 tracking-wider uppercase" data-i18n="p4Badge">Premium</span>
             <h3 class="font-display text-base md:text-lg text-ink font-medium mb-2" data-i18n="p4Title">Ungüento medicinal</h3>
             <p class="font-body text-bark text-xs font-light leading-relaxed opacity-90" data-i18n="p4Desc">Ungüento enriquecido con jalea real pura, el tesoro exclusivo de la reina de la colmena. Nutre y regenera la piel en profundidad, aportando suavidad, luminosidad y un cuidado antiedad natural excepcional.</p>
-            <p class="product-price">$11.000 <span>CLP</span></p>
+            <p class="product-price">$4.000 <span>CLP</span></p>
           </div>
         </div>
 
@@ -999,13 +1015,23 @@
         <h2 class="font-display text-3xl md:text-4xl font-light tracking-wide mb-4" data-i18n="reviewsTitle">Experiencias de bienestar</h2>
         <div class="flex justify-center items-center gap-2 mt-2 font-body text-xs text-white/70">
           <span class="stars text-sm">★★★★★</span>
-          <span class="font-medium text-white" id="global-rating-value">5.0</span>
-          <span class="opacity-60">/ 5.0 base en pacientes</span>
+          <span class="font-medium text-white" id="global-rating-value">—</span>
+          <span class="opacity-60" id="global-rating-base">/ 5.0 · 0 opiniones</span>
         </div>
       </div>
 
-      <div id="contenedor-opiniones" class="reviews-scroll-mobile grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-16">
-        </div>
+      <div id="contenedor-opiniones" class="reviews-scroll-mobile grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-8">
+      </div>
+
+      <!-- Bouton "Ver más" -->
+      <div id="reviews-show-more" class="hidden text-center mb-16">
+        <button id="btn-show-more" onclick="reviewsShowAll=true;renderReviews();" class="inline-flex items-center gap-2 font-body text-xs text-honey border border-honey/40 rounded-full px-8 py-3 hover:bg-honey/10 transition-all duration-300 tracking-widest uppercase">
+          Ver más opiniones
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7"/>
+          </svg>
+        </button>
+      </div>
 
       <div class="bg-[#FDFBF7]/5 rounded-2xl border border-white/10 p-8 md:p-12 max-w-2xl mx-auto">
         <div class="text-center mb-8">
@@ -1031,6 +1057,9 @@
           </div>
           <textarea id="r-comentario" rows="3" data-i18n-placeholder="placeholderReviewText" placeholder="Escribe tu reseña aquí..." class="form-field rounded-2xl !bg-white/5 !border-white/10 !text-white focus:!border-honey outline-none resize-none py-3" required></textarea>
           
+          <div id="review-profanity-error" class="hidden text-red-400 font-body text-xs text-center bg-red-900/20 py-3 px-4 rounded-full border border-red-500/20">
+            Por favor, conserve un lenguaje correcto y respetuoso.
+          </div>
           <div class="text-center pt-2">
             <button type="submit" data-i18n="btnReviewSubmit" class="btn-honey text-white text-xs font-medium tracking-widest uppercase px-8 py-3.5 rounded-full w-full sm:w-auto">
               Publicar Opinión
@@ -1060,10 +1089,11 @@
       </div>
 
       <div class="md:col-span-4 flex flex-col items-center md:items-end text-center md:text-right space-y-4">
-        <div class="flex justify-center gap-6 text-[11px] tracking-wider uppercase text-ink/80 font-semibold">
-          <a href="#sobre-mi" class="hover:text-honey transition-colors" data-i18n="navAbout">Sobre mí</a>
-          <a href="#agenda" class="hover:text-honey transition-colors" data-i18n="navSchedule">Agenda</a>
-          <a href="#productos" class="hover:text-honey transition-colors" data-i18n="navProducts">Productos</a>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <button onclick="document.getElementById('sobre-mi').scrollIntoView({behavior:'smooth'})" class="text-[11px] tracking-wider uppercase text-ink/80 font-semibold hover:text-honey transition-colors" data-i18n="navAbout">Sobre mí</button>
+          <button onclick="document.getElementById('agenda').scrollIntoView({behavior:'smooth'})" class="text-[11px] tracking-wider uppercase text-ink/80 font-semibold hover:text-honey transition-colors" data-i18n="navSchedule">Agenda</button>
+          <button onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})" class="text-[11px] tracking-wider uppercase text-ink/80 font-semibold hover:text-honey transition-colors" data-i18n="navProducts">Productos</button>
+          <button onclick="document.getElementById('opiniones').scrollIntoView({behavior:'smooth'})" class="text-[11px] tracking-wider uppercase text-ink/80 font-semibold hover:text-honey transition-colors" data-i18n="navReviews">Opiniones</button>
         </div>
         <p class="font-body text-xs text-bark/70 font-light">&copy; 2026 Apiterapia con Vero. Todos los derechos reservados.</p>
       </div>
@@ -1239,12 +1269,11 @@
       }
     };
 
-    const avisParDefaut = [
-      { nombre: "María Loreto", rating: 5, es: "Las sesiones con la Vero me han cambiado la vida. El dolor crónico que tenía en la espalda baja disminuyó notablemente desde la primera sesión. Excelente profesional, muy empática.", en: "Sessions with Vero have completely changed my life. The chronic lower back pain I had decreased drastically right from the very first session. Excellent professional, deeply empathetic." },
-      { nombre: "Carlos S.", rating: 5, es: "Llegué por un dolor terrible en la rodilla que no me dejaba dormir. Sinceramente, después de la tercera sesión con Vero el alivio fue total. Increíble la atención y paciencia.", en: "I came because of an awful pain in my knee that kept me awake at night. Honestly, after the third session with Vero, the relief was massive. Incredible care and endless patience." },
-      { nombre: "Daniela M.", rating: 5, es: "La Vero atiende súper bien, se nota al tiro que le encanta lo que hace y tiene mucha buena energía. Los productos naturales que me recomendó para llevar a casa me han hecho súper bien.", en: "Vero gives outstanding care, you can instantly tell she absolutely loves what she does and brings such a pure energy. The natural remedies she suggested for home have done wonders." },
-      { nombre: "Felipe G.", rating: 5, es: "Al principio iba con un poco de nervios por las abejas, pero el ambiente es muy calmado y te explica todo con calma. Salí súper relajado y con el cuerpo mucho más liviano. Totalmente recomendado.", en: "I was a bit nervous about the bees at first, but the room is so peaceful and she explains every step quietly. Left feeling deeply relaxed and lighter overall. Highly recommended." }
-    ];
+    // Aucun avis par défaut — seuls les vrais avis des clients sont affichés
+    const avisParDefaut = [];
+    // Pagination des avis
+    const REVIEWS_PER_PAGE = 5;
+    let reviewsShowAll = false;
 
     let currentLang = 'es';
 
@@ -1348,6 +1377,32 @@
       }
     }
 
+    // ── Filtre de modération — mots interdits EN + ES ────────────────────────
+    const PROFANITY_LIST = [
+      // Espagnol
+      'puta','puto','putos','putas','mierda','coño','joder','hostia','cabron','cabrón',
+      'cabrona','imbecil','imbécil','idiota','estupido','estúpido','gilipollas','pendejo',
+      'pendeja','marica','maricon','maricón','chinga','chingada','verga','polla','culo',
+      'cagada','cagar','maldito','maldita','bastardo','bastarda','zorra','prostituta',
+      'perra','hijo de puta','hdp','ctm','conchetumadre','weón','weon','huevón','huevon',
+      'chucha','culiao','concha','reinoide','pelotudo','boludo','forro','forra',
+      // Anglais
+      'fuck','fucking','fucker','shit','bitch','asshole','cunt','bastard','dick','cock',
+      'pussy','whore','slut','motherfucker','mf','wtf','damn','crap','bullshit','ass',
+      'piss','fag','faggot','nigger','nigga','retard','idiot','moron','dumbass','jackass'
+    ];
+
+    function containsProfanity(text) {
+      if (!text) return false;
+      const lower = text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      return PROFANITY_LIST.some(word => {
+        const normalized = word.normalize('NFD').replace(/[̀-ͯ]/g, '');
+        // Vérification par mot entier (évite les faux positifs)
+        const regex = new RegExp(`(^|[^a-z])${normalized}([^a-z]|$)`, 'i');
+        return regex.test(lower);
+      });
+    }
+
     // ── Créneaux réservés — stockés en localStorage (mode 100% statique) ────
     let serverBookedSlots = [];
 
@@ -1411,11 +1466,12 @@
       event.preventDefault();
 
       // Masquer tous les messages d'erreur
-      const errEl      = document.getElementById('form-error');
-      const dupEl      = document.getElementById('form-duplicate-error');
-      const pastEl     = document.getElementById('form-past-error');
-      const phoneErrEl = document.getElementById('form-phone-error');
-      [errEl, dupEl, pastEl, phoneErrEl].forEach(el => el?.classList.add('hidden'));
+      const errEl        = document.getElementById('form-error');
+      const dupEl        = document.getElementById('form-duplicate-error');
+      const pastEl       = document.getElementById('form-past-error');
+      const phoneErrEl   = document.getElementById('form-phone-error');
+      const profanityEl  = document.getElementById('form-profanity-error');
+      [errEl, dupEl, pastEl, phoneErrEl, profanityEl].forEach(el => el?.classList.add('hidden'));
 
       // Lire les valeurs du formulaire
       const nombre     = document.getElementById('f-nombre').value.trim();
@@ -1435,6 +1491,12 @@
       const phoneRegex   = /^(\+569\d{8}|09\d{8}|\+614\d{8}|04\d{8})$/;
       if (!phoneRegex.test(cleanedPhone)) {
         phoneErrEl?.classList.remove('hidden');
+        return;
+      }
+
+      // Filtre de modération
+      if (containsProfanity(nombre) || containsProfanity(comentario)) {
+        profanityEl?.classList.remove('hidden');
         return;
       }
 
@@ -1506,47 +1568,67 @@
 
     function calculateGlobalRating() {
       const custom = getCustomReviews();
+      const totalCount = custom.length;
       let totalRating = 0;
-      let totalCount = avisParDefaut.length + custom.length;
-
-      avisParDefaut.forEach(r => totalRating += r.rating);
       custom.forEach(r => totalRating += r.rating);
-
-      const average = totalCount > 0 ? (totalRating / totalCount).toFixed(1) : "5.0";
+      const average = totalCount > 0 ? (totalRating / totalCount).toFixed(1) : "—";
       const ratingEl = document.getElementById('global-rating-value');
+      const ratingBase = document.getElementById('global-rating-base');
       if (ratingEl) ratingEl.textContent = average;
+      if (ratingBase) ratingBase.textContent = `/ 5.0 · ${totalCount} ${currentLang === 'es' ? 'opinión(es)' : 'review(s)'}`;
     }
 
     function handleOpinionSubmit(event) {
       event.preventDefault();
-      const nombre = document.getElementById('r-nombre').value.trim();
-      const rating = parseInt(document.getElementById('r-rating').value, 10);
+      const nombre    = document.getElementById('r-nombre').value.trim();
+      const rating    = parseInt(document.getElementById('r-rating').value, 10);
       const comentario = document.getElementById('r-comentario').value.trim();
+      const errEl     = document.getElementById('review-profanity-error');
 
       if (!nombre || !comentario) return;
 
+      // Vérification du filtre de modération
+      if (containsProfanity(nombre) || containsProfanity(comentario)) {
+        if (errEl) errEl.classList.remove('hidden');
+        return;
+      }
+      if (errEl) errEl.classList.add('hidden');
+
       const newReview = { nombre, rating, es: comentario, en: comentario };
       saveCustomReview(newReview);
-      
+      reviewsShowAll = false; // Réinitialise la pagination
       document.getElementById('opinion-form').reset();
       renderReviews();
     }
 
     function renderReviews() {
       const container = document.getElementById('contenedor-opiniones');
+      const showMoreWrapper = document.getElementById('reviews-show-more');
       if (!container) return;
       container.innerHTML = '';
 
       const custom = getCustomReviews();
-      // Copie avant reverse pour ne pas muter le tableau source, avis récents en premier
-      const listToRender = [...[...custom].reverse(), ...avisParDefaut];
+      // Avis récents en premier
+      const listToRender = [...custom].reverse();
 
-      listToRender.forEach((r, idx) => {
-        const text = currentLang === 'es' ? r.es : r.en;
+      if (listToRender.length === 0) {
+        // Message "Sé el primero" si aucun avis
+        container.innerHTML = `<div class="col-span-full text-center py-12 opacity-60">
+          <p class="font-display text-2xl font-light text-white/70 mb-2">${currentLang === 'es' ? '¡Sé el primero en opinar!' : 'Be the first to share your experience!'}</p>
+          <p class="font-body text-xs text-white/40">${currentLang === 'es' ? 'Tu testimonio ayuda a más personas a descubrir la apiterapia.' : 'Your testimonial helps more people discover apitherapy.'}</p>
+        </div>`;
+        if (showMoreWrapper) showMoreWrapper.classList.add('hidden');
+        calculateGlobalRating();
+        return;
+      }
+
+      const visibleList = reviewsShowAll ? listToRender : listToRender.slice(0, REVIEWS_PER_PAGE);
+
+      visibleList.forEach((r) => {
+        const text     = currentLang === 'es' ? r.es : r.en;
         const starsStr = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-        
         const card = document.createElement('div');
-        card.className = `bg-[#FDFBF7]/5 border border-white/10 rounded-xl p-6 md:p-8 testimonial-line card-lift reveal visible transition-all duration-300`;
+        card.className = 'bg-[#FDFBF7]/5 border border-white/10 rounded-xl p-6 md:p-8 testimonial-line card-lift reveal visible transition-all duration-300';
         card.innerHTML = `
           <div class="flex flex-col h-full justify-between">
             <div>
@@ -1557,16 +1639,31 @@
               <p class="font-body text-[11px] tracking-widest uppercase font-semibold text-honey">${r.nombre}</p>
               <p class="text-[9px] font-body text-white/40 tracking-wider uppercase">${currentLang === 'es' ? 'Paciente Verificado' : 'Verified Patient'}</p>
             </div>
-          </div>
-        `;
+          </div>`;
         container.appendChild(card);
       });
+
+      // Bouton "Ver más" / "Show more"
+      if (showMoreWrapper) {
+        if (listToRender.length > REVIEWS_PER_PAGE && !reviewsShowAll) {
+          showMoreWrapper.classList.remove('hidden');
+          const btn = document.getElementById('btn-show-more');
+          if (btn) btn.textContent = currentLang === 'es'
+            ? `Ver más opiniones (${listToRender.length - REVIEWS_PER_PAGE} restantes)`
+            : `Show more reviews (${listToRender.length - REVIEWS_PER_PAGE} remaining)`;
+        } else {
+          showMoreWrapper.classList.add('hidden');
+        }
+      }
 
       calculateGlobalRating();
     }
 
     // ── Calendrier personnalisé — constantes ────────────────────────────────
-    const TIME_SLOTS_ALL = ['09:00','10:00','11:00','12:00','13:00','15:00','16:00','17:00','18:00'];
+    // Créneaux disponibles : Mar-Ven, 15h00–19h00, toutes les 30 min
+    const TIME_SLOTS_ALL = ['15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00'];
+    // Jours autorisés : 2=Mardi, 3=Mercredi, 4=Jeudi, 5=Vendredi (0=Dim, 1=Lun, 6=Sam)
+    const ALLOWED_WEEKDAYS = [2, 3, 4, 5];
 
     const CAL_MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const CAL_MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -1581,17 +1678,28 @@
       return `${year}-${String(month0 + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     }
 
-    // Statut d'un jour : 'past' | 'full' | 'available' | 'partial'
-    function getDateStatus(dateStr) {
+    // Vérifie si une date est dans le futur (minimum J+1) et un jour autorisé (Mar-Ven)
+    function isDateAllowed(dateStr) {
       const [y, m, d] = dateStr.split('-').map(Number);
-      // Fin de journée — si passée, toute la journée est passée
-      const endOfDay = new Date(y, m - 1, d, 23, 59, 0);
-      if (endOfDay < new Date()) return 'past';
+      const date = new Date(y, m - 1, d);
+      // Minimum J+1 : la date doit être strictement après aujourd'hui
+      const todayMidnight = new Date();
+      todayMidnight.setHours(0, 0, 0, 0);
+      const tomorrowMidnight = new Date(todayMidnight);
+      tomorrowMidnight.setDate(todayMidnight.getDate() + 1);
+      if (date < tomorrowMidnight) return false;
+      // Jours autorisés : Mar(2), Mer(3), Jeu(4), Ven(5)
+      return ALLOWED_WEEKDAYS.includes(date.getDay());
+    }
+
+    // Statut d'un jour : 'past' | 'disabled' | 'full' | 'available' | 'partial'
+    function getDateStatus(dateStr) {
+      // Si date non autorisée (passée, même jour, week-end ou lundi)
+      if (!isDateAllowed(dateStr)) return 'past';
 
       let bookedCount   = 0;
       let availableCount = 0;
       for (const slot of TIME_SLOTS_ALL) {
-        if (isSlotPast(dateStr, slot)) continue;
         if (isSlotDuplicate(dateStr, slot)) bookedCount++;
         else availableCount++;
       }
@@ -1810,11 +1918,985 @@
       }
     }, { passive: true });
 
-    if (btt) {
-      btt.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
+    // (back-to-top géré par l'attribut onclick inline)
+
   </script>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       ESPACE ADMIN — Dashboard Apiterapia
+       Accès : taper #admin dans l'URL ou naviguer vers /#admin
+       ══════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- EmailJS SDK — nécessaire pour les alertes d'intrusion par mail -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <style>
+    /* ── Admin Panel ── */
+    #admin-overlay {
+      position: fixed; inset: 0; z-index: 99998;
+      background: #1a1510;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    #admin-overlay.active { display: flex; }
+    .admin-tab-btn { transition: all 0.2s ease; }
+    .admin-tab-btn.active { background: #BD8F36; color: #fff; }
+    .admin-tab-btn:not(.active) { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
+    .admin-tab-btn:not(.active):hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .admin-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .admin-input:focus { border-color: #BD8F36; }
+    .admin-input::placeholder { color: rgba(255,255,255,0.3); }
+    .admin-btn {
+      background: linear-gradient(135deg, #BD8F36, #D4A74E);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .admin-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(189,143,54,0.35); }
+    .admin-btn-danger { background: linear-gradient(135deg,#c0392b,#e74c3c); }
+    .admin-btn-ghost {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+    }
+    .admin-btn-ghost:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .admin-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th { background: rgba(189,143,54,0.12); color: #D4A74E; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 10px 12px; text-align: left; font-family: 'Jost',sans-serif; }
+    .admin-table td { padding: 10px 12px; font-size: 12px; color: rgba(255,255,255,0.8); border-bottom: 1px solid rgba(255,255,255,0.05); font-family: 'Jost',sans-serif; vertical-align: middle; }
+    .admin-table tr:last-child td { border-bottom: none; }
+    .stock-badge-on  { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); border-radius: 99px; padding: 2px 10px; font-size: 10px; font-weight: 600; font-family:'Jost',sans-serif; }
+    .stock-badge-off { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); border-radius: 99px; padding: 2px 10px; font-size: 10px; font-weight: 600; font-family:'Jost',sans-serif; }
+    .admin-label { font-family:'Jost',sans-serif; font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; display:block; }
+  </style>
+
+  <!-- OVERLAY ADMIN -->
+  <div id="admin-overlay">
+
+    <!-- ── Écran de connexion / setup ── -->
+    <div id="admin-auth-screen" class="min-h-screen w-full flex items-center justify-center p-6">
+      <div class="w-full max-w-md">
+
+        <!-- Logo -->
+        <div class="text-center mb-8">
+          <img src="static/abeilles_Pictures/logo_website.png" alt="Logo" class="h-20 w-20 mx-auto mb-4 opacity-80">
+          <p class="font-display text-2xl font-light text-white tracking-wide">Apiterapia Admin</p>
+          <p class="font-body text-xs text-white/40 mt-1 tracking-widest uppercase">Espace privé · Accès restreint</p>
+        </div>
+
+        <!-- Formulaire premier lancement (setup) -->
+        <div id="admin-setup-form" class="admin-card p-8 hidden">
+          <h2 class="font-body text-sm font-semibold text-honey uppercase tracking-widest mb-6">Première connexion — Configuration du compte</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="admin-label">Votre adresse e-mail (pour recevoir les alertes)</label>
+              <input id="setup-email" type="email" class="admin-input" placeholder="vero@example.com">
+            </div>
+            <div>
+              <label class="admin-label">Identifiant admin</label>
+              <input id="setup-username" type="text" class="admin-input" placeholder="vero_admin">
+            </div>
+            <div>
+              <label class="admin-label">Mot de passe</label>
+              <input id="setup-password" type="password" class="admin-input" placeholder="Minimum 8 caractères">
+            </div>
+            <div>
+              <label class="admin-label">Confirmer le mot de passe</label>
+              <input id="setup-confirm" type="password" class="admin-input" placeholder="Répétez le mot de passe">
+            </div>
+            <div id="setup-error" class="hidden text-red-400 font-body text-xs py-2 px-3 bg-red-900/20 rounded-lg border border-red-500/20"></div>
+            <button onclick="adminSetupSubmit()" class="admin-btn w-full mt-2">Créer mon compte admin</button>
+          </div>
+        </div>
+
+        <!-- Formulaire de connexion -->
+        <div id="admin-login-form" class="admin-card p-8 hidden">
+          <h2 class="font-body text-sm font-semibold text-honey uppercase tracking-widest mb-6">Connexion</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="admin-label">Identifiant</label>
+              <input id="login-username" type="text" class="admin-input" placeholder="Votre identifiant" onkeydown="if(event.key==='Enter')adminLoginSubmit()">
+            </div>
+            <div>
+              <label class="admin-label">Mot de passe</label>
+              <input id="login-password" type="password" class="admin-input" placeholder="Votre mot de passe" onkeydown="if(event.key==='Enter')adminLoginSubmit()">
+            </div>
+            <div id="login-error" class="hidden text-red-400 font-body text-xs py-2 px-3 bg-red-900/20 rounded-lg border border-red-500/20"></div>
+            <div id="login-blocked" class="hidden text-orange-400 font-body text-xs py-2 px-3 bg-orange-900/20 rounded-lg border border-orange-500/20">
+              ⛔ Compte temporairement bloqué suite à plusieurs tentatives incorrectes. Un e-mail d'alerte a été envoyé.
+            </div>
+            <button onclick="adminLoginSubmit()" class="admin-btn w-full">Se connecter</button>
+            <button onclick="showForgotPassword()" class="admin-btn admin-btn-ghost w-full mt-1 text-xs">Mot de passe oublié</button>
+          </div>
+        </div>
+
+        <!-- Récupération mot de passe -->
+        <div id="admin-forgot-form" class="admin-card p-8 hidden">
+          <h2 class="font-body text-sm font-semibold text-honey uppercase tracking-widest mb-6">Récupération d'accès</h2>
+          <div id="forgot-step-email" class="space-y-4">
+            <p class="font-body text-xs text-white/60 leading-relaxed">Entrez votre e-mail admin. Un code à 6 chiffres vous sera envoyé.</p>
+            <input id="forgot-email" type="email" class="admin-input" placeholder="Votre e-mail admin">
+            <div id="forgot-error" class="hidden text-red-400 font-body text-xs py-2 px-3 bg-red-900/20 rounded-lg border border-red-500/20"></div>
+            <button onclick="adminForgotSendCode()" class="admin-btn w-full">Envoyer le code</button>
+            <button onclick="showLoginForm()" class="admin-btn admin-btn-ghost w-full">Retour</button>
+          </div>
+          <div id="forgot-step-code" class="space-y-4 hidden">
+            <p class="font-body text-xs text-white/60 leading-relaxed">Entrez le code à 6 chiffres reçu par e-mail.</p>
+            <input id="forgot-code" type="text" maxlength="6" class="admin-input text-center text-2xl tracking-[0.4em]" placeholder="000000">
+            <input id="forgot-new-password" type="password" class="admin-input" placeholder="Nouveau mot de passe">
+            <div id="forgot-code-error" class="hidden text-red-400 font-body text-xs py-2 px-3 bg-red-900/20 rounded-lg border border-red-500/20"></div>
+            <button onclick="adminForgotVerifyCode()" class="admin-btn w-full">Réinitialiser</button>
+          </div>
+        </div>
+
+        <!-- Bouton fermer -->
+        <button onclick="closeAdmin()" class="mt-6 w-full font-body text-xs text-white/30 hover:text-white/60 transition-colors tracking-widest uppercase">✕ Fermer et retourner au site</button>
+      </div>
+    </div>
+
+    <!-- ── Dashboard principal ── -->
+    <div id="admin-dashboard" class="hidden w-full flex-1 flex flex-col">
+
+      <!-- Header dashboard -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#1a1510] sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+          <img src="static/abeilles_Pictures/logo_website.png" alt="" class="h-8 w-8 opacity-70">
+          <div>
+            <p class="font-body text-sm font-semibold text-white tracking-wide">Dashboard Admin</p>
+            <p class="font-body text-[10px] text-white/40 tracking-widest uppercase" id="admin-welcome-name">Apiterapia con Vero</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="adminChangePassword()" class="admin-btn admin-btn-ghost text-[11px] px-4 py-2">Changer mot de passe</button>
+          <button onclick="adminLogout()" class="admin-btn admin-btn-danger text-[11px] px-4 py-2">Déconnexion</button>
+          <button onclick="closeAdmin()" class="text-white/40 hover:text-white/80 ml-2 transition-colors font-body text-xl">✕</button>
+        </div>
+      </div>
+
+      <!-- Onglets -->
+      <div class="flex gap-2 px-6 pt-5 pb-0">
+        <button id="tab-btn-rdv" onclick="showAdminTab('rdv')" class="admin-tab-btn active font-body text-xs font-medium tracking-widest uppercase px-5 py-2.5 rounded-t-lg">
+          📅 Rendez-vous
+        </button>
+        <button id="tab-btn-shop" onclick="showAdminTab('shop')" class="admin-tab-btn font-body text-xs font-medium tracking-widest uppercase px-5 py-2.5 rounded-t-lg">
+          🛒 Boutique
+        </button>
+        <button id="tab-btn-stats" onclick="showAdminTab('stats')" class="admin-tab-btn font-body text-xs font-medium tracking-widest uppercase px-5 py-2.5 rounded-t-lg">
+          📊 Statistiques
+        </button>
+      </div>
+
+      <!-- Contenu onglets -->
+      <div class="flex-1 px-6 py-6 overflow-y-auto">
+
+        <!-- ── ONGLET : Rendez-vous ── -->
+        <div id="admin-tab-rdv" class="admin-tab-content">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <h2 class="font-display text-2xl font-light text-white">Gestion des Rendez-vous</h2>
+            <button onclick="showAddAppointmentModal()" class="admin-btn text-xs px-5 py-2.5">+ Ajouter un RDV</button>
+          </div>
+
+          <!-- Ajout manuel RDV -->
+          <div id="add-rdv-form" class="admin-card p-6 mb-6 hidden">
+            <h3 class="font-body text-xs font-semibold text-honey uppercase tracking-widest mb-4">Nouveau rendez-vous</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div><label class="admin-label">Nom</label><input id="rdv-name" class="admin-input" placeholder="Nom du client"></div>
+              <div><label class="admin-label">Téléphone</label><input id="rdv-phone" class="admin-input" placeholder="+56912345678"></div>
+              <div><label class="admin-label">Date (YYYY-MM-DD)</label><input id="rdv-date" type="date" class="admin-input"></div>
+              <div>
+                <label class="admin-label">Horaire</label>
+                <select id="rdv-time" class="admin-input">
+                  <option value="">Sélectionner</option>
+                  <option value="15:00">15:00</option><option value="15:30">15:30</option>
+                  <option value="16:00">16:00</option><option value="16:30">16:30</option>
+                  <option value="17:00">17:00</option><option value="17:30">17:30</option>
+                  <option value="18:00">18:00</option><option value="18:30">18:30</option>
+                  <option value="19:00">19:00</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2 lg:col-span-2"><label class="admin-label">Commentaires</label><input id="rdv-comment" class="admin-input" placeholder="Notes optionnelles"></div>
+            </div>
+            <div class="flex gap-3 mt-4">
+              <button onclick="adminAddAppointment()" class="admin-btn text-xs">Enregistrer</button>
+              <button onclick="document.getElementById('add-rdv-form').classList.add('hidden')" class="admin-btn admin-btn-ghost text-xs">Annuler</button>
+            </div>
+          </div>
+
+          <div class="admin-card overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="admin-table" id="admin-rdv-table">
+                <thead><tr>
+                  <th>Date</th><th>Heure</th><th>Nom</th><th>Téléphone</th><th>Commentaire</th><th>Actions</th>
+                </tr></thead>
+                <tbody id="admin-rdv-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <p id="admin-rdv-empty" class="text-center text-white/30 font-body text-sm py-12 hidden">Aucun rendez-vous enregistré.</p>
+        </div>
+
+        <!-- ── ONGLET : Boutique ── -->
+        <div id="admin-tab-shop" class="admin-tab-content hidden">
+          <div class="mb-6">
+            <h2 class="font-display text-2xl font-light text-white mb-1">Gestion de la Boutique</h2>
+            <p class="font-body text-xs text-white/40">Modifiez les prix, descriptions et statuts de stock. Les changements sont visibles immédiatement sur le site public.</p>
+          </div>
+          <div id="admin-products-list" class="space-y-4"></div>
+          <div class="mt-6 flex gap-3">
+            <button onclick="adminSaveProducts()" class="admin-btn text-xs">💾 Sauvegarder les modifications</button>
+            <button onclick="adminResetProducts()" class="admin-btn admin-btn-ghost text-xs">↺ Réinitialiser</button>
+          </div>
+        </div>
+
+        <!-- ── ONGLET : Statistiques ── -->
+        <div id="admin-tab-stats" class="admin-tab-content hidden">
+          <h2 class="font-display text-2xl font-light text-white mb-6">Statistiques & Activité</h2>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="admin-card p-5 text-center">
+              <p class="font-display text-4xl font-light text-honey" id="stat-total-rdv">0</p>
+              <p class="font-body text-[10px] text-white/50 uppercase tracking-widest mt-1">Rendez-vous total</p>
+            </div>
+            <div class="admin-card p-5 text-center">
+              <p class="font-display text-4xl font-light text-honey" id="stat-this-month">0</p>
+              <p class="font-body text-[10px] text-white/50 uppercase tracking-widest mt-1">Ce mois-ci</p>
+            </div>
+            <div class="admin-card p-5 text-center">
+              <p class="font-display text-4xl font-light text-honey" id="stat-total-reviews">0</p>
+              <p class="font-body text-[10px] text-white/50 uppercase tracking-widest mt-1">Avis clients</p>
+            </div>
+            <div class="admin-card p-5 text-center">
+              <p class="font-display text-4xl font-light text-honey" id="stat-avg-rating">—</p>
+              <p class="font-body text-[10px] text-white/50 uppercase tracking-widest mt-1">Note moyenne</p>
+            </div>
+          </div>
+
+          <!-- Graphique mensuel -->
+          <div class="admin-card p-6 mb-6">
+            <h3 class="font-body text-xs font-semibold text-honey uppercase tracking-widest mb-4">Rendez-vous par mois (12 derniers mois)</h3>
+            <canvas id="admin-chart-rdv" height="120"></canvas>
+          </div>
+
+          <!-- Bouton réinitialiser toutes les données -->
+          <div class="admin-card p-6 border-red-500/20">
+            <h3 class="font-body text-xs font-semibold text-red-400 uppercase tracking-widest mb-3">Zone dangereuse</h3>
+            <p class="font-body text-xs text-white/40 mb-4">Supprimer toutes les données localStorage (RDV, avis, produits personnalisés). Cette action est irréversible.</p>
+            <button onclick="adminPurgeData()" class="admin-btn admin-btn-danger text-xs">🗑 Purger toutes les données</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /admin-overlay -->
+
+  <!-- Modal changement mot de passe -->
+  <div id="admin-change-pwd-modal" class="hidden fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 p-6">
+    <div class="admin-card w-full max-w-sm p-8 bg-[#1a1510]">
+      <h3 class="font-body text-sm font-semibold text-honey uppercase tracking-widest mb-5">Changer le mot de passe</h3>
+      <div class="space-y-3">
+        <input id="cpwd-current" type="password" class="admin-input" placeholder="Mot de passe actuel">
+        <input id="cpwd-new" type="password" class="admin-input" placeholder="Nouveau mot de passe">
+        <input id="cpwd-confirm" type="password" class="admin-input" placeholder="Confirmer le nouveau">
+        <div id="cpwd-error" class="hidden text-red-400 font-body text-xs py-2 px-3 bg-red-900/20 rounded-lg"></div>
+        <div class="flex gap-3 pt-1">
+          <button onclick="adminDoChangePassword()" class="admin-btn text-xs flex-1">Confirmer</button>
+          <button onclick="document.getElementById('admin-change-pwd-modal').classList.add('hidden')" class="admin-btn admin-btn-ghost text-xs flex-1">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ══════════════════════════════════════════════════════════════════════════════
+  // ADMIN — Configuration
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  // ⚠️  MASTER PASSWORD — RÉSERVÉ AU DÉVELOPPEUR (ne jamais partager)
+  const ADMIN_MASTER_PASSWORD = 'APITHERAPIA_DEV_MASTER_2026';
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // EmailJS — Remplissez ces valeurs après avoir créé un compte sur emailjs.com
+  // 1. Créez un compte gratuit sur https://www.emailjs.com
+  // 2. Créez un service (Gmail par ex.) → notez le SERVICE_ID
+  // 3. Créez un template email → notez le TEMPLATE_ID
+  //    Variables disponibles dans le template : {{to_email}}, {{message}}, {{subject}}
+  // 4. Récupérez votre PUBLIC_KEY dans Account → API Keys
+  // ──────────────────────────────────────────────────────────────────────────────
+  const EMAILJS_SERVICE_ID  = 'service_05krsa5';
+  const EMAILJS_TEMPLATE_ID = 'template_eqzvdtf';
+  const EMAILJS_PUBLIC_KEY  = 'xI3wvDZl8hhgtDrEU';
+
+  // Nombre de tentatives avant blocage temporaire
+  const MAX_LOGIN_ATTEMPTS = 3;
+  // Durée de blocage en minutes
+  const LOCKOUT_MINUTES = 15;
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Stockage Admin (localStorage)
+  // ──────────────────────────────────────────────────────────────────────────────
+  function adminGetCredentials() {
+    try { return JSON.parse(localStorage.getItem('apiterapia_admin_creds') || 'null'); } catch(e) { return null; }
+  }
+  function adminSaveCredentials(creds) {
+    localStorage.setItem('apiterapia_admin_creds', JSON.stringify(creds));
+  }
+  function adminGetAttempts() {
+    try { return JSON.parse(localStorage.getItem('apiterapia_admin_attempts') || '{"count":0,"lockedUntil":0}'); } catch(e) { return {count:0,lockedUntil:0}; }
+  }
+  function adminSaveAttempts(a) {
+    localStorage.setItem('apiterapia_admin_attempts', JSON.stringify(a));
+  }
+  function adminIsLocked() {
+    const a = adminGetAttempts();
+    if (a.lockedUntil && Date.now() < a.lockedUntil) return true;
+    if (a.lockedUntil && Date.now() >= a.lockedUntil) {
+      adminSaveAttempts({count:0, lockedUntil:0}); // Reset après expiration
+    }
+    return false;
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Hash SHA-256 simplifié (Web Crypto API)
+  // ──────────────────────────────────────────────────────────────────────────────
+  async function hashPassword(pwd) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(pwd + 'APITHERAPIA_SALT_2026');
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // EmailJS — Envoi alerte intrusion
+  // ──────────────────────────────────────────────────────────────────────────────
+  function sendIntrusionAlert(adminEmail, attemptCount) {
+    // Vérifie que EmailJS est configuré
+    if (EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID') {
+      console.warn('[Admin] EmailJS non configuré — alerte intrusion non envoyée.');
+      return;
+    }
+    try {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: adminEmail,
+        subject:  '⚠️ ALERTE SÉCURITÉ — Tentative d\'intrusion Apiterapia',
+        message: `Une tentative de connexion non autorisée a été détectée sur votre espace admin Apiterapia.\n\nNombre de tentatives incorrectes : ${attemptCount}\nDate et heure : ${new Date().toLocaleString('fr-FR')}\n\nSi ce n'est pas vous, changez immédiatement votre mot de passe.`
+      }).then(() => {
+        console.log('[Admin] Alerte intrusion envoyée à', adminEmail);
+      }).catch(err => {
+        console.error('[Admin] Erreur EmailJS:', err);
+      });
+    } catch(e) { console.error('[Admin] EmailJS init error:', e); }
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Détection d'accès admin via hash URL
+  // ──────────────────────────────────────────────────────────────────────────────
+  function checkAdminRoute() {
+    if (window.location.hash === '#admin') {
+      openAdmin();
+    }
+  }
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#admin') openAdmin();
+    else closeAdmin();
+  });
+  document.addEventListener('DOMContentLoaded', checkAdminRoute);
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Ouverture / Fermeture de l'overlay admin
+  // ──────────────────────────────────────────────────────────────────────────────
+  function openAdmin() {
+    document.getElementById('admin-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const creds = adminGetCredentials();
+    if (!creds) {
+      showSetupForm();
+    } else {
+      showLoginForm();
+    }
+  }
+
+  function closeAdmin() {
+    document.getElementById('admin-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+    if (window.location.hash === '#admin') {
+      history.pushState('', document.title, window.location.pathname);
+    }
+    adminLogout(true); // Reset sans déconnecter visuellement (silent=true)
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Affichage des formulaires
+  // ──────────────────────────────────────────────────────────────────────────────
+  function showSetupForm() {
+    document.getElementById('admin-auth-screen').style.display = 'flex';
+    document.getElementById('admin-dashboard').classList.add('hidden');
+    document.getElementById('admin-setup-form').classList.remove('hidden');
+    document.getElementById('admin-login-form').classList.add('hidden');
+    document.getElementById('admin-forgot-form').classList.add('hidden');
+  }
+  function showLoginForm() {
+    document.getElementById('admin-auth-screen').style.display = 'flex';
+    document.getElementById('admin-dashboard').classList.add('hidden');
+    document.getElementById('admin-setup-form').classList.add('hidden');
+    document.getElementById('admin-login-form').classList.remove('hidden');
+    document.getElementById('admin-forgot-form').classList.add('hidden');
+    // Vérifier si bloqué
+    if (adminIsLocked()) {
+      document.getElementById('login-blocked').classList.remove('hidden');
+    }
+  }
+  function showForgotPassword() {
+    document.getElementById('admin-login-form').classList.add('hidden');
+    document.getElementById('admin-forgot-form').classList.remove('hidden');
+    document.getElementById('forgot-step-email').classList.remove('hidden');
+    document.getElementById('forgot-step-code').classList.add('hidden');
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Setup initial du compte admin
+  // ──────────────────────────────────────────────────────────────────────────────
+  async function adminSetupSubmit() {
+    const email    = document.getElementById('setup-email').value.trim();
+    const username = document.getElementById('setup-username').value.trim();
+    const pwd      = document.getElementById('setup-password').value;
+    const confirm  = document.getElementById('setup-confirm').value;
+    const errEl    = document.getElementById('setup-error');
+
+    errEl.classList.add('hidden');
+
+    if (!email || !username || !pwd || !confirm) {
+      errEl.textContent = 'Tous les champs sont requis.';
+      errEl.classList.remove('hidden'); return;
+    }
+    if (!email.includes('@')) {
+      errEl.textContent = 'Adresse e-mail invalide.';
+      errEl.classList.remove('hidden'); return;
+    }
+    if (pwd.length < 8) {
+      errEl.textContent = 'Le mot de passe doit contenir au moins 8 caractères.';
+      errEl.classList.remove('hidden'); return;
+    }
+    if (pwd !== confirm) {
+      errEl.textContent = 'Les mots de passe ne correspondent pas.';
+      errEl.classList.remove('hidden'); return;
+    }
+
+    const hashedPwd = await hashPassword(pwd);
+    adminSaveCredentials({ email, username, passwordHash: hashedPwd });
+    showLoginForm();
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Connexion admin
+  // ──────────────────────────────────────────────────────────────────────────────
+  async function adminLoginSubmit() {
+    const username = document.getElementById('login-username').value.trim();
+    const pwd      = document.getElementById('login-password').value;
+    const errEl    = document.getElementById('login-error');
+    const blockedEl = document.getElementById('login-blocked');
+    errEl.classList.add('hidden');
+    blockedEl.classList.add('hidden');
+
+    // Vérifier le blocage
+    if (adminIsLocked()) {
+      blockedEl.classList.remove('hidden'); return;
+    }
+
+    const creds = adminGetCredentials();
+    if (!creds) { showSetupForm(); return; }
+
+    // Master password (accès développeur)
+    if (pwd === ADMIN_MASTER_PASSWORD) {
+      adminAccessDashboard(creds.username || 'Développeur');
+      return;
+    }
+
+    const hashedPwd = await hashPassword(pwd);
+
+    if (username === creds.username && hashedPwd === creds.passwordHash) {
+      // Succès
+      adminSaveAttempts({count: 0, lockedUntil: 0});
+      adminAccessDashboard(creds.username);
+    } else {
+      // Échec
+      const attempts = adminGetAttempts();
+      attempts.count++;
+
+      // Alerte email après la 1ère tentative échouée avec le bon username
+      if (username === creds.username && attempts.count >= 1) {
+        sendIntrusionAlert(creds.email, attempts.count);
+      }
+
+      if (attempts.count >= MAX_LOGIN_ATTEMPTS) {
+        attempts.lockedUntil = Date.now() + (LOCKOUT_MINUTES * 60 * 1000);
+        adminSaveAttempts(attempts);
+        blockedEl.classList.remove('hidden');
+        sendIntrusionAlert(creds.email, attempts.count);
+      } else {
+        adminSaveAttempts(attempts);
+        errEl.textContent = `Identifiant ou mot de passe incorrect. (${MAX_LOGIN_ATTEMPTS - attempts.count} tentative(s) restante(s))`;
+        errEl.classList.remove('hidden');
+      }
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Accès au dashboard
+  // ──────────────────────────────────────────────────────────────────────────────
+  function adminAccessDashboard(username) {
+    document.getElementById('admin-auth-screen').style.display = 'none';
+    document.getElementById('admin-dashboard').classList.remove('hidden');
+    document.getElementById('admin-welcome-name').textContent = 'Connecté : ' + username;
+    showAdminTab('rdv');
+    adminRenderRdv();
+    adminRenderProducts();
+    adminRenderStats();
+  }
+
+  function adminLogout(silent = false) {
+    if (!silent) {
+      document.getElementById('admin-dashboard').classList.add('hidden');
+      document.getElementById('admin-auth-screen').style.display = 'flex';
+      showLoginForm();
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Onglets
+  // ──────────────────────────────────────────────────────────────────────────────
+  function showAdminTab(tab) {
+    ['rdv','shop','stats'].forEach(t => {
+      document.getElementById(`admin-tab-${t}`).classList.toggle('hidden', t !== tab);
+      document.getElementById(`tab-btn-${t}`).classList.toggle('active', t === tab);
+    });
+    if (tab === 'stats') adminRenderStats();
+    if (tab === 'shop')  adminRenderProducts();
+    if (tab === 'rdv')   adminRenderRdv();
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Gestion des Rendez-vous (Admin)
+  // ──────────────────────────────────────────────────────────────────────────────
+  function showAddAppointmentModal() {
+    const form = document.getElementById('add-rdv-form');
+    form.classList.toggle('hidden');
+  }
+
+  function adminAddAppointment() {
+    const name    = document.getElementById('rdv-name').value.trim();
+    const phone   = document.getElementById('rdv-phone').value.trim();
+    const date    = document.getElementById('rdv-date').value;
+    const time    = document.getElementById('rdv-time').value;
+    const comment = document.getElementById('rdv-comment').value.trim();
+    if (!name || !date || !time) { alert('Nom, date et horaire sont requis.'); return; }
+    const slots = getAdminSlots();
+    slots.push({ name, phone, date, time, comment, created_at: new Date().toISOString(), source: 'admin' });
+    saveAdminSlots(slots);
+    // Synchroniser avec le localStorage public
+    const publicSlots = slots.map(s => ({ date: s.date, time: s.time }));
+    localStorage.setItem('apiterapia_slots', JSON.stringify(publicSlots));
+    document.getElementById('add-rdv-form').classList.add('hidden');
+    ['rdv-name','rdv-phone','rdv-comment'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('rdv-date').value = '';
+    document.getElementById('rdv-time').value = '';
+    adminRenderRdv();
+  }
+
+  function getAdminSlots() {
+    try {
+      // Fusion : slots admin enrichis + slots publics basiques
+      const adminData = JSON.parse(localStorage.getItem('apiterapia_admin_slots') || '[]');
+      const publicData = JSON.parse(localStorage.getItem('apiterapia_slots') || '[]');
+      // Enrichir les slots publics qui n'existent pas encore en admin
+      const adminKeys = new Set(adminData.map(s => `${s.date}_${s.time}`));
+      publicData.forEach(s => {
+        if (!adminKeys.has(`${s.date}_${s.time}`)) {
+          adminData.push({ ...s, name: s.name || '—', phone: s.phone || '—', comment: s.comment || '', source: 'client' });
+        }
+      });
+      return adminData;
+    } catch(e) { return []; }
+  }
+
+  function saveAdminSlots(slots) {
+    localStorage.setItem('apiterapia_admin_slots', JSON.stringify(slots));
+    // Synchroniser la liste publique
+    const publicSlots = slots.map(s => ({ date: s.date, time: s.time }));
+    localStorage.setItem('apiterapia_slots', JSON.stringify(publicSlots));
+    // Rafraîchir le calendrier public si visible
+    try { fetchBookedSlots(); } catch(e) {}
+  }
+
+  function adminRenderRdv() {
+    const slots = getAdminSlots();
+    const tbody  = document.getElementById('admin-rdv-tbody');
+    const empty  = document.getElementById('admin-rdv-empty');
+    const table  = document.getElementById('admin-rdv-table');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    if (slots.length === 0) {
+      table.classList.add('hidden');
+      empty.classList.remove('hidden');
+      return;
+    }
+    table.classList.remove('hidden');
+    empty.classList.add('hidden');
+    // Tri par date puis heure
+    const sorted = [...slots].sort((a, b) => (a.date + a.time) > (b.date + b.time) ? 1 : -1);
+    sorted.forEach((s, idx) => {
+      const tr = document.createElement('tr');
+      const source = s.source === 'admin' ? '<span style="font-size:9px;background:rgba(189,143,54,0.15);color:#D4A74E;border-radius:4px;padding:1px 6px;text-transform:uppercase;letter-spacing:0.05em">Admin</span>' : '<span style="font-size:9px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);border-radius:4px;padding:1px 6px;text-transform:uppercase;letter-spacing:0.05em">Client</span>';
+      tr.innerHTML = `
+        <td><strong>${s.date}</strong></td>
+        <td>${s.time} hrs</td>
+        <td>${s.name || '—'} ${source}</td>
+        <td>${s.phone || '—'}</td>
+        <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${s.comment || ''}">${s.comment || '—'}</td>
+        <td>
+          <button onclick="adminDeleteRdv('${s.date}','${s.time}')" style="background:rgba(239,68,68,0.12);color:#f87171;border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s">Supprimer</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function adminDeleteRdv(date, time) {
+    if (!confirm(`Supprimer le RDV du ${date} à ${time} ?`)) return;
+    const slots = getAdminSlots().filter(s => !(s.date === date && s.time === time));
+    saveAdminSlots(slots);
+    adminRenderRdv();
+    try { renderCalendar(); } catch(e) {}
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Gestion des Produits (Admin)
+  // ──────────────────────────────────────────────────────────────────────────────
+  const DEFAULT_PRODUCTS = [
+    { id:'p1', nameFr:'Miel naturelle',       nameEs:'Miel natural',                    price:'$8.000',  inStock:true },
+    { id:'p2', nameFr:'Combo Complet',         nameEs:'El Combo Completo',               price:'$20.000', inStock:true },
+    { id:'p3', nameFr:'Onguent médicinal #1',  nameEs:'Ungüento medicinal (veneno)',      price:'$6.000',  inStock:true },
+    { id:'p4', nameFr:'Onguent médicinal #2',  nameEs:'Ungüento medicinal (jalea real)', price:'$4.000',  inStock:true },
+    { id:'p5', nameFr:'Propolis',              nameEs:'Propóleo',                         price:'$8.000',  inStock:true },
+    { id:'p6', nameFr:'Teinture médicinale',   nameEs:'Tintura medicinal',               price:'$10.000', inStock:true },
+    { id:'p7', nameFr:'Coffret Miel Premium',  nameEs:'Caja de miel premium con panal',  price:'$15.000', inStock:true },
+  ];
+
+  function getAdminProducts() {
+    try {
+      const stored = JSON.parse(localStorage.getItem('apiterapia_admin_products') || 'null');
+      return stored || JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+    } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)); }
+  }
+
+  function adminRenderProducts() {
+    const container = document.getElementById('admin-products-list');
+    if (!container) return;
+    const products = getAdminProducts();
+    container.innerHTML = '';
+    products.forEach((p, idx) => {
+      const div = document.createElement('div');
+      div.className = 'admin-card p-5';
+      div.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div class="flex-1">
+            <p class="font-body text-xs font-semibold text-honey uppercase tracking-widest mb-3">${p.nameEs}</p>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label class="admin-label">Prix</label>
+                <input class="admin-input" id="prod-price-${idx}" value="${p.price}" placeholder="$0.000">
+              </div>
+              <div class="flex items-end gap-3">
+                <div class="flex-1">
+                  <label class="admin-label">Statut</label>
+                  <div class="flex items-center gap-3 mt-1">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="prod-stock-${idx}" ${p.inStock?'checked':''} class="w-4 h-4 accent-yellow-500">
+                      <span class="font-body text-xs text-white/70">En stock</span>
+                    </label>
+                    <span id="prod-badge-${idx}" class="${p.inStock?'stock-badge-on':'stock-badge-off'}">${p.inStock?'Disponible':'Agotado'}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      // Mise à jour du badge en temps réel
+      const checkbox = div.querySelector(`#prod-stock-${idx}`);
+      checkbox.addEventListener('change', () => {
+        const badge = div.querySelector(`#prod-badge-${idx}`);
+        badge.className = checkbox.checked ? 'stock-badge-on' : 'stock-badge-off';
+        badge.textContent = checkbox.checked ? 'Disponible' : 'Agotado';
+      });
+      container.appendChild(div);
+    });
+  }
+
+  function adminSaveProducts() {
+    const products = getAdminProducts();
+    products.forEach((p, idx) => {
+      const priceEl = document.getElementById(`prod-price-${idx}`);
+      const stockEl = document.getElementById(`prod-stock-${idx}`);
+      if (priceEl) p.price = priceEl.value.trim();
+      if (stockEl) p.inStock = stockEl.checked;
+    });
+    localStorage.setItem('apiterapia_admin_products', JSON.stringify(products));
+    // Appliquer les banderoles "Agotado" sur le site public
+    applyStockBadgesPublic(products);
+    alert('✅ Produits sauvegardés avec succès !');
+  }
+
+  function adminResetProducts() {
+    if (!confirm('Réinitialiser tous les produits aux valeurs par défaut ?')) return;
+    localStorage.removeItem('apiterapia_admin_products');
+    adminRenderProducts();
+    applyStockBadgesPublic(DEFAULT_PRODUCTS);
+  }
+
+  // Applique les banderoles "Agotado" sur les cartes produits du site public
+  function applyStockBadgesPublic(products) {
+    const cardIds = ['p1','p2','p3','p4','p5','p6','p7'];
+    // On parcourt les cartes dans l'ordre d'apparition dans le DOM
+    const cards = document.querySelectorAll('#productos .card-lift');
+    // Mapping : ordre des cartes dans le HTML vs ordre de l'admin
+    // HTML order: p2(combo), p1(miel), p3(unguento1), p4(unguento2), p5(propoleo), p6(tintura), p7(mielbox)
+    const htmlOrder = ['p2','p1','p3','p4','p5','p6','p7'];
+    cards.forEach((card, i) => {
+      const prodId = htmlOrder[i];
+      const prod   = products.find(p => p.id === prodId);
+      if (!prod) return;
+      // Supprimer l'ancienne banderole si elle existe
+      const existingBadge = card.querySelector('.agotado-banner');
+      if (existingBadge) existingBadge.remove();
+      const buyBtn = card.querySelector('.btn-buy');
+      if (buyBtn) buyBtn.disabled = prod.inStock;
+      if (!prod.inStock) {
+        // Injecter la banderole "Agotado"
+        const banner = document.createElement('div');
+        banner.className = 'agotado-banner';
+        banner.style.cssText = 'position:absolute;top:12px;left:-8px;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;font-family:Jost,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:5px 14px;border-radius:3px;box-shadow:2px 2px 8px rgba(0,0,0,0.2);z-index:20;';
+        banner.textContent = 'Agotado por el momento';
+        const imgWrapper = card.querySelector('.aspect-\\[3\\/4\\]');
+        if (imgWrapper) {
+          imgWrapper.style.position = 'relative';
+          imgWrapper.appendChild(banner);
+        }
+      }
+      // Mettre à jour le prix affiché
+      const priceEl = card.querySelector('.product-price');
+      if (priceEl) {
+        priceEl.innerHTML = `${prod.price} <span>CLP</span>`;
+      }
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Statistiques
+  // ──────────────────────────────────────────────────────────────────────────────
+  function adminRenderStats() {
+    const slots   = getAdminSlots();
+    const reviews = getCustomReviews();
+    const now     = new Date();
+
+    document.getElementById('stat-total-rdv').textContent = slots.length;
+
+    const thisMonth = slots.filter(s => {
+      const d = new Date(s.date);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    }).length;
+    document.getElementById('stat-this-month').textContent = thisMonth;
+    document.getElementById('stat-total-reviews').textContent = reviews.length;
+
+    const avgRating = reviews.length > 0
+      ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
+      : '—';
+    document.getElementById('stat-avg-rating').textContent = avgRating;
+
+    // Graphique barres — 12 derniers mois
+    renderAdminChart(slots);
+  }
+
+  function renderAdminChart(slots) {
+    const canvas = document.getElementById('admin-chart-rdv');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const now = new Date();
+    const labels = [];
+    const data   = [];
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthLabel = d.toLocaleDateString('es-ES', { month: 'short', year: '2-digit' });
+      labels.push(monthLabel);
+      const count = slots.filter(s => {
+        const sd = new Date(s.date);
+        return sd.getMonth() === d.getMonth() && sd.getFullYear() === d.getFullYear();
+      }).length;
+      data.push(count);
+    }
+
+    // Dessin manuel du graphique (pas de Chart.js CDN pour rester léger)
+    canvas.width  = canvas.parentElement.offsetWidth - 48;
+    canvas.height = 120;
+    const W = canvas.width, H = canvas.height;
+    const barW   = Math.floor(W / labels.length) - 4;
+    const maxVal = Math.max(...data, 1);
+
+    ctx.clearRect(0, 0, W, H);
+    labels.forEach((label, i) => {
+      const x      = i * (barW + 4) + 2;
+      const barH   = Math.floor((data[i] / maxVal) * (H - 30));
+      const y      = H - barH - 20;
+      const isThisMonth = (i === 11);
+      ctx.fillStyle = isThisMonth ? '#BD8F36' : 'rgba(189,143,54,0.35)';
+      ctx.beginPath();
+      ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+      ctx.fill();
+      // Label
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.font = '9px Jost, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x + barW / 2, H - 5);
+      // Valeur
+      if (data[i] > 0) {
+        ctx.fillStyle = isThisMonth ? '#D4A74E' : 'rgba(255,255,255,0.5)';
+        ctx.font = 'bold 10px Jost, sans-serif';
+        ctx.fillText(data[i], x + barW / 2, y - 4);
+      }
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Changement de mot de passe
+  // ──────────────────────────────────────────────────────────────────────────────
+  function adminChangePassword() {
+    document.getElementById('admin-change-pwd-modal').classList.remove('hidden');
+  }
+
+  async function adminDoChangePassword() {
+    const current  = document.getElementById('cpwd-current').value;
+    const newPwd   = document.getElementById('cpwd-new').value;
+    const confirm  = document.getElementById('cpwd-confirm').value;
+    const errEl    = document.getElementById('cpwd-error');
+    errEl.classList.add('hidden');
+
+    const creds = adminGetCredentials();
+    if (!creds) return;
+
+    // Autoriser aussi le master password
+    const currentHash = await hashPassword(current);
+    if (currentHash !== creds.passwordHash && current !== ADMIN_MASTER_PASSWORD) {
+      errEl.textContent = 'Mot de passe actuel incorrect.'; errEl.classList.remove('hidden'); return;
+    }
+    if (newPwd.length < 8) {
+      errEl.textContent = 'Minimum 8 caractères.'; errEl.classList.remove('hidden'); return;
+    }
+    if (newPwd !== confirm) {
+      errEl.textContent = 'Les mots de passe ne correspondent pas.'; errEl.classList.remove('hidden'); return;
+    }
+    creds.passwordHash = await hashPassword(newPwd);
+    adminSaveCredentials(creds);
+    adminSaveAttempts({count:0, lockedUntil:0});
+    document.getElementById('admin-change-pwd-modal').classList.add('hidden');
+    ['cpwd-current','cpwd-new','cpwd-confirm'].forEach(id => document.getElementById(id).value='');
+    alert('✅ Mot de passe changé avec succès !');
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Récupération de mot de passe (code à 6 chiffres)
+  // ──────────────────────────────────────────────────────────────────────────────
+  let _forgotResetCode = null;
+
+  function adminForgotSendCode() {
+    const emailInput = document.getElementById('forgot-email').value.trim();
+    const errEl = document.getElementById('forgot-error');
+    errEl.classList.add('hidden');
+    const creds = adminGetCredentials();
+    if (!creds || emailInput.toLowerCase() !== creds.email.toLowerCase()) {
+      errEl.textContent = 'Adresse e-mail non reconnue.'; errEl.classList.remove('hidden'); return;
+    }
+    // Générer un code à 6 chiffres
+    _forgotResetCode = String(Math.floor(100000 + Math.random() * 900000));
+    // Envoyer via EmailJS
+    if (EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID') {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: creds.email,
+        subject:  '🔑 Code de récupération Apiterapia Admin',
+        message: `Votre code de récupération est : ${_forgotResetCode}\n\nCe code est valable pour une utilisation immédiate.`
+      });
+    } else {
+      // En mode développement sans EmailJS : afficher le code dans la console
+      console.log(`[Admin DEBUG] Code de récupération : ${_forgotResetCode}`);
+      alert(`[Mode développement] Code de récupération : ${_forgotResetCode}`);
+    }
+    document.getElementById('forgot-step-email').classList.add('hidden');
+    document.getElementById('forgot-step-code').classList.remove('hidden');
+  }
+
+  async function adminForgotVerifyCode() {
+    const code    = document.getElementById('forgot-code').value.trim();
+    const newPwd  = document.getElementById('forgot-new-password').value;
+    const errEl   = document.getElementById('forgot-code-error');
+    errEl.classList.add('hidden');
+    if (code !== _forgotResetCode) {
+      errEl.textContent = 'Code incorrect.'; errEl.classList.remove('hidden'); return;
+    }
+    if (newPwd.length < 8) {
+      errEl.textContent = 'Le nouveau mot de passe doit contenir au moins 8 caractères.'; errEl.classList.remove('hidden'); return;
+    }
+    const creds = adminGetCredentials();
+    creds.passwordHash = await hashPassword(newPwd);
+    adminSaveCredentials(creds);
+    adminSaveAttempts({count:0, lockedUntil:0});
+    _forgotResetCode = null;
+    alert('✅ Mot de passe réinitialisé ! Vous pouvez maintenant vous connecter.');
+    showLoginForm();
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Purge des données
+  // ──────────────────────────────────────────────────────────────────────────────
+  function adminPurgeData() {
+    if (!confirm('⚠️ Supprimer TOUTES les données (RDV, avis, produits) ? Cette action est définitive.')) return;
+    ['apiterapia_slots','apiterapia_admin_slots','apiterapia_user_reviews','apiterapia_admin_products'].forEach(k => localStorage.removeItem(k));
+    alert('✅ Toutes les données ont été supprimées.');
+    adminRenderRdv();
+    adminRenderProducts();
+    adminRenderStats();
+    try { fetchBookedSlots(); renderReviews(); } catch(e) {}
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────────
+  // Chargement initial — appliquer les stocks sauvegardés
+  // ──────────────────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedProducts = localStorage.getItem('apiterapia_admin_products');
+    if (savedProducts) {
+      try { applyStockBadgesPublic(JSON.parse(savedProducts)); } catch(e) {}
+    }
+  });
+
+  </script>
+
 </body>
 </html>
