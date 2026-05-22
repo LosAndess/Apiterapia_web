@@ -119,7 +119,7 @@
 
     .btn-honey {
       background: linear-gradient(135deg, #BD8F36 0%, #D4A74E 100%);
-      transition: all 0.4s cubic-bezier(.25, .46, .45, .94);
+      transition: transform 0.4s cubic-bezier(.25,.46,.45,.94), box-shadow 0.4s cubic-bezier(.25,.46,.45,.94), opacity 0.3s ease;
       box-shadow: 0 4px 18px rgba(189,143,54,0.22), 0 1px 4px rgba(189,143,54,0.10);
     }
     .btn-honey:hover {
@@ -132,7 +132,7 @@
       border: 1px solid rgba(255,255,255,0.4);
       color: #fff;
       backdrop-filter: blur(8px);
-      transition: all 0.4s cubic-bezier(.25, .46, .45, .94);
+      transition: transform 0.4s cubic-bezier(.25,.46,.45,.94), box-shadow 0.4s cubic-bezier(.25,.46,.45,.94), opacity 0.3s ease;
     }
     .btn-ghost:hover {
       background: rgba(255,255,255,0.15);
@@ -347,7 +347,7 @@
       background: linear-gradient(135deg, #1da851 0%, #25D366 100%);
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 6px 24px rgba(37,211,102,0.38), 0 2px 8px rgba(37,211,102,0.18);
-      transition: all 0.35s cubic-bezier(.25, .46, .45, .94);
+      transition: transform 0.35s cubic-bezier(.25,.46,.45,.94), box-shadow 0.35s cubic-bezier(.25,.46,.45,.94), opacity 0.25s ease;
       cursor: pointer;
       border: none;
       flex-shrink: 0;
@@ -389,7 +389,7 @@
       color: #2C251E;
       width: 100%;
       outline: none;
-      transition: all 0.3s ease;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .form-field:focus {
       border-color: #BD8F36;
@@ -437,8 +437,6 @@
       min-width: 44px;
     }
     /* Animations modales et formulaires */
-    #admin-overlay { transition: opacity 0.25s ease; opacity: 0; pointer-events: none; }
-    #admin-overlay.active { opacity: 1; pointer-events: all; }
     #admin-auth-screen > div, #admin-dashboard {
       animation: fadeSlideUp 0.3s cubic-bezier(0.22,1,0.36,1) both;
     }
@@ -456,7 +454,7 @@
     }
     .btn-honey:active, .admin-btn:active { transform: scale(0.97); }
     .lang-btn {
-      transition: all 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       opacity: 0.4;
       cursor: pointer;
     }
@@ -631,7 +629,7 @@
       cursor: pointer;
       color: #735F43;
       font-size: 12px;
-      transition: all 0.2s;
+      transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
       flex-shrink: 0;
     }
     .cal-nav-btn:hover {
@@ -2329,9 +2327,13 @@
     #admin-overlay {
       position: fixed; inset: 0; z-index: 99998;
       background: #2C251E;
-      display: none; flex-direction: column; overflow-y: auto;
+      display: flex; flex-direction: column; overflow-y: auto;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
     }
-    #admin-overlay.active { display: flex; }
+    #admin-overlay.active {
+      opacity: 1; visibility: visible; pointer-events: all;
+    }
 
     /* Bruit décoratif (identique au body principal) */
     #admin-overlay::before {
@@ -2353,7 +2355,7 @@
       font-family: 'Jost', sans-serif; font-size: 10px;
       font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
       border-radius: 8px 8px 0 0;
-      transition: all 0.35s cubic-bezier(.25,.46,.45,.94);
+      transition: background 0.35s cubic-bezier(.25,.46,.45,.94), color 0.35s ease, box-shadow 0.35s ease;
       position: relative; z-index: 1;
     }
     .admin-tab-btn.active {
@@ -2379,7 +2381,7 @@
       color: #FDFBF7;
       font-family: 'Jost', sans-serif; font-size: 13px;
       width: 100%; outline: none;
-      transition: all 0.3s cubic-bezier(.25,.46,.45,.94);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .admin-input:focus {
       border-color: #BD8F36;
@@ -2398,7 +2400,7 @@
       font-family: 'Jost', sans-serif; font-size: 11px;
       font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(.25,.46,.45,.94);
+      transition: transform 0.4s cubic-bezier(.25,.46,.45,.94), box-shadow 0.4s cubic-bezier(.25,.46,.45,.94), opacity 0.3s ease;
       box-shadow: 0 4px 18px rgba(189,143,54,0.20), 0 1px 4px rgba(189,143,54,0.10);
     }
     .admin-btn:hover {
@@ -2807,13 +2809,19 @@
     } catch(e) { console.warn('[Cloud] Sync échouée, localStorage utilisé.', e); }
   }
 
-  // Tire les données du cloud et met à jour le localStorage (lecture publique)
+  // Tire les données du cloud et met à jour le localStorage + l'affichage public
   async function cloudSyncDown() {
     const data = await cloudGet();
     if (!data) return;
     if (Array.isArray(data.slots))       localStorage.setItem('apiterapia_slots', JSON.stringify(data.slots));
     if (Array.isArray(data.admin_slots)) localStorage.setItem('apiterapia_admin_slots', JSON.stringify(data.admin_slots));
-    if (data.products)                   localStorage.setItem('apiterapia_admin_products', JSON.stringify(data.products));
+    if (data.products && Array.isArray(data.products)) {
+      localStorage.setItem('apiterapia_admin_products', JSON.stringify(data.products));
+      // Appliquer traductions + badges stock sur le site public immédiatement
+      try { applyProductTranslationOverrides(data.products); } catch(e) {}
+      try { applyStockBadgesPublic(data.products); }          catch(e) {}
+      try { changeLang(currentLang); }                        catch(e) {}
+    }
   }
 
   // Pousse tout vers le cloud (écriture admin)
