@@ -428,10 +428,33 @@
       background-clip: text;
     }
 
-    /* Supprime le délai 300ms sur mobile pour tous les éléments cliquables */
+    /* Supprime le délai 300ms sur mobile + touch targets 44px minimum */
     button, a, [onclick], label, select, input[type="submit"], input[type="button"] {
       touch-action: manipulation;
     }
+    button:not(.lang-btn):not(.cal-nav-btn):not(.wa-close-btn) {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    /* Animations modales et formulaires */
+    #admin-overlay { transition: opacity 0.25s ease; opacity: 0; pointer-events: none; }
+    #admin-overlay.active { opacity: 1; pointer-events: all; }
+    #admin-auth-screen > div, #admin-dashboard {
+      animation: fadeSlideUp 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    #mobile-menu {
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
+    }
+    .admin-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+    .admin-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+    .btn-honey, .btn-ghost, .admin-btn {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    }
+    .btn-honey:active, .admin-btn:active { transform: scale(0.97); }
     .lang-btn {
       transition: all 0.3s ease;
       opacity: 0.4;
@@ -2233,7 +2256,9 @@
       initLanguage();
       initCalendar();
 
-      fetchBookedSlots();
+      // Sync cloud → localStorage au chargement (fallback silencieux si hors ligne)
+      cloudSyncDown().then(() => fetchBookedSlots());
+      fetchBookedSlots(); // Affichage immédiat depuis localStorage pendant la requête
 
       document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
@@ -2747,6 +2772,58 @@
   const EMAILJS_TEMPLATE_ID = 'template_eqzvdtf';
   const EMAILJS_PUBLIC_KEY  = 'xI3wvDZl8hhgtDrEU';
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // CLOUD SYNC — JSONBin.io (gratuit, sans backend)
+  // ──────────────────────────────────────────────────────────────────────────────
+  // ÉTAPES CONFIGURATION :
+  //   1. Créez un compte gratuit sur https://jsonbin.io
+  //   2. Cliquez "Create Bin" → contenu initial : {"slots":[],"admin_slots":[],"products":null}
+  //   3. Copiez l'ID du Bin (ex: 6650abc123def456...) → CLOUD_BIN_ID
+  //   4. Allez dans Account > API Keys → copiez votre Master Key → CLOUD_API_KEY
+  // ══════════════════════════════════════════════════════════════════════════════
+  const CLOUD_BIN_ID  = '6a0fbb316610dd3ae885ba5d';
+  const CLOUD_API_KEY = '$2a$10$/0IJdu4sKyPMlb8TZKxNF.QgUgavkeOMXqG016uJP54oYtcP3u09e';
+  const CLOUD_URL     = `https://api.jsonbin.io/v3/b/${CLOUD_BIN_ID}`;
+  const CLOUD_ENABLED = CLOUD_BIN_ID !== 'VOTRE_BIN_ID_ICI' && CLOUD_API_KEY !== 'VOTRE_MASTER_KEY_ICI';
+
+  async function cloudGet() {
+    if (!CLOUD_ENABLED) return null;
+    try {
+      const res = await fetch(`${CLOUD_URL}/latest`, { headers: { 'X-Master-Key': CLOUD_API_KEY } });
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.record || null;
+    } catch(e) { return null; }
+  }
+
+  async function cloudSet(data) {
+    if (!CLOUD_ENABLED) return;
+    try {
+      await fetch(CLOUD_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': CLOUD_API_KEY },
+        body: JSON.stringify(data)
+      });
+    } catch(e) { console.warn('[Cloud] Sync échouée, localStorage utilisé.', e); }
+  }
+
+  // Tire les données du cloud et met à jour le localStorage (lecture publique)
+  async function cloudSyncDown() {
+    const data = await cloudGet();
+    if (!data) return;
+    if (Array.isArray(data.slots))       localStorage.setItem('apiterapia_slots', JSON.stringify(data.slots));
+    if (Array.isArray(data.admin_slots)) localStorage.setItem('apiterapia_admin_slots', JSON.stringify(data.admin_slots));
+    if (data.products)                   localStorage.setItem('apiterapia_admin_products', JSON.stringify(data.products));
+  }
+
+  // Pousse tout vers le cloud (écriture admin)
+  async function cloudPush() {
+    const slots       = JSON.parse(localStorage.getItem('apiterapia_slots')         || '[]');
+    const admin_slots = JSON.parse(localStorage.getItem('apiterapia_admin_slots')   || '[]');
+    const products    = JSON.parse(localStorage.getItem('apiterapia_admin_products')|| 'null');
+    await cloudSet({ slots, admin_slots, products });
+  }
+
   // Nombre de tentatives avant blocage temporaire
   const MAX_LOGIN_ATTEMPTS = 3;
   // Durée de blocage en minutes
@@ -2965,6 +3042,21 @@
   // ──────────────────────────────────────────────────────────────────────────────
   // Accès au dashboard
   // ──────────────────────────────────────────────────────────────────────────────
+  // Session timeout : déconnexion automatique après 30 min d'inactivité
+  let _sessionTimer = null;
+  function _resetSessionTimer() {
+    clearTimeout(_sessionTimer);
+    _sessionTimer = setTimeout(() => {
+      if (!document.getElementById('admin-dashboard').classList.contains('hidden')) {
+        adminLogout();
+        alert('⏱ Session expirée. Veuillez vous reconnecter.');
+      }
+    }, 30 * 60 * 1000);
+  }
+  ['click','keydown','touchstart'].forEach(ev =>
+    document.addEventListener(ev, () => { if (_sessionTimer) _resetSessionTimer(); }, { passive: true })
+  );
+
   function adminAccessDashboard(username) {
     document.getElementById('admin-auth-screen').style.display = 'none';
     document.getElementById('admin-dashboard').classList.remove('hidden');
@@ -2973,9 +3065,12 @@
     adminRenderRdv();
     adminRenderProducts();
     adminRenderStats();
+    _resetSessionTimer(); // Démarrer le timer de session
   }
 
   function adminLogout(silent = false) {
+    clearTimeout(_sessionTimer);
+    _sessionTimer = null;
     if (!silent) {
       document.getElementById('admin-dashboard').classList.add('hidden');
       document.getElementById('admin-auth-screen').style.display = 'flex';
@@ -3042,11 +3137,10 @@
 
   function saveAdminSlots(slots) {
     localStorage.setItem('apiterapia_admin_slots', JSON.stringify(slots));
-    // Synchroniser la liste publique
     const publicSlots = slots.map(s => ({ date: s.date, time: s.time }));
     localStorage.setItem('apiterapia_slots', JSON.stringify(publicSlots));
-    // Rafraîchir le calendrier public si visible
     try { fetchBookedSlots(); } catch(e) {}
+    cloudPush(); // Sync cloud en arrière-plan
   }
 
   function adminRenderRdv() {
@@ -3261,10 +3355,10 @@
       if (descEnEl)  p.desc_en  = descEnEl.value.trim();
     });
     localStorage.setItem('apiterapia_admin_products', JSON.stringify(products));
-    // Mettre à jour les traductions en mémoire ET le site public
     applyProductTranslationOverrides(products);
     applyStockBadgesPublic(products);
-    changeLang(currentLang); // Rafraîchir l'affichage public immédiatement
+    changeLang(currentLang);
+    cloudPush(); // Sync cloud en arrière-plan
     alert('✅ Cambios guardados con éxito · Changes saved successfully!');
   }
 
