@@ -428,6 +428,10 @@
       background-clip: text;
     }
 
+    /* Supprime le délai 300ms sur mobile pour tous les éléments cliquables */
+    button, a, [onclick], label, select, input[type="submit"], input[type="button"] {
+      touch-action: manipulation;
+    }
     .lang-btn {
       transition: all 0.3s ease;
       opacity: 0.4;
@@ -1054,6 +1058,16 @@
           </svg>
           <span class="font-body text-[11px] font-semibold text-honey tracking-widest uppercase" data-i18n="bannerComingSoon">Ventas en línea próximamente</span>
         </div>
+      </div>
+
+      <!-- Slider nav (mobile uniquement) -->
+      <div class="flex md:hidden justify-end items-center gap-2 mb-3 px-1">
+        <button id="slider-prev" aria-label="Précédent" style="touch-action:manipulation" class="w-8 h-8 rounded-full border border-beige/60 bg-cream flex items-center justify-center text-ink/60 hover:text-ink hover:border-honey/60 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="slider-next" aria-label="Suivant" style="touch-action:manipulation" class="w-8 h-8 rounded-full border border-beige/60 bg-cream flex items-center justify-center text-ink/60 hover:text-ink hover:border-honey/60 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
       </div>
 
       <div id="products-slider" class="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto pb-8 pt-2 md:pb-0 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
@@ -1844,10 +1858,17 @@
         return;
       }
 
-      // Étape 3 — Enregistrer le créneau en localStorage
+      // Étape 3 — Enregistrer le créneau en localStorage (public + admin)
       serverBookedSlots.push({ date: fecha, time: hora });
       try {
         localStorage.setItem('apiterapia_slots', JSON.stringify(serverBookedSlots));
+        // Sync admin : enrichir apiterapia_admin_slots avec les infos client
+        const adminSlots = JSON.parse(localStorage.getItem('apiterapia_admin_slots') || '[]');
+        const alreadyInAdmin = adminSlots.some(s => s.date === fecha && s.time === hora);
+        if (!alreadyInAdmin) {
+          adminSlots.push({ name: nombre, phone: telefono, date: fecha, time: hora, comment: comentario, created_at: new Date().toISOString(), source: 'client' });
+          localStorage.setItem('apiterapia_admin_slots', JSON.stringify(adminSlots));
+        }
       } catch(e) { /* stockage plein ou désactivé — on continue quand même */ }
 
       try { updateAvailableTimes(); } catch(e) {}
@@ -2229,20 +2250,29 @@
     window.scrollTo(0, 0);
     if (history.scrollRestoration) history.scrollRestoration = 'manual';
 
-    // ── Boutique : centrer la carte cliquée sur mobile ──────────────────────
+    // ── Boutique : slider prev/next + swipe ─────────────────────────────────
     const productsSlider = document.getElementById('products-slider');
     if (productsSlider) {
-      productsSlider.addEventListener('click', function(e) {
-        if (window.innerWidth >= 768) return; // Desktop seulement si grille, pas besoin
-        const card = e.target.closest('.card-lift');
-        if (!card) return;
-        const sliderRect = productsSlider.getBoundingClientRect();
-        const cardRect   = card.getBoundingClientRect();
-        const scrollLeft = productsSlider.scrollLeft
-          + cardRect.left - sliderRect.left
-          - (sliderRect.width - cardRect.width) / 2;
-        productsSlider.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      const getCardWidth = () => {
+        const card = productsSlider.querySelector('.card-lift');
+        if (!card) return productsSlider.clientWidth;
+        return card.offsetWidth + parseInt(getComputedStyle(productsSlider).gap || 24);
+      };
+      const btnPrev = document.getElementById('slider-prev');
+      const btnNext = document.getElementById('slider-next');
+      if (btnPrev) btnPrev.addEventListener('click', () => {
+        productsSlider.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
       });
+      if (btnNext) btnNext.addEventListener('click', () => {
+        productsSlider.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+      });
+      // Swipe touch
+      let tsX = 0;
+      productsSlider.addEventListener('touchstart', e => { tsX = e.touches[0].clientX; }, { passive: true });
+      productsSlider.addEventListener('touchend', e => {
+        const dx = tsX - e.changedTouches[0].clientX;
+        if (Math.abs(dx) > 40) productsSlider.scrollBy({ left: dx > 0 ? getCardWidth() : -getCardWidth(), behavior: 'smooth' });
+      }, { passive: true });
     }
 
     window.addEventListener('scroll', () => {
@@ -3264,7 +3294,7 @@
       const existingBadge = card.querySelector('.agotado-banner');
       if (existingBadge) existingBadge.remove();
       const buyBtn = card.querySelector('.btn-buy');
-      if (buyBtn) buyBtn.disabled = prod.inStock;
+      if (buyBtn) buyBtn.disabled = !prod.inStock;
       if (!prod.inStock) {
         // Injecter la banderole "Agotado"
         const banner = document.createElement('div');
