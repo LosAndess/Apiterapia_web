@@ -161,30 +161,30 @@
       z-index: 1;
     }
 
-    /* ── WhatsApp floating menu container ── */
+    /* ── WhatsApp Premium ── */
     #wa-container {
       position: fixed;
-      bottom: 32px; right: 32px;
+      bottom: 28px; right: 28px;
       z-index: 998;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      gap: 14px;
     }
 
-    /* Menu popup */
+    /* Premium popup card */
     .wa-menu {
-      background: #FDFBF7;
-      border-radius: 16px;
-      border: 1px solid rgba(44,37,30,0.08);
-      box-shadow: 0 8px 40px rgba(44,37,30,0.14), 0 2px 8px rgba(44,37,30,0.06);
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 6px 20px rgba(0,0,0,0.08);
       overflow: hidden;
       transform-origin: bottom right;
-      transform: scale(0.85) translateY(10px);
+      transform: scale(0.78) translateY(20px);
       opacity: 0;
       pointer-events: none;
-      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
-      min-width: 248px;
-      margin-bottom: 10px;
+      transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+      min-width: 290px;
+      max-width: 320px;
       will-change: transform, opacity;
     }
     .wa-menu.open {
@@ -193,15 +193,120 @@
       pointer-events: all;
     }
 
-    /* Items du menu */
+    /* Header vert WhatsApp */
+    .wa-chat-header {
+      background: linear-gradient(135deg, #1a7a45 0%, #25A244 100%);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .wa-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      border: 2px solid rgba(255,255,255,0.30);
+      flex-shrink: 0;
+    }
+    .wa-header-info { flex: 1; min-width: 0; }
+    .wa-contact-name {
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wa-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 3px;
+    }
+    .wa-status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #90EE90;
+      flex-shrink: 0;
+      animation: waDotPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes waDotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .wa-status-badge span:last-child {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.02em;
+    }
+    .wa-close-btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: rgba(255,255,255,0.9);
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .wa-close-btn:hover { background: rgba(255,255,255,0.28); }
+
+    /* Corps chat (fond texturé WA) */
+    .wa-chat-body {
+      background: #e5ddd5;
+      padding: 14px 14px 10px;
+      background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1' fill='%23c8bfb5' fill-opacity='0.35'/%3E%3Ccircle cx='13' cy='13' r='1' fill='%23c8bfb5' fill-opacity='0.35'/%3E%3C/svg%3E");
+    }
+    .wa-chat-bubble {
+      background: #fff;
+      border-radius: 2px 12px 12px 12px;
+      padding: 9px 13px 8px;
+      display: inline-block;
+      max-width: 88%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      position: relative;
+    }
+    .wa-chat-bubble::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -7px;
+      width: 0; height: 0;
+      border-top: 7px solid #fff;
+      border-left: 7px solid transparent;
+    }
+    .wa-chat-bubble p {
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      color: #2C251E;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .wa-chat-time {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      color: rgba(44,37,30,0.40);
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    /* Zone actions */
+    .wa-actions {
+      background: #fff;
+      padding: 4px 0 6px;
+    }
     .wa-menu-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 13px 18px;
-      font-family: 'Jost', sans-serif;
-      font-size: 12px;
-      color: #2C251E;
+      padding: 11px 16px;
       cursor: pointer;
       transition: background 0.15s ease;
       text-align: left;
@@ -209,40 +314,67 @@
       background: transparent;
       border: none;
       text-decoration: none;
-      letter-spacing: 0.01em;
-      font-weight: 400;
-      line-height: 1.4;
     }
-    .wa-menu-item:hover { background: rgba(189,143,54,0.07); }
-    .wa-menu-item + .wa-menu-item { border-top: 1px solid rgba(44,37,30,0.07); }
-    .wa-menu-item svg { width: 18px; height: 18px; flex-shrink: 0; color: #BD8F36; }
+    .wa-menu-item:hover { background: rgba(37,162,68,0.07); }
+    .wa-menu-item + .wa-menu-item { border-top: 1px solid rgba(0,0,0,0.05); }
+    .wa-item-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(37,162,68,0.10);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .wa-item-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #2C251E;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .wa-item-sub {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      color: rgba(44,37,30,0.42);
+      margin: 2px 0 0;
+    }
 
     /* Bouton principal WhatsApp */
     .whatsapp-float {
       width: 56px; height: 56px;
       border-radius: 50%;
-      background: #25D366;
+      background: linear-gradient(135deg, #1da851 0%, #25D366 100%);
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 20px rgba(37,211,102,0.25);
-      transition: all 0.3s cubic-bezier(.25, .46, .45, .94);
+      box-shadow: 0 6px 24px rgba(37,211,102,0.38), 0 2px 8px rgba(37,211,102,0.18);
+      transition: all 0.35s cubic-bezier(.25, .46, .45, .94);
       cursor: pointer;
       border: none;
       flex-shrink: 0;
+      position: relative;
+    }
+    .whatsapp-float::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: rgba(37,211,102,0.22);
+      animation: waBtnPulse 2.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes waBtnPulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.22); opacity: 0; }
     }
     .whatsapp-float:hover {
-      transform: scale(1.08) translateY(-3px);
-      box-shadow: 0 12px 28px rgba(37,211,102,0.4);
+      transform: scale(1.10) translateY(-2px);
+      box-shadow: 0 14px 36px rgba(37,211,102,0.48);
     }
 
     @media (max-width: 767px) {
-      #wa-container {
-        bottom: 32px;
-        right: 20px;
-      }
-      .whatsapp-float {
-        width: 48px;
-        height: 48px;
-      }
+      #wa-container { bottom: 22px; right: 16px; }
+      .whatsapp-float { width: 50px; height: 50px; }
+      .wa-menu { min-width: 260px; max-width: 290px; }
     }
 
     .stars { color: #BD8F36; letter-spacing: 2px; }
@@ -549,41 +681,63 @@
     <p id="preloader-text" data-i18n="preloaderText" class="font-body text-xs tracking-[0.2em] text-white/60 uppercase font-light">Preparando tu experience Apiterapia...</p>
   </div>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-[104px] md:bottom-[104px] right-5 w-10 h-10 rounded-full bg-cream/90 text-ink border border-beige/60 shadow-lg flex items-center justify-center backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2" aria-label="Volver arriba">
+  <button id="back-to-top" onclick="scrollToTop()" class="fixed bottom-[104px] right-[22px] w-10 h-10 rounded-full bg-cream/90 text-ink border border-beige/60 shadow-lg flex items-center justify-center backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2" style="z-index:997" aria-label="Volver arriba">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
       <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
     </svg>
   </button>
 
-  <!-- ── Menu WhatsApp flottant ── -->
+  <!-- ── Menu WhatsApp Premium ── -->
   <div id="wa-container">
-    <!-- Popup menu (affiché au clic) -->
-    <div id="wa-menu" class="wa-menu" role="menu" aria-label="Menu WhatsApp">
-      <!-- Option 1 : Aller aux rendez-vous -->
-      <button class="wa-menu-item" onclick="waGoTo('agenda')" data-i18n="waMenuBook">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-        </svg>
-        Ir a la sección de reservas
-      </button>
-      <!-- Option 2 : Aller à la boutique -->
-      <button class="wa-menu-item" onclick="waGoTo('productos')" data-i18n="waMenuShop">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-        </svg>
-        Ir a la tienda
-      </button>
-      <!-- Option 3 : Message WhatsApp -->
-      <a href="https://wa.me/56939047200?text=Hola%20Vero%2C%20quisiera%20obtener%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20Apiterapia." target="_blank" class="wa-menu-item" onclick="closeWaMenu()" data-i18n="waMenuMsg">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-        </svg>
-        Enviar un mensaje (Informaciones)
-      </a>
+    <!-- Popup chat premium -->
+    <div id="wa-menu" class="wa-menu" role="dialog" aria-label="Contact WhatsApp">
+      <!-- Header profil -->
+      <div class="wa-chat-header">
+        <div class="wa-avatar">🐝</div>
+        <div class="wa-header-info">
+          <p class="wa-contact-name">Vero — Apiterapia</p>
+          <span class="wa-status-badge">
+            <span class="wa-status-dot"></span>
+            <span data-i18n="waStatusOnline">En línea</span>
+          </span>
+        </div>
+        <button class="wa-close-btn" onclick="closeWaMenu()" aria-label="Cerrar">✕</button>
+      </div>
+      <!-- Bulle message accueil -->
+      <div class="wa-chat-body">
+        <div class="wa-chat-bubble">
+          <p data-i18n="waChatGreeting">¡Hola! ¿En qué puedo ayudarte hoy? 🌿</p>
+          <p class="wa-chat-time">Ahora</p>
+        </div>
+      </div>
+      <!-- Actions -->
+      <div class="wa-actions">
+        <button class="wa-menu-item" onclick="waGoTo('agenda')">
+          <div class="wa-item-icon">📅</div>
+          <div>
+            <p class="wa-item-title" data-i18n="waMenuBook">Reservar sesión</p>
+            <p class="wa-item-sub" data-i18n="waMenuBookSub">Ver disponibilidad</p>
+          </div>
+        </button>
+        <button class="wa-menu-item" onclick="waGoTo('productos')">
+          <div class="wa-item-icon">🛒</div>
+          <div>
+            <p class="wa-item-title" data-i18n="waMenuShop">Tienda natural</p>
+            <p class="wa-item-sub" data-i18n="waMenuShopSub">Productos de la colmena</p>
+          </div>
+        </button>
+        <a href="https://wa.me/56939047200?text=Hola%20Vero%2C%20quisiera%20obtener%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20Apiterapia." target="_blank" class="wa-menu-item" onclick="closeWaMenu()">
+          <div class="wa-item-icon">💬</div>
+          <div>
+            <p class="wa-item-title" data-i18n="waMenuMsg">Enviar mensaje</p>
+            <p class="wa-item-sub" data-i18n="waMenuMsgSub">Respuesta rápida · WhatsApp</p>
+          </div>
+        </a>
+      </div>
     </div>
-    <!-- Bouton principal WhatsApp -->
+    <!-- Bouton principal -->
     <button id="wa-btn" class="whatsapp-float" onclick="toggleWaMenu()" aria-label="WhatsApp" aria-expanded="false">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.948 0c3.173.001 6.154 1.24 8.395 3.486 2.242 2.246 3.479 5.23 3.474 8.403-.01 6.547-5.347 11.896-11.901 11.896-2.003-.001-3.97-.506-5.718-1.472L0 24zm6.59-4.846c1.6.95 3.397 1.453 5.24 1.454h.005c5.444 0 9.877-4.437 9.885-9.885.004-2.639-1.02-5.122-2.883-6.989-1.864-1.868-4.346-2.894-6.994-2.895-5.45 0-9.884 4.437-9.892 9.885-.001 1.815.474 3.591 1.378 5.167L2.247 21.91l4.4-1.156zM16.92 14.84c-.27-.135-1.593-.787-1.84-.876-.246-.09-.425-.135-.604.135-.18.27-.696.876-.853 1.057-.157.18-.313.202-.583.067-.27-.135-1.14-.42-2.172-1.34-1.03-.92-1.727-2.056-1.93-2.326-.2-.27-.022-.416.113-.55.12-.12.27-.315.405-.473.134-.157.18-.27.27-.45.09-.18.044-.337-.022-.472-.067-.135-.604-1.455-.827-1.996-.217-.523-.44-.452-.604-.461-.157-.008-.337-.01-.517-.01-.18 0-.473.067-.72.337-.246.27-.94.92-.94 2.24 0 1.32.96 2.59 1.093 2.77.135.18 1.89 2.886 4.578 4.05 1.58.686 2.19.743 2.97.625.503-.075 1.593-.65 1.82-1.276.226-.625.226-1.16.157-1.276-.068-.115-.247-.18-.517-.315z"/>
       </svg>
     </button>
@@ -1181,9 +1335,14 @@
         phoneError: "Por favor, introduce un número válido (Chile: +569XXXXXXXX o Australia: +614XXXXXXXX).",
         priceLabel: "Consulta : <strong class=\"font-display text-xl text-honey font-semibold\">$10.000</strong> <span class=\"text-bark/60 font-body text-xs\">CLP</span>",
         shopImageCaption: "Directo de la colmena a tu hogar",
-        waMenuBook: "Ir a la sección de reservas",
-        waMenuShop: "Ir a la tienda",
-        waMenuMsg: "Enviar un mensaje (Informaciones)",
+        waMenuBook: "Reservar sesión",
+        waMenuBookSub: "Ver disponibilidad",
+        waMenuShop: "Tienda natural",
+        waMenuShopSub: "Productos de la colmena",
+        waMenuMsg: "Enviar mensaje",
+        waMenuMsgSub: "Respuesta rápida · WhatsApp",
+        waStatusOnline: "En línea",
+        waChatGreeting: "¡Hola! ¿En qué puedo ayudarte hoy? 🌿",
         // ── Admin ──
         adminPrivateSpace: "Área privada · Acceso restringido",
         adminSetupTitle: "Primera conexión — Configuración de cuenta",
@@ -1345,9 +1504,14 @@
         phoneError: "Please enter a valid number (Chile: +569XXXXXXXX or Australia: +614XXXXXXXX).",
         priceLabel: "Consultation : <strong class=\"font-display text-xl text-honey font-semibold\">$10.000</strong> <span class=\"text-bark/60 font-body text-xs\">CLP</span>",
         shopImageCaption: "Directly from the hive to your home",
-        waMenuBook: "Go to the booking section",
-        waMenuShop: "Go to the store",
-        waMenuMsg: "Send a message (Information)",
+        waMenuBook: "Book a session",
+        waMenuBookSub: "Check availability",
+        waMenuShop: "Natural store",
+        waMenuShopSub: "Hive products",
+        waMenuMsg: "Send a message",
+        waMenuMsgSub: "Quick reply · WhatsApp",
+        waStatusOnline: "Online",
+        waChatGreeting: "Hello! How can I help you today? 🌿",
         // ── Admin ──
         adminPrivateSpace: "Private area · Restricted access",
         adminSetupTitle: "First login — Account Setup",
@@ -2030,10 +2194,26 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      initLanguage();
-      initCalendar();   // Remplace l'ancien dateInput.min
+      // Appliquer les overrides produits AVANT initLanguage pour que les textes soient corrects dès le début
+      // (applyProductTranslationOverrides est défini dans le bloc admin plus bas, mais les scripts sont évalués dans l'ordre)
+      try {
+        const savedProds = localStorage.getItem('apiterapia_admin_products');
+        if (savedProds) {
+          const prods = JSON.parse(savedProds);
+          prods.forEach(p => {
+            if (!p.i18n_title) return;
+            if (p.title_es) translations.es[p.i18n_title] = p.title_es;
+            if (p.title_en) translations.en[p.i18n_title] = p.title_en;
+            if (p.desc_es && p.i18n_desc)  translations.es[p.i18n_desc] = p.desc_es;
+            if (p.desc_en && p.i18n_desc)  translations.en[p.i18n_desc] = p.desc_en;
+          });
+        }
+      } catch(e) {}
 
-      fetchBookedSlots();   // Charge les créneaux depuis le serveur Flask au démarrage
+      initLanguage();
+      initCalendar();
+
+      fetchBookedSlots();
 
       document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
@@ -2087,7 +2267,18 @@
       }
     }, { passive: true });
 
-    // (back-to-top géré par l'attribut onclick inline)
+    // ── scrollToTop : robuste multi-navigateurs (iOS Safari + Android) ──
+    function scrollToTop() {
+      // Méthode moderne (Chrome, FF, Edge, Safari 14+)
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
+      // Fallback synchrone pour iOS Safari < 14 et WebKit anciens
+      if (document.documentElement.scrollTop > 0) {
+        document.documentElement.scrollTop = 0;
+      }
+      if (document.body.scrollTop > 0) {
+        document.body.scrollTop = 0;
+      }
+    }
 
   </script>
 
@@ -2281,6 +2472,15 @@
     <div id="admin-auth-screen" class="min-h-screen w-full flex items-center justify-center p-6">
       <div class="w-full max-w-md">
 
+        <!-- Lang switcher (écran login) -->
+        <div class="flex justify-center mb-6">
+          <div class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 lang-switcher">
+            <button data-lang="es" class="lang-btn active font-body text-[11px] font-semibold tracking-wider focus:outline-none text-white">ES</button>
+            <span class="text-white/25 text-xs">|</span>
+            <button data-lang="en" class="lang-btn font-body text-[11px] font-semibold tracking-wider focus:outline-none text-white">EN</button>
+          </div>
+        </div>
+
         <!-- Logo -->
         <div class="text-center mb-8">
           <img src="static/abeilles_Pictures/logo_website.png" alt="Logo" class="h-20 w-20 mx-auto mb-4 opacity-80">
@@ -2371,9 +2571,15 @@
           </div>
         </div>
         <div class="flex items-center gap-3">
-          <button onclick="adminChangePassword()" class="admin-btn admin-btn-ghost text-[11px] px-4 py-2" data-i18n="adminChangePwdBtn">Cambiar contraseña</button>
+          <!-- Sélecteur de langue dans l'admin -->
+          <div class="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 lang-switcher">
+            <button data-lang="es" class="lang-btn active font-body text-[11px] font-semibold tracking-wider focus:outline-none text-white">ES</button>
+            <span class="text-white/25 text-xs">|</span>
+            <button data-lang="en" class="lang-btn font-body text-[11px] font-semibold tracking-wider focus:outline-none text-white">EN</button>
+          </div>
+          <button onclick="adminChangePassword()" class="admin-btn admin-btn-ghost text-[11px] px-4 py-2 hidden sm:inline-flex" data-i18n="adminChangePwdBtn">Cambiar contraseña</button>
           <button onclick="adminLogout()" class="admin-btn admin-btn-danger text-[11px] px-4 py-2" data-i18n="adminLogoutBtn">Cerrar sesión</button>
-          <button onclick="closeAdmin()" class="text-white/40 hover:text-white/80 ml-2 transition-colors font-body text-xl">✕</button>
+          <button onclick="closeAdmin()" class="text-white/40 hover:text-white/80 ml-1 transition-colors font-body text-xl leading-none">✕</button>
         </div>
       </div>
 
@@ -2430,7 +2636,12 @@
             <div class="overflow-x-auto">
               <table class="admin-table" id="admin-rdv-table">
                 <thead><tr>
-                  <th>Date</th><th>Heure</th><th>Nom</th><th>Téléphone</th><th>Commentaire</th><th>Actions</th>
+                  <th data-i18n="adminRdvThDate">Fecha</th>
+                  <th data-i18n="adminRdvThTime">Hora</th>
+                  <th data-i18n="adminRdvThName">Nombre</th>
+                  <th data-i18n="adminRdvThPhone">Teléfono</th>
+                  <th data-i18n="adminRdvThComment">Comentario</th>
+                  <th data-i18n="adminRdvThActions">Acciones</th>
                 </tr></thead>
                 <tbody id="admin-rdv-tbody"></tbody>
               </table>
@@ -2887,55 +3098,137 @@
   // Gestion des Produits (Admin)
   // ──────────────────────────────────────────────────────────────────────────────
   const DEFAULT_PRODUCTS = [
-    { id:'p1', nameFr:'Miel naturelle',       nameEs:'Miel natural',                    price:'$8.000',  inStock:true },
-    { id:'p2', nameFr:'Combo Complet',         nameEs:'El Combo Completo',               price:'$20.000', inStock:true },
-    { id:'p3', nameFr:'Onguent médicinal #1',  nameEs:'Ungüento medicinal (veneno)',      price:'$6.000',  inStock:true },
-    { id:'p4', nameFr:'Onguent médicinal #2',  nameEs:'Ungüento medicinal (jalea real)', price:'$4.000',  inStock:true },
-    { id:'p5', nameFr:'Propolis',              nameEs:'Propóleo',                         price:'$8.000',  inStock:true },
-    { id:'p6', nameFr:'Teinture médicinale',   nameEs:'Tintura medicinal',               price:'$10.000', inStock:true },
-    { id:'p7', nameFr:'Coffret Miel Premium',  nameEs:'Caja de miel premium con panal',  price:'$15.000', inStock:true },
+    {
+      id:'p1', i18n_title:'p1Title', i18n_desc:'p1Desc', i18n_badge:'p1Badge',
+      nameEs:'Miel natural',
+      title_es:'Miel natural',              title_en:'Natural Honey',
+      desc_es:'Miel pura y de origen natural, ideal para fortalecer el organismo y disfrutar de sus grandes propiedades.',
+      desc_en:'Pure, raw source honey, ideal for strengthening your body defenses and enjoying great organic properties.',
+      price:'$8.000', inStock:true
+    },
+    {
+      id:'p2', i18n_title:'p2Title', i18n_desc:'p2Desc', i18n_badge:'p2Badge',
+      nameEs:'El Combo Completo',
+      title_es:'El Combo Completo',         title_en:'The Complete Bundle',
+      desc_es:'Una selección de los mejores productos de la colmena: miel, propóleo y cuidados naturales para una rutina completa.',
+      desc_en:'A curated selection of the finest hive products: honey, propolis and natural care essentials for a complete wellness routine.',
+      price:'$20.000', inStock:true
+    },
+    {
+      id:'p3', i18n_title:'p3Title', i18n_desc:'p3Desc', i18n_badge:'p3Badge',
+      nameEs:'Ungüento medicinal (veneno)',
+      title_es:'Ungüento medicinal',        title_en:'Medicinal Ointment',
+      desc_es:'Ungüento natural de alta concentración elaborado con veneno de abeja puro. Aplicado directamente sobre la zona afectada, alivia de forma rápida y profunda dolores musculares y articulares crónicos.',
+      desc_en:'High-concentration natural ointment crafted with pure bee venom. Applied directly to the affected area, it provides fast and deep relief from chronic muscle and joint pain.',
+      price:'$6.000', inStock:true
+    },
+    {
+      id:'p4', i18n_title:'p4Title', i18n_desc:'p4Desc', i18n_badge:'p4Badge',
+      nameEs:'Ungüento medicinal (jalea real)',
+      title_es:'Ungüento medicinal',        title_en:'Medicinal Ointment',
+      desc_es:'Ungüento enriquecido con jalea real pura, el tesoro exclusivo de la reina de la colmena. Nutre y regenera la piel en profundidad, aportando suavidad, luminosidad y un cuidado antiedad natural excepcional.',
+      desc_en:'Ointment enriched with pure royal jelly, the exclusive treasure of the hive queen. Deeply nourishes and regenerates the skin, delivering softness, radiance, and exceptional natural anti-aging care.',
+      price:'$4.000', inStock:true
+    },
+    {
+      id:'p5', i18n_title:'p5Title', i18n_desc:'p5Desc', i18n_badge:'p5Badge',
+      nameEs:'Propóleo',
+      title_es:'Propóleo',                  title_en:'Propolis',
+      desc_es:'Resina protectora de la colmena, conocida por sus propiedades antibacterianas e inmunoestimulantes.',
+      desc_en:'Protective resin from the hive, renowned for its antibacterial and immune-boosting properties.',
+      price:'$8.000', inStock:true
+    },
+    {
+      id:'p6', i18n_title:'p6Title', i18n_desc:'p6Desc', i18n_badge:'p6Badge',
+      nameEs:'Tintura medicinal',
+      title_es:'Tintura medicinal',         title_en:'Medicinal Tincture',
+      desc_es:'Potente tintura medicinal líquida elaborada artesanalmente con extractos puros de la colmena. De rápida absorción, concentra las propiedades terapéuticas del propóleo y plantas medicinales para fortalecer el sistema inmune de forma natural.',
+      desc_en:'Potent artisanal liquid medicinal tincture made with pure hive extracts. Fast-absorbing, it concentrates the therapeutic properties of propolis and medicinal plants to naturally strengthen your immune system.',
+      price:'$10.000', inStock:true
+    },
+    {
+      id:'p7', i18n_title:'p7Title', i18n_desc:'p7Desc', i18n_badge:'p7Badge',
+      nameEs:'Caja de miel premium con panal',
+      title_es:'Caja de miel premium con panal', title_en:'Premium Honey Box with Comb',
+      desc_es:'El regalo perfecto para los amantes de lo auténtico. Esta caja premium incluye una selección exclusiva de mieles artesanales 100% puras y un trozo de panal natural cosechado directamente de la colmena. Una experiencia sensorial única y un símbolo del más puro lujo natural.',
+      desc_en:'The perfect gift for lovers of the authentic. This premium box includes an exclusive selection of 100% pure artisanal honeys and a piece of natural honeycomb harvested directly from the hive. A unique sensory experience and a symbol of pure natural luxury.',
+      price:'$15.000', inStock:true
+    },
   ];
 
   function getAdminProducts() {
     try {
       const stored = JSON.parse(localStorage.getItem('apiterapia_admin_products') || 'null');
-      return stored || JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+      if (!stored) return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+      // Fusionner avec DEFAULT_PRODUCTS pour s'assurer que les champs i18n existent
+      return DEFAULT_PRODUCTS.map((def, i) => Object.assign({}, def, stored[i] || {}));
     } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)); }
+  }
+
+  // Injecte les overrides produits dans l'objet translations (appel au DOMContentLoaded + après save)
+  function applyProductTranslationOverrides(products) {
+    if (!products) {
+      try {
+        const saved = localStorage.getItem('apiterapia_admin_products');
+        if (!saved) return;
+        products = JSON.parse(saved);
+      } catch(e) { return; }
+    }
+    products.forEach(p => {
+      if (!p.i18n_title) return;
+      if (p.title_es) translations.es[p.i18n_title] = p.title_es;
+      if (p.title_en) translations.en[p.i18n_title] = p.title_en;
+      if (p.desc_es)  translations.es[p.i18n_desc]  = p.desc_es;
+      if (p.desc_en)  translations.en[p.i18n_desc]  = p.desc_en;
+    });
   }
 
   function adminRenderProducts() {
     const container = document.getElementById('admin-products-list');
     if (!container) return;
     const products = getAdminProducts();
+    const t = translations[currentLang];
     container.innerHTML = '';
     products.forEach((p, idx) => {
       const div = document.createElement('div');
       div.className = 'admin-card p-5';
       div.innerHTML = `
-        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-          <div class="flex-1">
-            <p class="font-body text-xs font-semibold text-honey uppercase tracking-widest mb-3">${p.nameEs}</p>
-            <div class="grid sm:grid-cols-2 gap-3">
-              <div>
-                <label class="admin-label">Prix</label>
-                <input class="admin-input" id="prod-price-${idx}" value="${p.price}" placeholder="$0.000">
-              </div>
-              <div class="flex items-end gap-3">
-                <div class="flex-1">
-                  <label class="admin-label">Statut</label>
-                  <div class="flex items-center gap-3 mt-1">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" id="prod-stock-${idx}" ${p.inStock?'checked':''} class="w-4 h-4 accent-yellow-500">
-                      <span class="font-body text-xs text-white/70">En stock</span>
-                    </label>
-                    <span id="prod-badge-${idx}" class="${p.inStock?'stock-badge-on':'stock-badge-off'}">${p.inStock?'Disponible':'Agotado'}</span>
-                  </div>
-                </div>
-              </div>
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <p class="font-body text-xs font-semibold text-honey uppercase tracking-widest">${p.nameEs}</p>
+            <div class="flex items-center gap-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="prod-stock-${idx}" ${p.inStock ? 'checked' : ''} class="w-4 h-4 accent-yellow-500">
+                <span class="font-body text-xs text-white/60">${t.adminStatTotalRdv ? 'Stock' : 'Stock'}</span>
+              </label>
+              <span id="prod-badge-${idx}" class="${p.inStock ? 'stock-badge-on' : 'stock-badge-off'}">${p.inStock ? 'Disponible' : 'Agotado'}</span>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="admin-label">Precio / Price</label>
+              <input class="admin-input" id="prod-price-${idx}" value="${p.price}" placeholder="$0.000">
+            </div>
+            <div></div>
+            <div>
+              <label class="admin-label">Título ES</label>
+              <input class="admin-input" id="prod-title-es-${idx}" value="${p.title_es || ''}" placeholder="Título en español">
+            </div>
+            <div>
+              <label class="admin-label">Title EN</label>
+              <input class="admin-input" id="prod-title-en-${idx}" value="${p.title_en || ''}" placeholder="Title in English">
+            </div>
+            <div>
+              <label class="admin-label">Descripción ES</label>
+              <textarea class="admin-input" id="prod-desc-es-${idx}" rows="3" placeholder="Descripción en español">${p.desc_es || ''}</textarea>
+            </div>
+            <div>
+              <label class="admin-label">Description EN</label>
+              <textarea class="admin-input" id="prod-desc-en-${idx}" rows="3" placeholder="Description in English">${p.desc_en || ''}</textarea>
             </div>
           </div>
         </div>`;
-      // Mise à jour du badge en temps réel
+      // Badge temps réel
       const checkbox = div.querySelector(`#prod-stock-${idx}`);
       checkbox.addEventListener('change', () => {
         const badge = div.querySelector(`#prod-badge-${idx}`);
@@ -2949,22 +3242,35 @@
   function adminSaveProducts() {
     const products = getAdminProducts();
     products.forEach((p, idx) => {
-      const priceEl = document.getElementById(`prod-price-${idx}`);
-      const stockEl = document.getElementById(`prod-stock-${idx}`);
-      if (priceEl) p.price = priceEl.value.trim();
-      if (stockEl) p.inStock = stockEl.checked;
+      const priceEl    = document.getElementById(`prod-price-${idx}`);
+      const stockEl    = document.getElementById(`prod-stock-${idx}`);
+      const titleEsEl  = document.getElementById(`prod-title-es-${idx}`);
+      const titleEnEl  = document.getElementById(`prod-title-en-${idx}`);
+      const descEsEl   = document.getElementById(`prod-desc-es-${idx}`);
+      const descEnEl   = document.getElementById(`prod-desc-en-${idx}`);
+      if (priceEl)   p.price    = priceEl.value.trim();
+      if (stockEl)   p.inStock  = stockEl.checked;
+      if (titleEsEl) p.title_es = titleEsEl.value.trim();
+      if (titleEnEl) p.title_en = titleEnEl.value.trim();
+      if (descEsEl)  p.desc_es  = descEsEl.value.trim();
+      if (descEnEl)  p.desc_en  = descEnEl.value.trim();
     });
     localStorage.setItem('apiterapia_admin_products', JSON.stringify(products));
-    // Appliquer les banderoles "Agotado" sur le site public
+    // Mettre à jour les traductions en mémoire ET le site public
+    applyProductTranslationOverrides(products);
     applyStockBadgesPublic(products);
-    alert('✅ Produits sauvegardés avec succès !');
+    changeLang(currentLang); // Rafraîchir l'affichage public immédiatement
+    alert('✅ Cambios guardados con éxito · Changes saved successfully!');
   }
 
   function adminResetProducts() {
-    if (!confirm('Réinitialiser tous les produits aux valeurs par défaut ?')) return;
+    const t = translations[currentLang];
+    if (!confirm(currentLang === 'es' ? '¿Restablecer todos los productos a los valores por defecto?' : 'Reset all products to default values?')) return;
     localStorage.removeItem('apiterapia_admin_products');
     adminRenderProducts();
+    applyProductTranslationOverrides(JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)));
     applyStockBadgesPublic(DEFAULT_PRODUCTS);
+    changeLang(currentLang);
   }
 
   // Applique les banderoles "Agotado" sur les cartes produits du site public
@@ -3182,12 +3488,16 @@
   }
 
   // ──────────────────────────────────────────────────────────────────────────────
-  // Chargement initial — appliquer les stocks sauvegardés
+  // Chargement initial — appliquer overrides produits (stocks + traductions)
   // ──────────────────────────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     const savedProducts = localStorage.getItem('apiterapia_admin_products');
     if (savedProducts) {
-      try { applyStockBadgesPublic(JSON.parse(savedProducts)); } catch(e) {}
+      try {
+        const prods = JSON.parse(savedProducts);
+        applyStockBadgesPublic(prods);
+        // Les traductions sont déjà appliquées plus haut dans le premier DOMContentLoaded
+      } catch(e) {}
     }
   });
 
