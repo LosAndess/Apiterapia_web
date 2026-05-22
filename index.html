@@ -2621,6 +2621,8 @@
             <span class="text-white/25 text-xs">|</span>
             <button data-lang="en" class="lang-btn font-body text-[11px] font-semibold tracking-wider focus:outline-none text-white">EN</button>
           </div>
+          <!-- Indicateur statut cloud -->
+          <span id="cloud-status" class="font-body text-[10px] hidden sm:inline transition-opacity duration-500" style="opacity:0;color:#4caf50;">☁️ Synchronisé</span>
           <button onclick="adminChangePassword()" class="admin-btn admin-btn-ghost text-[11px] px-4 py-2 hidden sm:inline-flex" data-i18n="adminChangePwdBtn">Cambiar contraseña</button>
           <button onclick="adminLogout()" class="admin-btn admin-btn-danger text-[11px] px-4 py-2" data-i18n="adminLogoutBtn">Cerrar sesión</button>
           <button onclick="closeAdmin()" class="text-white/40 hover:text-white/80 ml-1 transition-colors font-body text-xl leading-none">✕</button>
@@ -2816,18 +2818,42 @@
     } catch(e) { console.warn('[Cloud] GET erreur réseau:', e.message); return null; }
   }
 
+  // Met à jour l'indicateur visuel de statut cloud dans l'admin (si présent)
+  function cloudUpdateStatus(success) {
+    const el = document.getElementById('cloud-status');
+    if (!el) return;
+    el.textContent = success ? '☁️ Synchronisé' : '⚠️ Hors ligne';
+    el.style.color  = success ? '#4caf50' : '#e07b39';
+    el.style.opacity = '1';
+    // Disparaît doucement après 4s
+    clearTimeout(el._fadeTimer);
+    el._fadeTimer = setTimeout(() => { el.style.opacity = '0'; }, 4000);
+  }
+
   async function cloudSet(data) {
     if (!CLOUD_ENABLED) return;
     try {
       const res = await fetch(CLOUD_URL, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'X-Master-Key': CLOUD_API_KEY },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': CLOUD_API_KEY,
+          'X-Bin-Versioning': 'false'   // Évite la limite de versions du plan gratuit
+        },
         body: JSON.stringify(data),
         cache: 'no-store'
       });
-      if (!res.ok) { console.warn('[Cloud] PUT échoué:', res.status, res.statusText); return; }
+      if (!res.ok) {
+        console.warn('[Cloud] PUT échoué:', res.status, res.statusText);
+        cloudUpdateStatus(false);
+        return;
+      }
       console.log('[Cloud] PUT OK ✓ — données synchronisées');
-    } catch(e) { console.warn('[Cloud] PUT erreur réseau — fallback localStorage:', e.message); }
+      cloudUpdateStatus(true);
+    } catch(e) {
+      console.warn('[Cloud] PUT erreur réseau — fallback localStorage:', e.message);
+      cloudUpdateStatus(false);
+    }
   }
 
   // Tire les données du cloud et met à jour le localStorage + l'affichage public
