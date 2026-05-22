@@ -447,9 +447,6 @@
       scrollbar-width: none;
     }
     
-    #back-to-top {
-      z-index: 998;
-    }
 
     @keyframes smoothFloatY {
       0% { transform: translate3d(0, 0, 0) rotate(0deg); }
@@ -478,7 +475,7 @@
     #contenedor-opiniones > div:nth-child(3n+3) { animation: smoothFloatY 8.3s ease-in-out infinite; animation-delay: 2s; }
 
     /* GPU rendering enhancements across animations */
-    .reveal, .nav-link::after, .btn-honey, .btn-ghost, #back-to-top, #mobile-menu {
+    .reveal, .nav-link::after, .btn-honey, .btn-ghost, #mobile-menu {
       will-change: transform, opacity;
     }
 
@@ -681,11 +678,6 @@
     <p id="preloader-text" data-i18n="preloaderText" class="font-body text-xs tracking-[0.2em] text-white/60 uppercase font-light">Preparando tu experience Apiterapia...</p>
   </div>
 
-  <button id="back-to-top" onclick="scrollToTop()" class="fixed bottom-[104px] right-[22px] w-10 h-10 rounded-full bg-cream/90 text-ink border border-beige/60 shadow-lg flex items-center justify-center backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2" style="z-index:997" aria-label="Volver arriba">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-    </svg>
-  </button>
 
   <!-- ── Menu WhatsApp Premium ── -->
   <div id="wa-container">
@@ -2246,7 +2238,6 @@
       });
     }
 
-    const btt = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => {
       // Fermer le menu burger automatiquement au scroll
       const mobileMenu = document.getElementById('mobile-menu');
@@ -2255,34 +2246,7 @@
         const icon = document.getElementById('menu-icon');
         if (icon) icon.style.transform = 'rotate(0deg)';
       }
-
-      if (btt) {
-        if (window.scrollY > 400) {
-          btt.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
-          btt.classList.add('opacity-100', 'translate-y-0');
-        } else {
-          btt.classList.remove('opacity-100', 'translate-y-0');
-          btt.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
-        }
-      }
     }, { passive: true });
-
-    // ── scrollToTop : robuste multi-navigateurs (iOS Safari + Android) ──
-    function scrollToTop() {
-      if ('scrollBehavior' in document.documentElement.style) {
-        // Méthode moderne — tous les navigateurs récents dont iOS Safari 14+
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        // Fallback animé pour très vieux WebKit
-        (function smoothScroll() {
-          var pos = window.scrollY || document.documentElement.scrollTop;
-          if (pos > 0) {
-            window.scrollBy(0, -Math.max(1, Math.floor(pos / 8)));
-            requestAnimationFrame(smoothScroll);
-          }
-        })();
-      }
-    }
 
   </script>
 
