@@ -2269,14 +2269,18 @@
 
     // ── scrollToTop : robuste multi-navigateurs (iOS Safari + Android) ──
     function scrollToTop() {
-      // Méthode moderne (Chrome, FF, Edge, Safari 14+)
-      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
-      // Fallback synchrone pour iOS Safari < 14 et WebKit anciens
-      if (document.documentElement.scrollTop > 0) {
-        document.documentElement.scrollTop = 0;
-      }
-      if (document.body.scrollTop > 0) {
-        document.body.scrollTop = 0;
+      if ('scrollBehavior' in document.documentElement.style) {
+        // Méthode moderne — tous les navigateurs récents dont iOS Safari 14+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // Fallback animé pour très vieux WebKit
+        (function smoothScroll() {
+          var pos = window.scrollY || document.documentElement.scrollTop;
+          if (pos > 0) {
+            window.scrollBy(0, -Math.max(1, Math.floor(pos / 8)));
+            requestAnimationFrame(smoothScroll);
+          }
+        })();
       }
     }
 
