@@ -1894,6 +1894,8 @@
 
       try { updateAvailableTimes(); } catch(e) {}
       try { renderCalendar(); }       catch(e) {}
+      // Push cloud : le slot client doit être visible sur tous les appareils
+      try { cloudPush(); } catch(e) {}
 
       // Étape 4 — Construire l'URL WhatsApp et ouvrir la conversation
       let msg = `Hola Vero, me gustaría agendar una sesión de Apiterapia.\n\n• *Nombre:* ${nombre}\n• *WhatsApp:* ${telefono}\n• *Fecha deseada:* ${fecha}\n• *Horario:* ${hora} hrs`;
@@ -2231,7 +2233,10 @@
     // ── Rafraîchissement localStorage au retour sur l'onglet ──────────────
     // Relit le localStorage si l'utilisateur revient depuis WhatsApp
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) fetchBookedSlots();
+      if (!document.hidden) {
+        // Sync cloud d'abord, puis refresh calendrier — couvre le retour depuis WhatsApp
+        try { cloudSyncDown().then(() => fetchBookedSlots()); } catch(e) { fetchBookedSlots(); }
+      }
     });
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -2268,6 +2273,13 @@
         }
       }, 100);
     });
+
+    // ── Polling cloud toutes les 30s — sync silencieuse côté client ─────────
+    setInterval(() => {
+      if (!document.hidden) {
+        try { cloudSyncDown().then(() => fetchBookedSlots()); } catch(e) {}
+      }
+    }, 30000);
 
     // Revenir tout en haut à chaque rafraîchissement de page
     window.scrollTo(0, 0);
@@ -2789,24 +2801,33 @@
   const CLOUD_ENABLED = CLOUD_BIN_ID !== 'VOTRE_BIN_ID_ICI' && CLOUD_API_KEY !== 'VOTRE_MASTER_KEY_ICI';
 
   async function cloudGet() {
-    if (!CLOUD_ENABLED) return null;
+    if (!CLOUD_ENABLED) { console.warn('[Cloud] Désactivé — clés manquantes.'); return null; }
     try {
-      const res = await fetch(`${CLOUD_URL}/latest`, { headers: { 'X-Master-Key': CLOUD_API_KEY } });
-      if (!res.ok) return null;
+      // Cache-busting : timestamp empêche le cache navigateur (mobile Safari surtout)
+      const url = `${CLOUD_URL}/latest?t=${Date.now()}`;
+      const res = await fetch(url, {
+        headers: { 'X-Master-Key': CLOUD_API_KEY },
+        cache: 'no-store'
+      });
+      if (!res.ok) { console.warn('[Cloud] GET échoué:', res.status, res.statusText); return null; }
       const json = await res.json();
+      console.log('[Cloud] GET OK ✓');
       return json.record || null;
-    } catch(e) { return null; }
+    } catch(e) { console.warn('[Cloud] GET erreur réseau:', e.message); return null; }
   }
 
   async function cloudSet(data) {
     if (!CLOUD_ENABLED) return;
     try {
-      await fetch(CLOUD_URL, {
+      const res = await fetch(CLOUD_URL, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'X-Master-Key': CLOUD_API_KEY },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        cache: 'no-store'
       });
-    } catch(e) { console.warn('[Cloud] Sync échouée, localStorage utilisé.', e); }
+      if (!res.ok) { console.warn('[Cloud] PUT échoué:', res.status, res.statusText); return; }
+      console.log('[Cloud] PUT OK ✓ — données synchronisées');
+    } catch(e) { console.warn('[Cloud] PUT erreur réseau — fallback localStorage:', e.message); }
   }
 
   // Tire les données du cloud et met à jour le localStorage + l'affichage public
