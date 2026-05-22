@@ -906,8 +906,8 @@
           </svg>
         </div>
         <div>
-          <p class="font-body text-sm font-semibold text-ink mb-1 tracking-wide">Información importante sobre las sesiones</p>
-          <p class="font-body text-xs text-bark font-light leading-relaxed">La recolección de abejas para las sesiones de apiterapia debe realizarse con al menos <strong class="font-medium text-honey">24 horas de anticipación</strong>. Por ello, las reservas sólo están disponibles <strong class="font-medium text-honey">a partir del día siguiente</strong>. Si tienes alguna consulta o necesitas coordinar una fecha específica, no dudes en <a href="https://wa.me/56939047200" target="_blank" class="text-honey underline hover:text-honey-light transition-colors">contactarme directamente por WhatsApp</a>.</p>
+          <p class="font-body text-sm font-semibold text-ink mb-1 tracking-wide" data-i18n="sessionInfoTitle">Información importante sobre las sesiones</p>
+          <p class="font-body text-xs text-bark font-light leading-relaxed" data-i18n-html="sessionInfoBody">La recolección de abejas para las sesiones de apiterapia debe realizarse con al menos <strong class="font-medium text-honey">24 horas de anticipación</strong>. Por ello, las reservas sólo están disponibles <strong class="font-medium text-honey">a partir del día siguiente</strong>. Si tienes alguna consulta o necesitas coordinar una fecha específica, no dudes en <a href="https://wa.me/56939047200" target="_blank" class="text-honey underline hover:text-honey-light transition-colors">contactarme directamente por WhatsApp</a>.</p>
         </div>
       </div>
 
@@ -1266,6 +1266,8 @@
         aboutTag: "El Origen del Bienestar",
         aboutTitle: "Sanación milenaria con <br><em class='gradient-text not-italic font-normal'>la sabiduría de la colmena</em>",
         aboutParagraphs: "<p>Guiada por una vocación profunda hacia los cuidados naturales, ofrezco un espacio seguro y sereno para reconectar con tu bienestar. La apiterapia es un arte sanador milenario, valorado desde el Antiguo Egipto y la Grecia clásica, que hoy pongo a tu disposición para revitalizar tu salud integral.</p><p>Durante nuestras sesiones, realizo un abordaje profesional y holístico. Utilizo con máxima delicadeza el aguijón de la abeja, un recurso natural extraordinario, aplicándolo estratégicamente en las zonas exactas de tensión. Esta técnica, lejos de inspirar temor, es un puente directo hacia el alivio profundo de dolores musculares y articulares, estimulando la propia capacidad regenerativa de tu cuerpo.</p><p>Para complementar este cuidado, puedes adquirir los tesoros más puros de la colmena: propóleos y ungüentos. Mi propósito es acompañarte con amor, paciencia y absoluto respeto, brindándote una experiencia sanadora de primer nivel.</p>",
+        sessionInfoTitle: "Información importante sobre las sesiones",
+        sessionInfoBody: "La recolección de abejas para las sesiones de apiterapia debe realizarse con al menos <strong class=\"font-medium text-honey\">24 horas de anticipación</strong>. Por ello, las reservas sólo están disponibles <strong class=\"font-medium text-honey\">a partir del día siguiente</strong>. Si tienes alguna consulta o necesitas coordinar una fecha específica, no dudes en <a href=\"https://wa.me/56939047200\" target=\"_blank\" class=\"text-honey underline hover:text-honey-light transition-colors\">contactarme directamente por WhatsApp</a>.",
         bookTag: "Reserva en Línea",
         bookTitle: "Planifica tu consulta",
         bookSubtitle: "Completa tus datos y obtendrás el formato inmediato para confirmar tu hora con Vero por WhatsApp.",
@@ -1435,6 +1437,8 @@
         aboutTag: "The Origin of Well-being",
         aboutTitle: "Ancient healing through <br><em class='gradient-text not-italic font-normal'>the wisdom of the hive</em>",
         aboutParagraphs: "<p>Guided by a deep calling for natural care, I offer a safe and serene space to reconnect with your well-being. Apitherapy is an ancient healing art, revered since Ancient Egypt and Classical Greece, which I now bring to you to consciously revitalize your holistic health.</p><p>During our sessions, I take a professional and comprehensive approach. I use the bee's sting with the utmost delicacy—an extraordinary natural resource—applying it strategically to precise zones of tension. This technique, far from being something to fear, acts as a direct pathway to profound relief for muscle and joint pain, awakening your body’s own regenerative capacity.</p><p>To complement this care, I integrate the purest treasures of the hive: protective propolis and ointments. My true purpose is to accompany you with love, patience, and absolute respect, providing a premium healing experience.</p>",
+        sessionInfoTitle: "Important information about sessions",
+        sessionInfoBody: "Bee collection for apitherapy sessions must be arranged at least <strong class=\"font-medium text-honey\">24 hours in advance</strong>. Therefore, bookings are only available <strong class=\"font-medium text-honey\">from the following day onwards</strong>. If you have any questions or need to arrange a specific date, feel free to <a href=\"https://wa.me/56939047200\" target=\"_blank\" class=\"text-honey underline hover:text-honey-light transition-colors\">contact me directly via WhatsApp</a>.",
         bookTag: "Online Booking",
         bookTitle: "Plan your consultation",
         bookSubtitle: "Fill in your details to immediately generate your pre-formatted confirmation message with Vero via WhatsApp.",
@@ -1650,10 +1654,13 @@
       }
     }
 
-    document.querySelectorAll('.lang-switcher').forEach(container => {
-      container.querySelectorAll('[data-lang]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          changeLang(btn.getAttribute('data-lang'));
+    // Lang switcher — binding différé au DOMContentLoaded pour couvrir les boutons admin (injectés après ce script)
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.lang-switcher').forEach(container => {
+        container.querySelectorAll('[data-lang]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            changeLang(btn.getAttribute('data-lang'));
+          });
         });
       });
     });
