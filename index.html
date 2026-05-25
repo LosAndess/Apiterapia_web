@@ -161,7 +161,7 @@
       z-index: 1;
     }
 
-    /* ── WhatsApp Premium ── */
+    /* ══ WhatsApp Premium — Design Sapin & Doré ══════════════════════════════ */
     #wa-container {
       position: fixed;
       bottom: 28px; right: 28px;
@@ -169,22 +169,27 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 14px;
+      gap: 16px;
     }
 
-    /* Premium popup card */
+    /* Carte popup premium */
     .wa-menu {
       background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 6px 20px rgba(0,0,0,0.08);
+      border-radius: 22px;
+      box-shadow:
+        0 32px 72px rgba(0,0,0,0.20),
+        0 8px 24px rgba(0,0,0,0.10),
+        0 0 0 1px rgba(0,0,0,0.04);
       overflow: hidden;
       transform-origin: bottom right;
-      transform: scale(0.78) translateY(20px);
+      transform: scale(0.80) translateY(24px);
       opacity: 0;
       pointer-events: none;
-      transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
-      min-width: 290px;
-      max-width: 320px;
+      transition:
+        transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity   0.28s ease;
+      min-width: 296px;
+      max-width: 328px;
       will-change: transform, opacity;
     }
     .wa-menu.open {
@@ -193,30 +198,43 @@
       pointer-events: all;
     }
 
-    /* Header vert WhatsApp */
+    /* Header dégradé sapin → vert forêt */
     .wa-chat-header {
-      background: linear-gradient(135deg, #1a7a45 0%, #25A244 100%);
-      padding: 14px 16px;
+      background: linear-gradient(135deg, #0f5c30 0%, #1a7a45 45%, #25A244 100%);
+      padding: 16px 18px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .wa-chat-header::after {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(212,167,78,0.12);
+      pointer-events: none;
     }
     .wa-avatar {
-      width: 42px; height: 42px;
+      width: 46px; height: 46px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.18);
+      background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(212,167,78,0.18));
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      border: 2px solid rgba(255,255,255,0.30);
+      font-size: 22px;
+      border: 2px solid rgba(212,167,78,0.35);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
       flex-shrink: 0;
     }
     .wa-header-info { flex: 1; min-width: 0; }
     .wa-contact-name {
-      font-family: 'Jost', sans-serif;
-      font-size: 13px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
       font-weight: 600;
       color: #fff;
       line-height: 1.2;
+      letter-spacing: 0.02em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -230,97 +248,110 @@
     .wa-status-dot {
       width: 7px; height: 7px;
       border-radius: 50%;
-      background: #90EE90;
+      background: #a8f5b8;
       flex-shrink: 0;
-      animation: waDotPulse 2.2s ease-in-out infinite;
+      box-shadow: 0 0 0 2px rgba(168,245,184,0.25);
+      animation: waDotPulse 2.4s ease-in-out infinite;
     }
     @keyframes waDotPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.4); }
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 2px rgba(168,245,184,0.25); }
+      50%       { opacity: 0.6; transform: scale(1.5); box-shadow: 0 0 0 4px rgba(168,245,184,0.10); }
     }
     .wa-status-badge span:last-child {
       font-family: 'Jost', sans-serif;
       font-size: 10px;
-      color: rgba(255,255,255,0.85);
-      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.80);
+      letter-spacing: 0.04em;
+      font-weight: 400;
     }
     .wa-close-btn {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: rgba(255,255,255,0.9);
-      width: 26px; height: 26px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.88);
+      width: 28px; height: 28px;
       border-radius: 50%;
       cursor: pointer;
       font-size: 11px;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, border-color 0.2s ease;
       flex-shrink: 0;
       line-height: 1;
     }
-    .wa-close-btn:hover { background: rgba(255,255,255,0.28); }
+    .wa-close-btn:hover {
+      background: rgba(255,255,255,0.28);
+      border-color: rgba(255,255,255,0.38);
+    }
 
-    /* Corps chat (fond texturé WA) */
+    /* Corps chat — fond texturé naturel */
     .wa-chat-body {
-      background: #e5ddd5;
-      padding: 14px 14px 10px;
-      background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1' fill='%23c8bfb5' fill-opacity='0.35'/%3E%3Ccircle cx='13' cy='13' r='1' fill='%23c8bfb5' fill-opacity='0.35'/%3E%3C/svg%3E");
+      background: #ede8df;
+      padding: 16px 16px 12px;
+      background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1' fill='%23b8ae9e' fill-opacity='0.28'/%3E%3Ccircle cx='13' cy='13' r='1' fill='%23b8ae9e' fill-opacity='0.28'/%3E%3C/svg%3E");
     }
     .wa-chat-bubble {
       background: #fff;
-      border-radius: 2px 12px 12px 12px;
-      padding: 9px 13px 8px;
+      border-radius: 3px 14px 14px 14px;
+      padding: 10px 14px 8px;
       display: inline-block;
-      max-width: 88%;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      max-width: 90%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
       position: relative;
+      animation: waBubbleIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
+      animation-delay: 0.15s;
+    }
+    @keyframes waBubbleIn {
+      from { opacity:0; transform: translateY(8px) scale(0.96); }
+      to   { opacity:1; transform: translateY(0)   scale(1); }
     }
     .wa-chat-bubble::before {
       content: '';
       position: absolute;
-      top: 0; left: -7px;
+      top: 0; left: -8px;
       width: 0; height: 0;
-      border-top: 7px solid #fff;
-      border-left: 7px solid transparent;
+      border-top: 8px solid #fff;
+      border-left: 8px solid transparent;
     }
     .wa-chat-bubble p {
       font-family: 'Jost', sans-serif;
       font-size: 13px;
       color: #2C251E;
-      line-height: 1.5;
+      line-height: 1.55;
       margin: 0;
     }
     .wa-chat-time {
       font-family: 'Jost', sans-serif;
       font-size: 10px;
-      color: rgba(44,37,30,0.40);
+      color: rgba(44,37,30,0.36);
       text-align: right;
-      margin-top: 3px;
+      margin-top: 4px;
+      letter-spacing: 0.02em;
     }
 
     /* Zone actions */
     .wa-actions {
       background: #fff;
-      padding: 4px 0 6px;
+      padding: 4px 0 8px;
     }
     .wa-menu-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 11px 16px;
+      gap: 13px;
+      padding: 12px 18px;
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: background 0.18s ease;
       text-align: left;
       width: 100%;
       background: transparent;
       border: none;
       text-decoration: none;
     }
-    .wa-menu-item:hover { background: rgba(37,162,68,0.07); }
-    .wa-menu-item + .wa-menu-item { border-top: 1px solid rgba(0,0,0,0.05); }
+    .wa-menu-item:hover { background: rgba(15,92,48,0.05); }
+    .wa-menu-item + .wa-menu-item { border-top: 1px solid rgba(0,0,0,0.04); }
     .wa-item-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      background: rgba(37,162,68,0.10);
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(15,92,48,0.08), rgba(37,162,68,0.10));
+      border: 1px solid rgba(37,162,68,0.12);
       display: flex; align-items: center; justify-content: center;
       font-size: 17px;
       flex-shrink: 0;
@@ -336,18 +367,24 @@
     .wa-item-sub {
       font-family: 'Jost', sans-serif;
       font-size: 10px;
-      color: rgba(44,37,30,0.42);
+      color: rgba(44,37,30,0.40);
       margin: 2px 0 0;
+      letter-spacing: 0.01em;
     }
 
-    /* Bouton principal WhatsApp */
+    /* Bouton principal WhatsApp flottant */
     .whatsapp-float {
-      width: 56px; height: 56px;
+      width: 58px; height: 58px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1da851 0%, #25D366 100%);
+      background: linear-gradient(145deg, #1a8c4e 0%, #25D366 100%);
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 24px rgba(37,211,102,0.38), 0 2px 8px rgba(37,211,102,0.18);
-      transition: transform 0.35s cubic-bezier(.25,.46,.45,.94), box-shadow 0.35s cubic-bezier(.25,.46,.45,.94), opacity 0.25s ease;
+      box-shadow:
+        0 6px 26px rgba(37,211,102,0.40),
+        0 2px 8px rgba(37,211,102,0.20),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      transition:
+        transform 0.38s cubic-bezier(.25,.46,.45,.94),
+        box-shadow 0.38s cubic-bezier(.25,.46,.45,.94);
       cursor: pointer;
       border: none;
       flex-shrink: 0;
@@ -356,25 +393,26 @@
     .whatsapp-float::before {
       content: '';
       position: absolute;
-      inset: -4px;
+      inset: -5px;
       border-radius: 50%;
-      background: rgba(37,211,102,0.22);
-      animation: waBtnPulse 2.8s ease-in-out infinite;
+      background: rgba(37,211,102,0.18);
+      animation: waBtnPulse 3s ease-in-out infinite;
       pointer-events: none;
     }
     @keyframes waBtnPulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.22); opacity: 0; }
+      0%, 100% { transform: scale(1);    opacity: 0.8; }
+      50%       { transform: scale(1.26); opacity: 0; }
     }
     .whatsapp-float:hover {
-      transform: scale(1.10) translateY(-2px);
-      box-shadow: 0 14px 36px rgba(37,211,102,0.48);
+      transform: scale(1.10) translateY(-3px);
+      box-shadow: 0 16px 40px rgba(37,211,102,0.50), 0 4px 12px rgba(37,211,102,0.22);
     }
+    .whatsapp-float:active { transform: scale(0.96); }
 
     @media (max-width: 767px) {
       #wa-container { bottom: 22px; right: 16px; }
-      .whatsapp-float { width: 50px; height: 50px; }
-      .wa-menu { min-width: 260px; max-width: 290px; }
+      .whatsapp-float { width: 52px; height: 52px; }
+      .wa-menu { min-width: 268px; max-width: 300px; }
     }
 
     .stars { color: #BD8F36; letter-spacing: 2px; }
@@ -691,6 +729,37 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-left: 2px;
+    }
+
+    /* ── Scroll to Top ──────────────────────────────────────────────────────── */
+    #scroll-top-btn {
+      position: fixed;
+      bottom: 28px; left: 28px;
+      z-index: 997;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #BD8F36 0%, #D4A74E 100%);
+      border: none;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(189,143,54,0.32), 0 1px 6px rgba(189,143,54,0.14);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s cubic-bezier(.25,.46,.45,.94), box-shadow 0.3s ease;
+      touch-action: manipulation;
+    }
+    #scroll-top-btn.visible {
+      opacity: 1; visibility: visible; pointer-events: all;
+      transform: translateY(0);
+    }
+    #scroll-top-btn:hover {
+      box-shadow: 0 10px 28px rgba(189,143,54,0.48);
+      transform: translateY(-3px);
+    }
+    #scroll-top-btn:active { transform: scale(0.95); }
+    @media (max-width: 767px) {
+      #scroll-top-btn { bottom: 22px; left: 14px; width: 42px; height: 42px; }
     }
   </style>
 </head>
@@ -1972,9 +2041,10 @@
 
       const newReview = { nombre, rating, es: comentario, en: comentario };
       saveCustomReview(newReview);
-      reviewsShowAll = false; // Réinitialise la pagination
+      reviewsShowAll = false;
       document.getElementById('opinion-form').reset();
       renderReviews();
+      try { cloudPush(); } catch(e) {} // Sync Firebase
     }
 
     function renderReviews() {
@@ -2259,9 +2329,12 @@
       initLanguage();
       initCalendar();
 
-      // Sync cloud → localStorage au chargement (fallback silencieux si hors ligne)
-      cloudSyncDown().then(() => fetchBookedSlots());
-      fetchBookedSlots(); // Affichage immédiat depuis localStorage pendant la requête
+      // Affichage immédiat depuis localStorage, puis sync Firebase + listener temps réel
+      fetchBookedSlots();
+      cloudSyncDown().then(() => {
+        fetchBookedSlots();
+        try { firebaseListenRealtime(); } catch(e) {}
+      });
 
       document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
@@ -2274,12 +2347,7 @@
       }, 100);
     });
 
-    // ── Polling cloud toutes les 30s — sync silencieuse côté client ─────────
-    setInterval(() => {
-      if (!document.hidden) {
-        try { cloudSyncDown().then(() => fetchBookedSlots()); } catch(e) {}
-      }
-    }, 30000);
+    // Sync temps réel gérée par firebaseListenRealtime() — pas de polling nécessaire
 
     // Revenir tout en haut à chaque rafraîchissement de page
     window.scrollTo(0, 0);
@@ -2310,6 +2378,19 @@
       }, { passive: true });
     }
 
+    // ── Scroll to top — init (click handler) ─────────────────────────────────
+    const _scrollTopBtn = document.getElementById('scroll-top-btn');
+    if (_scrollTopBtn) {
+      _scrollTopBtn.addEventListener('click', () => {
+        // Compatible tous navigateurs + mobile Safari
+        try {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch(e) {
+          window.scrollTo(0, 0);
+        }
+      });
+    }
+
     window.addEventListener('scroll', () => {
       // Fermer le menu burger automatiquement au scroll
       const mobileMenu = document.getElementById('mobile-menu');
@@ -2318,9 +2399,20 @@
         const icon = document.getElementById('menu-icon');
         if (icon) icon.style.transform = 'rotate(0deg)';
       }
+      // Scroll to top : visible après 320px de scroll
+      if (_scrollTopBtn) {
+        _scrollTopBtn.classList.toggle('visible', window.scrollY > 320);
+      }
     }, { passive: true });
 
   </script>
+
+  <!-- ── Bouton Scroll to Top ──────────────────────────────────────────────── -->
+  <button id="scroll-top-btn" aria-label="Retour en haut de page">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+    </svg>
+  </button>
 
   <!-- ══════════════════════════════════════════════════════════════════════════
        ESPACE ADMIN — Dashboard Apiterapia
@@ -2329,6 +2421,10 @@
 
   <!-- EmailJS SDK — nécessaire pour les alertes d'intrusion par mail -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Firebase SDK (compat mode — embarqué direct dans index.html) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
   <style>
     /* ══ Admin Panel — Design Apiterapia ══════════════════════════════════════
@@ -2789,94 +2885,113 @@
   const EMAILJS_PUBLIC_KEY  = 'xI3wvDZl8hhgtDrEU';
 
   // ══════════════════════════════════════════════════════════════════════════════
-  // CLOUD SYNC — JSONBin.io (gratuit, sans backend)
-  // ──────────────────────────────────────────────────────────────────────────────
-  // ÉTAPES CONFIGURATION :
-  //   1. Créez un compte gratuit sur https://jsonbin.io
-  //   2. Cliquez "Create Bin" → contenu initial : {"slots":[],"admin_slots":[],"products":null}
-  //   3. Copiez l'ID du Bin (ex: 6650abc123def456...) → CLOUD_BIN_ID
-  //   4. Allez dans Account > API Keys → copiez votre Master Key → CLOUD_API_KEY
+  // FIREBASE REALTIME DATABASE — Synchronisation temps réel multi-appareils
   // ══════════════════════════════════════════════════════════════════════════════
-  const CLOUD_BIN_ID  = '6a0fbb316610dd3ae885ba5d';
-  const CLOUD_API_KEY = '$2a$10$/0IJdu4sKyPMlb8TZKxNF.QgUgavkeOMXqG016uJP54oYtcP3u09e';
-  const CLOUD_URL     = `https://api.jsonbin.io/v3/b/${CLOUD_BIN_ID}`;
-  const CLOUD_ENABLED = CLOUD_BIN_ID !== 'VOTRE_BIN_ID_ICI' && CLOUD_API_KEY !== 'VOTRE_MASTER_KEY_ICI';
+  const firebaseConfig = {
+    apiKey:            "AIzaSyAXhf4RXseDHcfquAvLKL6erVmWLVSuUFo",
+    authDomain:        "apitherapia-6ea78.firebaseapp.com",
+    databaseURL:       "https://apitherapia-6ea78-default-rtdb.firebaseio.com",
+    projectId:         "apitherapia-6ea78",
+    storageBucket:     "apitherapia-6ea78.firebasestorage.app",
+    messagingSenderId: "551231427483",
+    appId:             "1:551231427483:web:f46ee4913a8385925f873e",
+    measurementId:     "G-YECWCGEMEX"
+  };
 
-  async function cloudGet() {
-    if (!CLOUD_ENABLED) { console.warn('[Cloud] Désactivé — clés manquantes.'); return null; }
-    try {
-      // Cache-busting : timestamp empêche le cache navigateur (mobile Safari surtout)
-      const url = `${CLOUD_URL}/latest?t=${Date.now()}`;
-      const res = await fetch(url, {
-        headers: { 'X-Master-Key': CLOUD_API_KEY },
-        cache: 'no-store'
-      });
-      if (!res.ok) { console.warn('[Cloud] GET échoué:', res.status, res.statusText); return null; }
-      const json = await res.json();
-      console.log('[Cloud] GET OK ✓');
-      return json.record || null;
-    } catch(e) { console.warn('[Cloud] GET erreur réseau:', e.message); return null; }
-  }
+  // Initialisation Firebase (garde-fou contre double-init)
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const _fbDB  = firebase.database();
+  const _FB_REF = 'apitherapia';
 
-  // Met à jour l'indicateur visuel de statut cloud dans l'admin (si présent)
-  function cloudUpdateStatus(success) {
+  // ── Indicateur visuel statut sync (admin header) ──────────────────────────
+  function cloudUpdateStatus(ok) {
     const el = document.getElementById('cloud-status');
     if (!el) return;
-    el.textContent = success ? '☁️ Synchronisé' : '⚠️ Hors ligne';
-    el.style.color  = success ? '#4caf50' : '#e07b39';
+    el.textContent   = ok ? '☁️ Synchronisé' : '⚠️ Hors ligne';
+    el.style.color   = ok ? '#4caf50' : '#e07b39';
     el.style.opacity = '1';
-    // Disparaît doucement après 4s
-    clearTimeout(el._fadeTimer);
-    el._fadeTimer = setTimeout(() => { el.style.opacity = '0'; }, 4000);
+    clearTimeout(el._ft);
+    el._ft = setTimeout(() => { el.style.opacity = '0'; }, 4000);
   }
 
-  async function cloudSet(data) {
-    if (!CLOUD_ENABLED) return;
+  // ── Lecture one-shot Firebase ──────────────────────────────────────────────
+  async function _fbGet() {
     try {
-      const res = await fetch(CLOUD_URL, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': CLOUD_API_KEY,
-          'X-Bin-Versioning': 'false'   // Évite la limite de versions du plan gratuit
-        },
-        body: JSON.stringify(data),
-        cache: 'no-store'
-      });
-      if (!res.ok) {
-        console.warn('[Cloud] PUT échoué:', res.status, res.statusText);
-        cloudUpdateStatus(false);
-        return;
-      }
-      console.log('[Cloud] PUT OK ✓ — données synchronisées');
+      const snap = await _fbDB.ref(_FB_REF).get();
+      if (snap.exists()) { console.log('[Firebase] GET OK ✓'); return snap.val(); }
+      return null;
+    } catch(e) { console.warn('[Firebase] GET erreur:', e.message); return null; }
+  }
+
+  // ── Écriture Firebase ──────────────────────────────────────────────────────
+  async function _fbSet(data) {
+    try {
+      await _fbDB.ref(_FB_REF).set(data);
+      console.log('[Firebase] SET OK ✓');
       cloudUpdateStatus(true);
     } catch(e) {
-      console.warn('[Cloud] PUT erreur réseau — fallback localStorage:', e.message);
+      console.warn('[Firebase] SET erreur:', e.message);
       cloudUpdateStatus(false);
     }
   }
 
-  // Tire les données du cloud et met à jour le localStorage + l'affichage public
+  // ── Sync descendante Firebase → localStorage + DOM ────────────────────────
   async function cloudSyncDown() {
-    const data = await cloudGet();
+    const data = await _fbGet();
     if (!data) return;
-    if (Array.isArray(data.slots))       localStorage.setItem('apiterapia_slots', JSON.stringify(data.slots));
-    if (Array.isArray(data.admin_slots)) localStorage.setItem('apiterapia_admin_slots', JSON.stringify(data.admin_slots));
+    if (Array.isArray(data.slots))       localStorage.setItem('apiterapia_slots',        JSON.stringify(data.slots));
+    if (Array.isArray(data.admin_slots)) localStorage.setItem('apiterapia_admin_slots',  JSON.stringify(data.admin_slots));
+    if (Array.isArray(data.reviews))     localStorage.setItem('apiterapia_user_reviews', JSON.stringify(data.reviews));
     if (data.products && Array.isArray(data.products)) {
       localStorage.setItem('apiterapia_admin_products', JSON.stringify(data.products));
-      // Appliquer traductions + badges stock sur le site public immédiatement
       try { applyProductTranslationOverrides(data.products); } catch(e) {}
       try { applyStockBadgesPublic(data.products); }          catch(e) {}
       try { changeLang(currentLang); }                        catch(e) {}
     }
   }
 
-  // Pousse tout vers le cloud (écriture admin)
+  // ── Push localStorage → Firebase ──────────────────────────────────────────
   async function cloudPush() {
-    const slots       = JSON.parse(localStorage.getItem('apiterapia_slots')         || '[]');
-    const admin_slots = JSON.parse(localStorage.getItem('apiterapia_admin_slots')   || '[]');
-    const products    = JSON.parse(localStorage.getItem('apiterapia_admin_products')|| 'null');
-    await cloudSet({ slots, admin_slots, products });
+    const slots       = JSON.parse(localStorage.getItem('apiterapia_slots')          || '[]');
+    const admin_slots = JSON.parse(localStorage.getItem('apiterapia_admin_slots')    || '[]');
+    const products    = JSON.parse(localStorage.getItem('apiterapia_admin_products') || 'null');
+    const reviews     = JSON.parse(localStorage.getItem('apiterapia_user_reviews')   || '[]');
+    // Si Firebase vide (1er lancement), initialise avec les produits par défaut
+    const toSave = {
+      slots,
+      admin_slots,
+      products: products || JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
+      reviews
+    };
+    await _fbSet(toSave);
+  }
+
+  // ── Listener temps réel (remplace polling 30s) ────────────────────────────
+  let _fbListenerActive = false;
+  function firebaseListenRealtime() {
+    if (_fbListenerActive) return;
+    _fbListenerActive = true;
+    _fbDB.ref(_FB_REF).on('value', (snap) => {
+      if (!snap.exists()) return;
+      const data = snap.val();
+      // Slots → calendrier public
+      if (Array.isArray(data.slots)) {
+        localStorage.setItem('apiterapia_slots', JSON.stringify(data.slots));
+        try { fetchBookedSlots(); } catch(e) {}
+      }
+      // Produits → prix + stock en temps réel
+      if (data.products && Array.isArray(data.products)) {
+        localStorage.setItem('apiterapia_admin_products', JSON.stringify(data.products));
+        try { applyProductTranslationOverrides(data.products); } catch(e) {}
+        try { applyStockBadgesPublic(data.products); }          catch(e) {}
+        try { changeLang(currentLang); }                        catch(e) {}
+      }
+      // Avis clients
+      if (Array.isArray(data.reviews)) {
+        localStorage.setItem('apiterapia_user_reviews', JSON.stringify(data.reviews));
+        try { renderReviews(); } catch(e) {}
+      }
+    }, (err) => { console.warn('[Firebase] Listener erreur:', err.message); });
   }
 
   // Nombre de tentatives avant blocage temporaire
@@ -3418,13 +3533,13 @@
   }
 
   function adminResetProducts() {
-    const t = translations[currentLang];
     if (!confirm(currentLang === 'es' ? '¿Restablecer todos los productos a los valores por defecto?' : 'Reset all products to default values?')) return;
     localStorage.removeItem('apiterapia_admin_products');
     adminRenderProducts();
     applyProductTranslationOverrides(JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)));
     applyStockBadgesPublic(DEFAULT_PRODUCTS);
     changeLang(currentLang);
+    try { cloudPush(); } catch(e) {} // Sync reset sur Firebase
   }
 
   // Applique les banderoles "Agotado" sur les cartes produits du site public
@@ -3630,10 +3745,19 @@
   // ──────────────────────────────────────────────────────────────────────────────
   // Purge des données
   // ──────────────────────────────────────────────────────────────────────────────
-  function adminPurgeData() {
+  async function adminPurgeData() {
     const t = translations[currentLang];
     if (!confirm(t.adminPurgeConfirm || '⚠️ ¿Eliminar TODOS los datos? Esta acción es definitiva.')) return;
+    // 1. Vider le localStorage local
     ['apiterapia_slots','apiterapia_admin_slots','apiterapia_user_reviews','apiterapia_admin_products'].forEach(k => localStorage.removeItem(k));
+    // 2. Réinitialiser Firebase avec les produits par défaut et données vides
+    const emptyState = {
+      slots:       [],
+      admin_slots: [],
+      reviews:     [],
+      products:    JSON.parse(JSON.stringify(DEFAULT_PRODUCTS))
+    };
+    try { await _fbSet(emptyState); } catch(e) { console.warn('[Purge] Firebase reset erreur:', e.message); }
     alert(t.adminPurgeSuccess || '✅ Todos los datos han sido eliminados.');
     adminRenderRdv();
     adminRenderProducts();
